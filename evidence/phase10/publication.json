@@ -1,0 +1,54 @@
+{
+  "checked_at": "2026-10-18T19:56:35.110Z",
+  "site": {
+    "url": "https://denlumi-showcase.vercel.app",
+    "kind": "Static public presentation; interactive application remains local-only",
+    "deployment_status": "READY",
+    "anonymous_http": [
+      {
+        "path": "/",
+        "status": 200,
+        "bytes": 7039,
+        "content_type": "text/html; charset=utf-8"
+      },
+      {
+        "path": "/style.css",
+        "status": 200,
+        "bytes": 6320,
+        "content_type": "text/css; charset=utf-8"
+      },
+      {
+        "path": "/mark.svg",
+        "status": 200,
+        "bytes": 228,
+        "content_type": "image/svg+xml"
+      },
+      {
+        "path": "/demo-paused.png",
+        "status": 200,
+        "bytes": 383416,
+        "content_type": "image/png"
+      }
+    ],
+    "security_headers": "CSP, Permissions-Policy, nosniff, no-referrer, frame deny present",
+    "app_credentials_uploaded": false
+  },
+  "repository": {
+    "url": "https://github.com/AmirmLotfy/denlumi",
+    "status": "PUBLIC_PUBLISHED",
+    "first_source_commit": "2577719",
+    "license": "MIT",
+    "source_scope": "Separate allowlisted snapshot; original dirty/untracked checkout preserved"
+  },
+  "submission": {
+    "status": "NOT_SUBMITTED",
+    "video": "SCRIPT_ONLY",
+    "devpost_account": "UNVERIFIED_CONNECTOR_INTERNAL_ERRORS"
+  },
+  "limitations": [
+    "No fresh database/Auth/application-browser full regression",
+    "No recorded/uploaded public demo video",
+    "No hosted Supabase or new provider calls",
+    "No human usability, qualified reviewer or production-readiness acceptance"
+  ]
+}

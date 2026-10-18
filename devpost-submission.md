@@ -44,7 +44,7 @@ Bedrock onboarding also stopped at a real authorization blocker. Model discovery
 
 The documented local slice connects exact plan review, separate authenticated caregiver acknowledgment, preflight, report, pause, stale-work refusal, fresh MCP retrieval and private preview across the supported fictional shapes. It includes permission, duplicate-work, failure and offline-Stop checks, and automated desktop reflow and native browser zoom evidence.
 
-The latest recorded October 1 maintenance checks passed a selected 58-test domain set, two Auth tests, six browser tests, typecheck/build and both phase-specific HTTP proofs. An earlier full suite passed 105/105 before later maintenance edits; that result is historical. We have not run new tests for this submission draft or established a current full regression pass.
+The latest recorded October 1 maintenance checks passed a selected 58-test domain set, two Auth tests, six browser tests, typecheck/build and both phase-specific HTTP proofs. An earlier full suite passed 105/105 before later maintenance edits; that result is historical. On October 18, production build and typecheck passed, along with 11 deterministic conversation/Stop tests, five local-setup boundary tests, and static-site browser checks at 320, 768 and 1440 pixels. These do not establish a current database/Auth/application-browser full regression pass.
 
 ## What we learned
 
@@ -60,7 +60,9 @@ Next engineering work is the accumulated-fixture database/Auth timeout investiga
 - Optional AWS Builder: owner decision pending; describe the genuine speech integrations and blocked Bedrock attempt exactly as above. Do not claim eligibility or an award outcome.
 - Open Source: not selected in this draft; no additional contribution URL or publication has been verified.
 - Built with: Next.js, React, TypeScript, Node.js, Supabase Auth, PostgreSQL, Model Context Protocol, AWS SDK for JavaScript v3, Amazon Polly, Amazon Transcribe Streaming; Amazon Bedrock integration **blocked at inference**.
-- Code repository, video and any judge-access link: **not yet supplied or verified**. Never substitute a localhost URL for an externally accessible link.
+- Public code repository: https://github.com/AmirmLotfy/denlumi (MIT, published October 18).
+- Public presentation: https://denlumi-showcase.vercel.app (static evidence site; interactive application remains local-only).
+- Video: **not recorded/uploaded; no public video URL yet**. Never substitute the presentation site or localhost for the required working-application video.
 
 ## Internal claim references — remove this section when copying to Devpost
 

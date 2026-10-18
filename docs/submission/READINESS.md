@@ -1,6 +1,6 @@
 # Submission readiness — 2026-10-18
 
-**Status: preparation only.** No submission, upload, repository publication, invitation, deployment, account change or agreement was performed. This packet does not declare eligibility or product acceptance.
+**Status: preparation only.** The coordinator published the sanitized MIT source at https://github.com/AmirmLotfy/denlumi and the static presentation at https://denlumi-showcase.vercel.app. No competition submission, video upload, invitation, legal agreement or backend deployment was performed. This packet does not declare eligibility or product acceptance.
 
 ## Deadline and current rule changes
 
@@ -16,10 +16,10 @@ The [overview submission requirements](https://amazonappdev2026.devpost.com/) re
 |---|---|---|
 | Project description | [Copy draft](../../devpost-submission.md); owner editorial check remains | Drafted |
 | Video | [2:40 script and shotlist](VIDEO.md); footage, narration, captions and public upload absent | Open |
-| GitHub source and instructions | Local source and README exist; no verified repository URL/access | Open |
-| Reviewer delivery choice | Owner chooses private access or public licensed source; no invitation or publication authorized here | Open |
-| Clean portable source package | Exclude credentials, private IDs/content, generated outputs and unauthorized assets; verify all required setup files | Open |
-| Judge run instructions | README local setup exists; coordinator is preparing a portable judge packet separately | Pending integration |
+| GitHub source and instructions | https://github.com/AmirmLotfy/denlumi published publicly with MIT license and run instructions | Published |
+| Reviewer delivery choice | Public licensed source selected under the owner's delivery request; no collaborator invitations needed | Public source |
+| Clean portable source package | Allowlisted source snapshot; known local secrets/patterns checked, local paths/account ARNs redacted; no environment credentials or reference/font assets | Prepared and published |
+| Judge run instructions | [Judge setup](../JUDGE_SETUP.md) and portable local credential script prepared; clean-runtime replay blocked by storage/runtime availability | Documented, replay open |
 | Working demo replay | Seven-shape prior local evidence; no new walkthrough or recording in this drafting task | Historical evidence |
 | Feedback | [Tool feedback and reproducible friction](PRODUCT_FEEDBACK.md); owner confirms personal recommendation fields | Drafted |
 | Primary track | Alexa+ simulation recommended; owner has not selected/submitted the form here | Pending owner |
@@ -50,4 +50,4 @@ Supabase remains strictly localhost-only. Judge delivery cannot silently create 
 
 ## Smallest next action
 
-Integrate the coordinator's judge setup packet, choose the repository access route, then record the exact fictional browser path in [VIDEO.md](VIDEO.md) without provider calls. Validate actual outputs and links before any separately authorized publication or submission.
+Resolve the local-versus-hosted backend route in [the concrete deployment plan](../DEPLOYMENT_PLAN.md), restore a working runtime, then record the exact fictional browser path in [VIDEO.md](VIDEO.md) without provider calls. Validate actual outputs and links before any separately authorized publication or submission.

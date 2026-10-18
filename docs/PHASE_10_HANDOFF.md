@@ -30,7 +30,7 @@ The first showcase probe checked an offscreen lazy image too early and failed; t
 
 ## Deployment and publication
 
-Vercel target verified: team `mellardoos-projects`, new `denlumi-showcase` project. Only the static showcase files are uploaded; no application secrets, database or functions. Deployment URL and public verification are recorded in `evidence/phase10/publication.json` when completed. The app remains local-only. The public source target is `https://github.com/AmirmLotfy/denlumi`; verify actual publication record before treating it as published.
+Vercel target verified: team `mellardoos-projects`, new `denlumi-showcase` project. Only the static showcase files are uploaded; no application secrets, database or functions. Anonymous HTTP 200 verified at https://denlumi-showcase.vercel.app and all three assets, with CSP and other configured headers. Provider/team preview aliases may require Vercel authentication; use the short public production domain. Actual verification is recorded in `evidence/phase10/publication.json`. The app remains local-only. The public MIT source is published at `https://github.com/AmirmLotfy/denlumi`, from initial source commit `2577719` in the separate publication checkout. Final documentation updates use a subsequent commit. No original-checkout commit or branch mutation occurred.
 
 ## Blockers and evidence boundaries
 

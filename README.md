@@ -21,6 +21,8 @@ Open `http://127.0.0.1:3400`. `configure-local.py` writes local credentials to t
 
 ## Current hackathon status — 18 October 2026
 
+[Public source](https://github.com/AmirmLotfy/denlumi) · [Public presentation](https://denlumi-showcase.vercel.app) · [Judge setup](docs/JUDGE_SETUP.md)
+
 The Alexa+ entry uses the permitted simulated-browser path. The [official deadline](https://amazonappdev2026.devpost.com/rules) is **23 October 2026, 12:00 p.m. PDT / 19:00 UTC / 10:00 p.m. Cairo**. Phases 8–9 have substantial local implementation and recorded checks, with human/provider/operational acceptance still open. Phase 10 publication and submission preparation are now authorized. The [submission draft](devpost-submission.md), [readiness checklist](docs/submission/READINESS.md) and [current handoff](docs/PHASE_10_HANDOFF.md) distinguish actual evidence from missing deliverables.
 
 The public presentation in `apps/showcase` is a static site with an original, historical fictional-app screenshot. It does not expose a live backend or collect household data. The actual interactive application remains local-only. All source is licensed under [MIT](LICENSE); third-party rights remain in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
