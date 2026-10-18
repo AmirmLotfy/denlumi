@@ -1,0 +1,33 @@
+{
+  "checked_at": "2026-09-23",
+  "result": "PASS_APPLICATION_SCOPE_ONLY",
+  "environment": "Local Colima Denlumi Supabase PostgreSQL 17.6; fictional test records; separate task-owned database in the same local container",
+  "attempts": [
+    {
+      "scope": "Full platform dump and restore",
+      "result": "PARTIAL_FAILURE",
+      "detail": "The first restore had 9 Supabase auxiliary Realtime, Vault and event-trigger privilege/concurrency errors. It was not counted as a pass."
+    },
+    {
+      "scope": "Application public/private/auth schema dump and restore",
+      "result": "PASS",
+      "detail": "pg_dump -Fc for the three schemas; created a separate database from template0, removed its pre-existing empty public schema, and ran pg_restore as local supabase_admin with -j 2. Restore exited 0."
+    }
+  ],
+  "snapshot_counts_source_and_restored": {
+    "households": 526,
+    "pets": 922,
+    "cases": 536,
+    "plan_revisions": 485,
+    "auth_users": 1024,
+    "private_idempotency": 1145
+  },
+  "access_check": {
+    "public_private_tables_with_rls": "47/47 in source and restored",
+    "public_private_policies": "32 in source and restored",
+    "authenticated_fictional_owner_own_household_visible": 1,
+    "authenticated_fictional_owner_other_households_visible": 0
+  },
+  "cleanup": "Both task-owned restored databases and both temporary dump files were removed; original local database remained in use.",
+  "limits": "This proves an application-scoped local fictional restore and one restored RLS owner scope check. It does not establish a full Supabase platform disaster recovery, hosted backup retention/erasure, point-in-time recovery, or a timed production RTO."
+}

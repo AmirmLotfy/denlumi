@@ -1,0 +1,57 @@
+{
+  "name": "denlumi",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22.13.1"
+  },
+  "packageManager": "npm@10.9.2",
+  "workspaces": [
+    "apps/web"
+  ],
+  "scripts": {
+    "dev": "npm run dev --workspace apps/web",
+    "build": "npm run build --workspace apps/web",
+    "start": "npm run start --workspace apps/web",
+    "typecheck": "tsc --noEmit",
+    "test:unit": "tsx --test --test-concurrency=1 tests/local-stop.test.ts tests/conversation.test.ts",
+    "release:prepare": "node scripts/prepare-public-release.mjs",
+    "test": "tsx --env-file=.env.local --test --test-concurrency=1 tests/state.test.ts tests/provider.test.ts tests/local-stop.test.ts tests/household.test.ts tests/planning.test.ts tests/phase45.test.ts tests/conversation.test.ts tests/phase7.test.ts tests/speech-boundary.test.ts tests/signout.test.ts",
+    "test:phase6:http": "tsx --env-file=.env.local scripts/prove-phase6-http.ts",
+    "test:phase7": "tsx --env-file=.env.local --test --test-concurrency=1 tests/phase7.test.ts",
+    "test:phase45": "tsx --env-file=.env.local --test --test-concurrency=1 tests/phase45.test.ts",
+    "test:phase45:http": "tsx --env-file=.env.local scripts/prove-phase45-http.ts",
+    "workers:phase45": "tsx --env-file=.env.local scripts/run-phase45-workers.ts",
+    "test:http": "tsx --env-file=.env.local scripts/prove-http.ts",
+    "test:browser": "playwright test tests/e2e/phase0.spec.ts tests/e2e/phase7.spec.ts tests/e2e/shared.spec.ts",
+    "test:browser:voice": "playwright test tests/e2e/phase6.spec.ts",
+    "test:phase7:http": "tsx --env-file=.env.local scripts/prove-phase7-http.ts",
+    "providers:probe": "tsx --env-file=.env.local scripts/probe-providers.ts",
+    "db:setup": "tsx --env-file=.env.local scripts/setup-db.ts",
+    "test:household:http": "tsx --env-file=.env.local scripts/prove-household-http.ts"
+    ,"test:phase23:http": "tsx --env-file=.env.local scripts/prove-phase23-http.ts",
+    "test:mcp:http": "tsx --env-file=.env.local scripts/prove-mcp-http.ts"
+  },
+  "dependencies": {
+    "@aws-sdk/client-bedrock-runtime": "3.1133.0",
+    "@aws-sdk/client-polly": "3.1133.0",
+    "@aws-sdk/client-transcribe-streaming": "3.1133.0",
+    "@modelcontextprotocol/sdk": "1.30.0",
+    "@supabase/supabase-js": "2.116.0",
+    "next": "16.3.5",
+    "pg": "8.23.0",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "zod": "4.6.5"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.63.0",
+    "@types/node": "22.20.3",
+    "@types/pg": "8.23.1",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.2.3",
+    "tsx": "4.23.13",
+    "typescript": "6.0.3"
+  }
+}

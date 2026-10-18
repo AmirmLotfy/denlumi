@@ -1,0 +1,17 @@
+stateDiagram-v2
+    [*] --> Preflight
+    Preflight --> Active: current authorized context
+    Preflight --> Blocked: stale or unavailable or hold
+    Active --> Paused: local stop then server pause
+    Active --> Interrupted: connectivity/checkpoint lost
+    Active --> Finished: caregiver completes record
+    Paused --> Active: explicit fresh authorized recheck
+    Paused --> Finished: close software session
+    Interrupted --> Paused: synchronized human checkpoint
+    Paused --> Blocked: professional hold or content revoked
+    Blocked --> Preflight: permitted fresh review only
+    Finished --> [*]
+    note right of Paused
+        Software paused does not mean
+        animals physically separated.
+    end note

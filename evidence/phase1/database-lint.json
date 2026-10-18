@@ -1,0 +1,7 @@
+{
+  "checked_at": "2026-09-22",
+  "command": "supabase db lint --local --schema public,private --level warning --fail-on warning",
+  "result": "PASS",
+  "output": "No schema errors found",
+  "scope": "local database only"
+}

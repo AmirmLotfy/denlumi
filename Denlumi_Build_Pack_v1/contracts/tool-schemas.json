@@ -1,0 +1,234 @@
+{
+  "status": "design_contract_not_running_server",
+  "tools": [
+    {
+      "name": "get_household_brief",
+      "description": "Read authorized current household handover and plan state, not physical verification.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "household_id": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "required": [
+          "household_id"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "get_case_context",
+      "description": "Read current case participants, approved content state, holds and unknowns.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "case_id": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "required": [
+          "case_id"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "list_due_tasks",
+      "description": "Read scoped tasks and attributed reports. No report is not proof a task was missed.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "household_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "window_hours": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 48
+          }
+        },
+        "required": [
+          "household_id",
+          "window_hours"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "prepare_session",
+      "description": "Return fresh preflight and human start-review destination. Never start animal contact.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "case_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "expected_safety_epoch": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "required": [
+          "case_id",
+          "expected_safety_epoch"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "record_observation",
+      "description": "Record a draft from a user report. Confirmed state requires a separately bound human-origin confirmation. Possible concerns may provisionally pause software.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "case_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "session_id": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uuid"
+          },
+          "actor_pet_id": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uuid"
+          },
+          "target_pet_id": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uuid"
+          },
+          "report_text": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 1000
+          },
+          "assertion": {
+            "type": "string",
+            "enum": [
+              "affirmed",
+              "negated",
+              "uncertain"
+            ]
+          },
+          "expected_safety_epoch": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "required": [
+          "case_id",
+          "session_id",
+          "actor_pet_id",
+          "target_pet_id",
+          "report_text",
+          "assertion",
+          "expected_safety_epoch"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "pause_guidance",
+      "description": "Stop or pause software guidance in the authorized scope; never claim physical separation.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "case_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "reason": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 1000
+          }
+        },
+        "required": [
+          "case_id",
+          "reason"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "draft_handover",
+      "description": "Prepare a factual internal draft from authorized current case events.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "case_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "expected_safety_epoch": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "required": [
+          "case_id",
+          "expected_safety_epoch"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "draft_professional_summary",
+      "description": "Prepare a private summary draft only. No sending or diagnosis.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "case_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "expected_safety_epoch": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "required": [
+          "case_id",
+          "expected_safety_epoch"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "explain_current_step",
+      "description": "Retrieve applicable original reviewed rationale, provenance, and restrictions.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "case_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "expected_safety_epoch": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "required": [
+          "case_id",
+          "expected_safety_epoch"
+        ],
+        "additionalProperties": false
+      }
+    }
+  ]
+}

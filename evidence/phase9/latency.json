@@ -1,0 +1,17 @@
+{
+  "checked_at": "2026-09-28T04:27:14.171Z",
+  "environment": "localhost production Next.js server, local Supabase, serial requests, fictional demo household, model disabled",
+  "sample_size_each": 12,
+  "ordinary_graph_http_ms": {
+    "median": 56,
+    "p95": 118,
+    "max": 118,
+    "target_p95_ms": 800
+  },
+  "current_plan_mcp_http_ms": {
+    "median": 403,
+    "p95": 786,
+    "max": 786
+  },
+  "limits": "No live provider, audio, first-response UI feedback, local Stop p95, supported-device or network latency measured. These localhost measurements are not a production SLA."
+}

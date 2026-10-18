@@ -1,0 +1,22 @@
+erDiagram
+    HOUSEHOLDS ||--o{ PETS : contains
+    HOUSEHOLDS ||--o{ MEMBERSHIPS : authorizes
+    HOUSEHOLDS ||--o{ CASES : manages
+    PETS ||--o{ CASE_PETS : participates
+    CASES ||--|{ CASE_PETS : selects
+    PETS ||--o{ PET_PAIRS : relates
+    PET_PAIRS ||--o{ PAIR_CONTEXTS : contextualizes
+    CASES ||--o{ PAIR_CONTEXTS : tracks
+    PROTOCOLS ||--|{ PROTOCOL_VERSIONS : versions
+    PROTOCOL_VERSIONS ||--o{ PROTOCOL_REVIEWS : reviewed_by
+    CASES ||--o{ PLAN_REVISIONS : plans
+    PROTOCOL_VERSIONS ||--o{ PLAN_REVISIONS : constrains
+    PLAN_REVISIONS ||--o{ PLAN_REVIEWS : acknowledged
+    PLAN_REVISIONS ||--o{ SESSIONS : supports
+    SESSIONS ||--|{ SESSION_PETS : selects
+    SESSIONS o|--o{ OBSERVATIONS : records
+    OBSERVATIONS o|--o{ SAFETY_HOLDS : may_trigger
+    HOUSEHOLDS ||--o{ HANDOVERS : publishes
+    HANDOVERS ||--o{ HANDOVER_ACKS : read_by
+    ROUTINE_RULES ||--o{ TASK_OCCURRENCES : schedules
+    TASK_OCCURRENCES ||--o{ TASK_REPORTS : reported_as

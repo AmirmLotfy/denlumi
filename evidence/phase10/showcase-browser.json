@@ -1,0 +1,33 @@
+{
+  "checked_at": "2026-10-18T19:53:57.100Z",
+  "scope": "Automated local static showcase only; no application backend, human accessibility or provider acceptance",
+  "checks": [
+    {
+      "width": 320,
+      "status": 200,
+      "overflow": false,
+      "images": true,
+      "forms": 0,
+      "scripts": 0
+    },
+    {
+      "width": 768,
+      "status": 200,
+      "overflow": false,
+      "images": true,
+      "forms": 0,
+      "scripts": 0
+    },
+    {
+      "width": 1440,
+      "status": 200,
+      "overflow": false,
+      "images": true,
+      "forms": 0,
+      "scripts": 0
+    }
+  ],
+  "keyboard_skip": "PASS",
+  "anchors": "PASS",
+  "page_errors": []
+}

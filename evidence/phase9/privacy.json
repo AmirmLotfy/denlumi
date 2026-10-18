@@ -1,0 +1,8 @@
+{
+  "checked_at": "2026-09-22T22:56:53Z",
+  "environment": "Local production Next.js, fictional demo household, Chrome Playwright request and console events",
+  "command": "npx --no-install playwright test tests/e2e/phase9-privacy.spec.ts",
+  "result": "PASS 1/1 targeted and PASS within the 21/21 combined production-browser suite",
+  "observed": "One fictional private observation was saved and reloaded. In the exercised tab, no request left the local app origin, the fictional report marker did not appear in request URLs or browser console/page-error messages, and the marker remained in the authenticated record after reload. A delayed real caregiver read also verified that typing begun while sample entry finishes is preserved.",
+  "limits": "Page-level browser-event probe only. Local request bodies intentionally carry the fictional report to the authenticated local backend. This does not prove absence of production telemetry, provider retention, server-log leakage, backup expiry or data previously downloaded by a recipient."
+}

@@ -1,0 +1,14 @@
+{
+  "checked_at": "2026-09-23T01:12:53.966Z",
+  "scope": "One task-created fictional household in unlinked localhost Supabase; no existing household was purged",
+  "missing_retention_acknowledgment_http_status": 400,
+  "consented_creation_http_status": 200,
+  "access_expiry_hours": 24,
+  "primary_purge_eligibility_days": 7,
+  "exact_id_cleanup_status": "completed",
+  "primary_cleanup_verified": true,
+  "owner_identity_deleted": false,
+  "backup_erasure_verified": false,
+  "private_content_or_ids_emitted": false,
+  "limits": "The fixture was aged deliberately. This proves the one-shot local cleanup path, not a scheduler, customer notice comprehension, hosted backups or production retention."
+}

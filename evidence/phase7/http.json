@@ -1,0 +1,16 @@
+{
+  "checked_at": "2026-10-01T12:09:27.805Z",
+  "result": "PASS",
+  "scope": "Real cookie-authenticated local HTTP + isolated Supabase, fictional verified test accounts. No external send or hosted resources.",
+  "checks": [
+    "password sign-in and invalid-password denial",
+    "exact preview",
+    "changed destination rejected",
+    "verified recipient read",
+    "wrong recipient denied",
+    "immediate revocation",
+    "access disabled before deletion",
+    "primary cleanup verified"
+  ],
+  "backup_erasure_verified": false
+}

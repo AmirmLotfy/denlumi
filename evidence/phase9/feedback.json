@@ -1,0 +1,13 @@
+{
+  "checked_at": "2026-09-23T00:13:10.987Z",
+  "environment": "Local production Next.js and Supabase, headless Chrome, fictional household, model disabled, 12 serial synthetic browser clicks",
+  "sample_size": 12,
+  "visible_retrieving_feedback_ms": {
+    "median": 1.4,
+    "p95": 5.5,
+    "max": 5.5,
+    "target_ms": 1000
+  },
+  "result": "PASS for measured loading acknowledgment",
+  "limits": "Measures click-event to visible Retrieving label in one local Chrome build. It does not measure first answer content, spoken feedback, human perception, live Bedrock, supported devices, network latency or the full voice-response target. Each turn used actual authenticated app HTTP and MCP current-state reads; no model request was made."
+}

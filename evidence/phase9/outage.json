@@ -1,0 +1,8 @@
+{
+  "checked_at": "2026-09-23",
+  "environment": "Local production Next.js and fictional local Supabase; Playwright intercepts one planning GET or assistant turn",
+  "test": "tests/e2e/phase9-outage.spec.ts",
+  "result": "PASS 2/2 focused after final fix and included in PASS 26/26 combined production-browser run",
+  "failure_then_fix": "A simulated planning HTTP 503 initially left an old exact-handover button visible; a simulated assistant HTTP 503 initially left the previous answer visible. After the fixes, failed current-state reads hide cached review/handover/draft/preflight controls, and a new conversational turn clears its old answer. Local Stop remains available. Removing each interception and making a fresh read restores the current handover or answer and clears the error.",
+  "limits": "These two tests use browser-level simulated 503s. A separate db-recovery.json drill used a real app-to-Postgres database-selection failure. Neither proves a database-service outage, AWS/provider outage, hosted failover or production recovery time."
+}

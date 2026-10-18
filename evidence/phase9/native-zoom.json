@@ -1,0 +1,21 @@
+{
+  "checked_at": "2026-09-23T02:36:09.035Z",
+  "result": "PASS",
+  "environment": "Task-owned headed Chromium 153.0.8010.12 on macOS; local production Next.js and fictional local Supabase",
+  "mechanism": "chrome.tabs.setZoom(tabId, 2) from a temporary unpacked local extension; browser reported zoom 2",
+  "before": {
+    "width": 800,
+    "dpr": 2
+  },
+  "after": {
+    "width": 400,
+    "dpr": 4
+  },
+  "checks": [
+    "Native browser zoom reduced CSS viewport from 800 to 400 pixels",
+    "No horizontal document overflow in review, handover and session stages",
+    "Stop and section navigation remained inside the visible viewport at all seven decision stages",
+    "Fictional software session started and local Stop showed its stopped state"
+  ],
+  "limits": "One task-owned desktop Chromium profile. Browser automation does not prove human screen-reader announcements, supported-device behavior, user comprehension, physical audio, or professional content approval. No hosted service or real animal guidance was used."
+}

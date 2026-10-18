@@ -1,0 +1,49 @@
+{
+  "checked_at": "2026-09-22T20:45:45.525Z",
+  "http_status": 200,
+  "answer_source": "database_template",
+  "provider": {
+    "status": "blocked",
+    "detail": "BEDROCK_ValidationException"
+  },
+  "trace": [
+    {
+      "method": "initialize",
+      "http_status": 200,
+      "protocol": "2025-11-25"
+    },
+    {
+      "method": "notifications/initialized",
+      "http_status": 202,
+      "protocol": "2025-11-25"
+    },
+    {
+      "method": "tools/list",
+      "http_status": 200,
+      "protocol": "2025-11-25"
+    },
+    {
+      "method": "tools/call",
+      "tool_name": "get_household_brief",
+      "http_status": 200,
+      "protocol": "2025-11-25"
+    },
+    {
+      "method": "tools/call",
+      "tool_name": "get_household_brief",
+      "http_status": 200,
+      "protocol": "2025-11-25"
+    }
+  ],
+  "chat_history_used": false,
+  "safety_epoch": 1,
+  "bedrock_calls": [
+    {
+      "provider": "bedrock",
+      "outcome": "blocked",
+      "request_id": "d6c70790-457e-4310-ac49-25f4dd39bb6d",
+      "error_code": "ValidationException"
+    }
+  ],
+  "scope": "Real authenticated local conversation endpoint. One bounded AWS Bedrock attempt, no professional animal advice or model-generated guidance."
+}

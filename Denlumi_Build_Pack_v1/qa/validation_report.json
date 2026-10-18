@@ -1,0 +1,47 @@
+{
+  "status": "passed_specification_consistency_checks",
+  "checks_passed": 17,
+  "checks": [
+    "All JSON files parse",
+    "Logical entity count and names agree",
+    "All foreign-key targets exist",
+    "All entity field names are unique",
+    "Every cited source key is registered",
+    "All demo protocols are unapproved for live use",
+    "No sample protocol specifies an animal-session duration",
+    "Protocol source references exist",
+    "Seven demo protocols validate against the JSON Schema",
+    "All 17 scenario fixtures present",
+    "Scenario protocol IDs resolve",
+    "All species pairings and solo routes represented",
+    "Fictional household IDs, pairs and tenant scopes are consistent",
+    "Nine tool schemas have unique names and reject extra inputs",
+    "No forbidden consequential tool is exposed",
+    "Acceptance definitions are unique and explicitly unexecuted",
+    "Specified normal-text contrast pairs meet 4.5 to 1"
+  ],
+  "logical_entities": 37,
+  "scenario_fixtures": 17,
+  "protocol_fixtures": 7,
+  "tool_contracts": 9,
+  "acceptance_test_definitions": 75,
+  "text_contrast_ratios": {
+    "ink_on_canvas": 13.739,
+    "secondary_on_surface": 6.18,
+    "surface_on_action": 7.88,
+    "warning_on_surface": 7.41,
+    "danger_on_surface": 7.148,
+    "info_on_surface": 7.216
+  },
+  "not_tested": [
+    "application implementation",
+    "live provider APIs",
+    "database migrations or RLS execution",
+    "real animal handling",
+    "clinical efficacy",
+    "trademark or domain availability",
+    "rendered UI accessibility",
+    "native Alexa publication",
+    "rendered Mermaid graphics"
+  ]
+}

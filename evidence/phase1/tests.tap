@@ -1,0 +1,179 @@
+
+> denlumi@0.0.1 test
+> tsx --env-file=.env.local --test --test-concurrency=1 tests/state.test.ts tests/provider.test.ts tests/local-stop.test.ts tests/household.test.ts
+
+TAP version 13
+# Subtest: identity does not grant household access; reviewer/support credentials are not membership
+ok 1 - identity does not grant household access; reviewer/support credentials are not membership
+  ---
+  duration_ms: 834.561459
+  ...
+# Subtest: disabled identity and suspended household deny both RLS reads and privileged server writes
+ok 2 - disabled identity and suspended household deny both RLS reads and privileged server writes
+  ---
+  duration_ms: 487.795125
+  ...
+# Subtest: canonical pair rejects self, reverse, duplicate and foreign-household endpoints
+ok 3 - canonical pair rejects self, reverse, duplicate and foreign-household endpoints
+  ---
+  duration_ms: 1431.044375
+  ...
+# Subtest: scope arrays have same-household referential integrity, reject nulls/duplicates, preserve referenced records
+ok 4 - scope arrays have same-household referential integrity, reject nulls/duplicates, preserve referenced records
+  ---
+  duration_ms: 994.777333
+  ...
+# Subtest: case requires at least one pet at commit, pair contexts require both case participants
+ok 5 - case requires at least one pet at commit, pair contexts require both case participants
+  ---
+  duration_ms: 439.468
+  ...
+# Subtest: database owner consistency, timezone, and nonnegative versions enforced
+ok 6 - database owner consistency, timezone, and nonnegative versions enforced
+  ---
+  duration_ms: 650.264333
+  ...
+# Subtest: create household retry is unique; adult acknowledgement and mode spoofing rejected; empty records allowed
+ok 7 - create household retry is unique; adult acknowledgement and mode spoofing rejected; empty records allowed
+  ---
+  duration_ms: 269.3975
+  ...
+# Subtest: single-pet and multi-pet graph preserves participants, canonical pairs and distinct contexts without guidance
+ok 8 - single-pet and multi-pet graph preserves participants, canonical pairs and distinct contexts without guidance
+  ---
+  duration_ms: 420.829875
+  ...
+# Subtest: owner-only mutations enforce stale/duplicate/concurrent state and scope; pet changes invalidate old plan
+ok 9 - owner-only mutations enforce stale/duplicate/concurrent state and scope; pet changes invalidate old plan
+  ---
+  duration_ms: 941.585167
+  ...
+# Subtest: explicit membership grants are scoped, audited, expiring and immediately revocable; no self privilege
+ok 10 - explicit membership grants are scoped, audited, expiring and immediately revocable; no self privilege
+  ---
+  duration_ms: 660.221334
+  ...
+# Subtest: ownership transfers atomically to existing unrestricted caregiver and removes old owner authority
+ok 11 - ownership transfers atomically to existing unrestricted caregiver and removes old owner authority
+  ---
+  duration_ms: 436.729417
+  ...
+# Subtest: adding third case participant stales the bound plan and never infers group readiness
+ok 12 - adding third case participant stales the bound plan and never infers group readiness
+  ---
+  duration_ms: 495.45175
+  ...
+# Subtest: new exposed graph tables reject all Data API writes and hide foreign household rows
+ok 13 - new exposed graph tables reject all Data API writes and hide foreign household rows
+  ---
+  duration_ms: 939.751417
+  ...
+# Subtest: concurrent participant removal cannot commit an empty case
+ok 14 - concurrent participant removal cannot commit an empty case
+  ---
+  duration_ms: 399.703208
+  ...
+# Subtest: local stop cancels playing and queued audio, aborts pending work and latches without network
+ok 15 - local stop cancels playing and queued audio, aborts pending work and latches without network
+  ---
+  duration_ms: 0.471791
+  ...
+# Subtest: storage/audio failure cannot prevent the local visible stop
+ok 16 - storage/audio failure cannot prevent the local visible stop
+  ---
+  duration_ms: 0.081958
+  ...
+# Subtest: model unavailable does not disable database reads or pause
+ok 17 - model unavailable does not disable database reads or pause
+  ---
+  duration_ms: 531.585209
+  ...
+# Subtest: durable provider call budget refuses overrun without an AWS request
+ok 18 - durable provider call budget refuses overrun without an AWS request
+  ---
+  duration_ms: 406.291041
+  ...
+# Subtest: real authentication rejects forged token and revoked Supabase session
+ok 19 - real authentication rejects forged token and revoked Supabase session
+  ---
+  duration_ms: 344.730666
+  ...
+# Subtest: revoked session also loses direct Supabase Data API reads
+ok 20 - revoked session also loses direct Supabase Data API reads
+  ---
+  duration_ms: 502.230958
+  ...
+# Subtest: household isolation enforced by server and actual RLS; Data API writes denied
+ok 21 - household isolation enforced by server and actual RLS; Data API writes denied
+  ---
+  duration_ms: 885.783667
+  ...
+# Subtest: cat_dog: distinct demo content, fictional pause, stale caregiver, fresh retrieval, idempotency
+ok 22 - cat_dog: distinct demo content, fictional pause, stale caregiver, fresh retrieval, idempotency
+  ---
+  duration_ms: 517.891417
+  ...
+# Subtest: cat_cat: distinct demo content, fictional pause, stale caregiver, fresh retrieval, idempotency
+ok 23 - cat_cat: distinct demo content, fictional pause, stale caregiver, fresh retrieval, idempotency
+  ---
+  duration_ms: 564.258875
+  ...
+# Subtest: dog_dog: distinct demo content, fictional pause, stale caregiver, fresh retrieval, idempotency
+ok 24 - dog_dog: distinct demo content, fictional pause, stale caregiver, fresh retrieval, idempotency
+  ---
+  duration_ms: 539.728041
+  ...
+# Subtest: single_cat: distinct demo content, fictional pause, stale caregiver, fresh retrieval, idempotency
+ok 25 - single_cat: distinct demo content, fictional pause, stale caregiver, fresh retrieval, idempotency
+  ---
+  duration_ms: 508.377875
+  ...
+# Subtest: single_dog: distinct demo content, fictional pause, stale caregiver, fresh retrieval, idempotency
+ok 26 - single_dog: distinct demo content, fictional pause, stale caregiver, fresh retrieval, idempotency
+  ---
+  duration_ms: 504.045375
+  ...
+# Subtest: multi_pet: distinct demo content, fictional pause, stale caregiver, fresh retrieval, idempotency
+ok 27 - multi_pet: distinct demo content, fictional pause, stale caregiver, fresh retrieval, idempotency
+  ---
+  duration_ms: 507.82925
+  ...
+# Subtest: expired/revoked/scoped memberships lose reads and writes immediately
+ok 28 - expired/revoked/scoped memberships lose reads and writes immediately
+  ---
+  duration_ms: 434.104167
+  ...
+# Subtest: reader cannot mutate; forged pet references and hidden properties are rejected
+ok 29 - reader cannot mutate; forged pet references and hidden properties are rejected
+  ---
+  duration_ms: 446.852042
+  ...
+# Subtest: concurrent pause transactions: only one stale version can commit
+ok 30 - concurrent pause transactions: only one stale version can commit
+  ---
+  duration_ms: 458.232958
+  ...
+# Subtest: negation/uncertainty and observation time remain intact; model has no confirmation/override tools
+ok 31 - negation/uncertainty and observation time remain intact; model has no confirmation/override tools
+  ---
+  duration_ms: 862.510625
+  ...
+# Subtest: demo content fails closed for live household, revoked content, changed home, and locale; stop still works
+ok 32 - demo content fails closed for live household, revoked content, changed home, and locale; stop still works
+  ---
+  duration_ms: 463.787
+  ...
+# Subtest: database composite constraints prevent cross-household pets; transaction failure rolls back epoch
+ok 33 - database composite constraints prevent cross-household pets; transaction failure rolls back epoch
+  ---
+  duration_ms: 828.086458
+  ...
+1..33
+# tests 33
+# suites 0
+# pass 33
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 19829.620375

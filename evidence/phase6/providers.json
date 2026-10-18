@@ -1,0 +1,41 @@
+{
+  "checked_at": "2026-09-22T20:42:46.306Z",
+  "region": "us-east-1",
+  "model_id": "us.amazon.nova-micro-v1:0",
+  "scope": "Live provider feasibility requests; fictional text only. No real animal guidance.",
+  "cost_guard": {
+    "max_bedrock_requests": 1,
+    "max_output_tokens": 96,
+    "retries": 0,
+    "max_polly_characters": 100,
+    "max_transcribe_seconds": 15
+  },
+  "tests": {
+    "bedrock": {
+      "status": "BLOCKED",
+      "error": "ValidationException",
+      "message": "Operation not allowed",
+      "request_id": "92e24286-2089-43d7-947f-15fda7f39ab2",
+      "http_status": 400
+    },
+    "polly": {
+      "status": "PASS",
+      "request_id": "3cc9c6dd-b1cb-4a7e-9796-9f7ddd7c7b3d",
+      "http_status": 200,
+      "audio_bytes": 62012,
+      "encoding": "PCM signed 16-bit little-endian, mono, 16000 Hz",
+      "audible_playback": "NOT_TESTED"
+    },
+    "transcribe": {
+      "status": "PASS",
+      "request_id": "55fe1dbe-facf-4e88-9ffe-6fa32ab0abd2",
+      "http_status": 200,
+      "input": "Polly fictional sample",
+      "audio_seconds": 1.937875,
+      "transcript": [
+        "Fictional Dinlumi connection test."
+      ],
+      "microphone_capture": "NOT_TESTED"
+    }
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "checked_at": "2026-09-23",
+  "environment": "Local production Next.js, fictional local Supabase, Playwright Chromium, one worker",
+  "command": "npx --no-install playwright test tests/e2e/phase8-journey.spec.ts tests/e2e/phase8-participant-stale.spec.ts tests/e2e/phase9-accessibility.spec.ts tests/e2e/phase9-outage.spec.ts",
+  "result": "PASS 16/16 affected production-browser tests after the planning-read fix; later combined selection PASS 26/26 after the conversational stale-answer fix",
+  "accessibility_scope": "At 320 CSS pixels, keyboard traversal completed fictional sample opening, intake, exact owner review, owner and separate sample caregiver handover acknowledgments, preflight, explicit start and local Stop with visible focus and unclipped Stop/navigation. Review, handover and session decisions also reflowed under a 200% CSS zoom simulation. Prior checks cover four views, reduced motion, photo-free names and forced colors.",
+  "limits": "Automated Chromium keyboard checks only. The 200% test changes CSS zoom; it is not native browser zoom. In a later in-app browser check, Cmd+Plus and Cmd+Equal caused no change in the reported 1280 CSS-pixel viewport or devicePixelRatio, so that surface did not establish native zoom behavior. No human screen-reader transcript, supported-device matrix, human usability result or physical audio perception. The user's running Chrome tab was not changed for this check."
+}

@@ -1,0 +1,14 @@
+import { z } from 'zod';
+const uuid=z.string().uuid();
+const name=z.string().trim().min(1).max(80);
+const date=z.iso.date().nullable().default(null);
+export const householdInput=z.object({nickname:name,timezone:z.string().refine(v=>{try{new Intl.DateTimeFormat('en',{timeZone:v});return true;}catch{return false;}},'IANA timezone required'),locale:z.literal('en'),adult_acknowledged:z.literal(true),notification_preferences:z.object({internal_inbox:z.literal(true),email:z.literal(false)}).strict()}).strict();
+export const expectedHousehold=z.object({expected_state_version:z.number().int().positive(),expected_safety_epoch:z.number().int().nonnegative()});
+export const petFields=z.object({nickname:name,species:z.enum(['cat','dog']),age_band:z.string().trim().max(80).nullable().default(null),approx_birth_date:date,arrival_date:date,context_notes:z.object({schema_version:z.literal(1),reported_history:z.string().max(1500).nullable(),accessibility_notes:z.string().max(500).nullable()}).strict().default({schema_version:1,reported_history:null,accessibility_notes:null})}).strict();
+export const addPetInput=expectedHousehold.extend(petFields.shape).extend({aliases:z.array(name).max(10).default([])}).strict();
+export const updatePetInput=addPetInput.extend({expected_pet_version:z.number().int().positive()}).strict();
+export const caseInput=expectedHousehold.extend({title:name,scenario_code:z.string().regex(/^SC(0[1-9]|1[0-7])$/),participants:z.array(z.object({pet_id:uuid,role:z.enum(['resident','newcomer','returning','affected'])}).strict()).min(1).max(100).refine(v=>new Set(v.map(p=>p.pet_id)).size===v.length),context_key:z.string().trim().min(1).max(120).default('home')}).strict();
+export const membershipInput=expectedHousehold.extend({profile_id:uuid,role:z.enum(['caregiver','sitter','reader']),pet_scope:z.array(uuid).max(100).nullable(),case_scope:z.array(uuid).max(100).nullable(),expires_at:z.iso.datetime({offset:true}).nullable(),adult_acknowledged:z.literal(true)}).strict().refine(v=>v.role!=='sitter'||v.expires_at!==null,'Sitter expiry required');
+export const revokeInput=expectedHousehold.strict();
+export const transferInput=expectedHousehold.extend({new_owner_id:uuid,confirm_transfer:z.literal(true)}).strict();
+export const participantInput=expectedHousehold.extend({pet_id:uuid,role:z.enum(['resident','newcomer','returning','affected']),context_key:z.string().trim().min(1).max(120).default('home')}).strict();

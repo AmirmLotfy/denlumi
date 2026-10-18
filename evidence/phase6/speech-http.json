@@ -1,0 +1,40 @@
+{
+  "checked_at": "2026-09-22T20:43:45.701Z",
+  "scope": "Real authenticated app HTTP endpoints and live AWS speech. Fictional household, synthetic silence input. No human microphone or audible playback proof.",
+  "microphone_capture": "NOT_TESTED",
+  "audible_playback": "NOT_TESTED",
+  "polly": {
+    "status": "PASS",
+    "http_status": 200,
+    "audio_bytes": 48161,
+    "content_type": "audio/mpeg",
+    "epoch": "1",
+    "caption_present": true
+  },
+  "transcribe": {
+    "status": "PASS",
+    "http_status": 200,
+    "input": "One second synthetic PCM silence; transport proof only",
+    "transcript": "",
+    "source_kind": "voice",
+    "saved": false,
+    "requires_review": true,
+    "raw_audio_retained": false,
+    "provider": "Amazon Transcribe",
+    "request_id": "5bb06053-4707-4875-9206-ac89960c9098"
+  },
+  "provider_calls": [
+    {
+      "provider": "polly",
+      "outcome": "completed",
+      "request_id": "12e3172d-c923-4e85-9012-37b117328315",
+      "error_code": null
+    },
+    {
+      "provider": "transcribe",
+      "outcome": "completed",
+      "request_id": "5bb06053-4707-4875-9206-ac89960c9098",
+      "error_code": null
+    }
+  ]
+}

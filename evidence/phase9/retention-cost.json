@@ -1,0 +1,81 @@
+{
+  "checked_at": "2026-09-23T02:22:00.931Z",
+  "environment": "Aggregate read-only queries against unlinked local Supabase; no private text, identifiers or credentials emitted",
+  "effective_provider_daily_call_limit": 12,
+  "households": [
+    {
+      "mode": "demo",
+      "status": "active",
+      "total": 1937,
+      "expired": 26
+    },
+    {
+      "mode": "demo",
+      "status": "suspended",
+      "total": 19,
+      "expired": 0
+    },
+    {
+      "mode": "live",
+      "status": "active",
+      "total": 368,
+      "expired": 0
+    }
+  ],
+  "demo_retention": {
+    "consented": 30,
+    "expired_older_unconsented": 26,
+    "due_consented": 0
+  },
+  "provider_calls": [
+    {
+      "provider": "bedrock",
+      "outcome": "blocked",
+      "total": 1,
+      "with_usage": 0,
+      "older_than_30_days": 0
+    },
+    {
+      "provider": "polly",
+      "outcome": "completed",
+      "total": 2,
+      "with_usage": 0,
+      "older_than_30_days": 0
+    },
+    {
+      "provider": "polly-test",
+      "outcome": "reserved",
+      "total": 8,
+      "with_usage": 8,
+      "older_than_30_days": 0
+    },
+    {
+      "provider": "test-no-network",
+      "outcome": "reserved",
+      "total": 32,
+      "with_usage": 0,
+      "older_than_30_days": 0
+    },
+    {
+      "provider": "transcribe",
+      "outcome": "completed",
+      "total": 2,
+      "with_usage": 0,
+      "older_than_30_days": 0
+    }
+  ],
+  "exports": {
+    "total": 127,
+    "expired_with_content": 102
+  },
+  "verified_by_tests": "Full local suite PASS 102/102 after budget serialization, demo expiry, deletion-only preparation for a still-authenticated expired-demo owner, consented exact-ID and bounded explicit-ID batch cleanup, positive explicitly scoped batch CLI selection, exact-ID operator CLI failure/retry, and privacy-safe speech unit accounting. Production-build expired-demo deletion browser journey PASS 1/1 with a freshly authenticated verified owner. Six guided fictional shapes passed full browser journeys 7/7 including SC07 coordination-only. After the explicit browser checkbox, the earlier affected production browser selection PASS 25/26 with one case-sensitive test assertion failure; the corrected affected desktop journey PASS 1/1. Authenticated localhost HTTP missing consent 400, accepted sample 200 and fixture cleanup completed.",
+  "findings": [
+    "Demo household default expiry is 24 hours and server/RLS/provider reservation deny access after expiry.",
+    "A freshly authenticated owner with a saved household reference can use the deletion-only browser path after demo expiry; foreign households, caregivers, stale state and stale authentication are refused. Anonymous browser sessions may not remain recoverable after 24 hours, so this is not a complete expired-demo self-service flow.",
+    "New fictional samples record retention acknowledgment and become eligible for local primary cleanup after seven days. The one-shot worker is dry-run by default; application requires an exact ID or a bounded 1-20 row batch. Older unconsented fixtures are excluded; no continuously operating scheduler or hosted purge has been proven.",
+    "Expired private export content remains stored until household deletion; expiry revokes access, not bytes. This matches the current private-record retention model but requires a published policy before customer use.",
+    "The proposed 30-day operational metadata retention has no automated purge job. No provider billing-rate reconciliation or actual USD cost claim is available.",
+    "Polly/Transcribe measured units are stored for new calls without input text; older provider rows can lack usage. AWS-side audio/model retention and hosted backup expiry remain unverified."
+  ],
+  "limits": "These are local aggregate counts at one point in time. No AWS provider retention configuration, billing statement, hosted deletion, production telemetry or legal retention policy was verified."
+}

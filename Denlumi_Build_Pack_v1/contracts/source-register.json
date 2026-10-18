@@ -1,0 +1,125 @@
+{
+  "checked_on": "2026-09-16",
+  "sources": [
+    {
+      "id": "S1",
+      "title": "Amazon Developer Hackathon official rules",
+      "url": "https://amazonappdev2026.devpost.com/rules",
+      "scope": "Simulated Alexa+ path, submission requirements, dates, judging. Recheck before submission."
+    },
+    {
+      "id": "S2",
+      "title": "Alexa+ Developer Docs Home",
+      "url": "https://developer.amazon.com/docs/alexaplus/add-ons/home.html",
+      "scope": "Public documentation states selected-partner access for the Category SDK and MCP Toolkit."
+    },
+    {
+      "id": "S3",
+      "title": "Alexa+ Policy Requirements",
+      "url": "https://developer.amazon.com/docs/alexaplus/add-ons/policy-requirements.html",
+      "scope": "Private information over voice and consent/scope restrictions; review native behavior separately."
+    },
+    {
+      "id": "S4",
+      "title": "2024 AAFP Intercat Tension Guidelines",
+      "url": "https://catvets.com/resource/2024-intercat-tension-guidelines/",
+      "scope": "Feline-specific prevention/recognition/management guidance; not blanket approval of this product."
+    },
+    {
+      "id": "S5",
+      "title": "Cat Friendly Homes: Introducing a New Cat",
+      "url": "https://catfriendly.com/be-a-cat-friendly-caregiver/adopting-a-cat/introducing-a-cat/",
+      "scope": "Gradual response-dependent introductions; no fixed completion calendar."
+    },
+    {
+      "id": "S6",
+      "title": "Dogs Trust: Introducing your new dog or puppy",
+      "url": "https://www.dogstrust.org.uk/dog-advice/life-with-your-dog/at-home/introducing-new-puppy",
+      "scope": "Species-specific dog introductions and professional help when appropriate."
+    },
+    {
+      "id": "S7",
+      "title": "Dogs Trust: Dogs and cats living together",
+      "url": "https://www.dogstrust.ie/dog-advice/life-with-your-dog/at-home/dogs-and-cats-living-together",
+      "scope": "Some dogs and cats cannot safely share access; retain separation/professional pathways."
+    },
+    {
+      "id": "S8",
+      "title": "AVSAB: Position Statements",
+      "url": "https://avsab.org/resources/position-statements/",
+      "scope": "Current humane dog-training position favors reward-based methods; informs product policy."
+    },
+    {
+      "id": "S9",
+      "title": "AAHA: Common Pet Pain Signs",
+      "url": "https://www.aaha.org/resources/whats-wrong-common-pet-pain-signs/",
+      "scope": "Behavior changes can be associated with pain; product must not diagnose them as ordinary training issues."
+    },
+    {
+      "id": "S10",
+      "title": "Cats Protection: Dogs and Other Pets",
+      "url": "https://www.cats.org.uk/help-and-advice/cats-and-your-family/dogs-and-other-pets",
+      "scope": "Mixed-species context depends on individuals and their history, not a universal compatibility rule."
+    },
+    {
+      "id": "S11",
+      "title": "Catellect: AI Cat Behaviorist",
+      "url": "https://catellect.com/experience/cat-behaviorist",
+      "scope": "Competitor advertises cat-introduction/behavior guidance. Marketing reviewed; effectiveness not tested."
+    },
+    {
+      "id": "S12",
+      "title": "MCP 2025-11-25: Transports",
+      "url": "https://modelcontextprotocol.io/specification/2025-11-25/basic/transports",
+      "scope": "Primary technical reference for a real Streamable HTTP implementation."
+    },
+    {
+      "id": "S13",
+      "title": "Amazon Bedrock: Structured Outputs",
+      "url": "https://docs.aws.amazon.com/bedrock/latest/userguide/claude-messages-structured-outputs.html",
+      "scope": "Supported API/model combinations must be verified in the account. Schema conformance is not factual validation."
+    },
+    {
+      "id": "S14",
+      "title": "AWS Lambda with SQS",
+      "url": "https://docs.aws.amazon.com/lambda/latest/dg/with-sqs.html",
+      "scope": "At-least-once processing means duplicate-safe effects are necessary."
+    },
+    {
+      "id": "S15",
+      "title": "Amazon Transcribe: Streaming Audio",
+      "url": "https://docs.aws.amazon.com/transcribe/latest/dg/streaming.html",
+      "scope": "Speech transport, encoding, and implementation details to verify in Phase 0."
+    },
+    {
+      "id": "S16",
+      "title": "Amazon Polly Overview",
+      "url": "https://docs.aws.amazon.com/polly/latest/dg/what-is.html",
+      "scope": "Candidate speech-output service, not native Alexa access."
+    },
+    {
+      "id": "S17",
+      "title": "W3C WCAG 2.2",
+      "url": "https://www.w3.org/TR/WCAG22/",
+      "scope": "Accessibility conformance target; an actual interface still needs testing."
+    },
+    {
+      "id": "S18",
+      "title": "Alexa+ Account Linking for MCP Add-ons",
+      "url": "https://www.developer.amazon.com/docs/alexaplus/add-ons/mcp-toolkit-account-linking.html",
+      "scope": "MCP-specific OAuth 2.1/PKCE requirements; separate from generic legacy skill docs."
+    },
+    {
+      "id": "S19",
+      "title": "Supabase: Row Level Security",
+      "url": "https://supabase.com/docs/guides/database/postgres/row-level-security",
+      "scope": "RLS isolation and privileged service-role behavior."
+    },
+    {
+      "id": "S20",
+      "title": "Amazon Developer Hackathon resources",
+      "url": "https://amazonappdev2026.devpost.com/resources",
+      "scope": "Official getting-started resources; no extra hardware dependency assumed."
+    }
+  ]
+}

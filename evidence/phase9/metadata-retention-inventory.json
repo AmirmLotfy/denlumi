@@ -1,0 +1,19 @@
+{
+  "checked_at": "2026-09-28T05:05:12Z",
+  "scope": "Read-only aggregate SQL against isolated localhost Supabase; no rows changed",
+  "policy_status": "30-day operational metadata target is proposed, not published or approved",
+  "candidate_tables": [
+    {"table":"private.deletion_requests","rows":167,"older_than_30_days":0},
+    {"table":"private.household_creations","rows":448,"older_than_30_days":0},
+    {"table":"private.idempotency","rows":6316,"older_than_30_days":0},
+    {"table":"private.provider_calls","rows":57,"older_than_30_days":0},
+    {"table":"public.audit_events","rows":6229,"older_than_30_days":0},
+    {"table":"public.outbox_events","rows":1246,"older_than_30_days":0}
+  ],
+  "observed_inbound_foreign_keys": [
+    {"referenced":"public.outbox_events","dependent":"public.deliveries"},
+    {"referenced":"private.deletion_requests","dependent":"private.demo_deletion_codes"}
+  ],
+  "conclusion": "There was nothing older than 30 days to purge in the selected local tables. This is an inventory, not a retention implementation, scheduled job, privacy-policy approval, backup-erasure proof or hosted check.",
+  "hosted_supabase_actions": false
+}

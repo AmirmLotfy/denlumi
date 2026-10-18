@@ -1,0 +1,18 @@
+{
+  "checked_at": "2026-09-28T04:29:50Z",
+  "environment": "Local production Next.js 16.3.5, Denlumi-only local Supabase/PostgreSQL 17.6 containers, fictional records",
+  "trigger": "A Phase 8 browser journey failed after Sam's handover acknowledgment. PostgreSQL logged three statement timeouts for the current-plan read, inside the RLS case-membership check. The original plan query filtered only by case_id against roughly 2,300 local plan revisions, while its available revision index began with household_id.",
+  "change": "The current brief now filters the plan, pet participants, handovers, observations and active holds by both authenticated household_id and case_id. RLS remains active and the existing composite indexes can serve the scoped reads.",
+  "planner_check": "EXPLAIN for the revised plan query showed an Index Scan Backward using plan_revisions_household_id_case_id_revision_number_key with both household_id and case_id in Index Cond, then a protocol_versions primary-key lookup. This was an administrator-side plan inspection, not an RLS performance benchmark.",
+  "verification": {
+    "typecheck": "PASS",
+    "production_build": "PASS",
+    "focused_browser": "PASS 1/1 full typed/no-audio owner handover, explicit start, report, pause, stale caregiver refusal, fresh MCP retrieval and private preview",
+    "pairing_browser": "PASS 7/7 including all six guided fictional shapes and SC07 coordination-only",
+    "local_suite": "PASS 102/102, including tenant isolation, stale state and RLS",
+    "post_change_statement_timeouts_observed": 0,
+    "post_change_log_window": "2026-09-28T04:24:00Z through 2026-09-28T04:29:50Z"
+  },
+  "latency_note": "A separate 12-sample serial localhost probe after the change measured graph-read p95 118 ms and full current-plan MCP p95 786 ms. This is not a paired before/after benchmark; the earlier p95 75/363 ms was measured on a different local load and fixture state. No production latency claim follows.",
+  "limits": "The original timeouts are evidence of a local failure, not proof that this single query was their only cause. The passing reruns and planner check do not establish production scale, human usability, supported-device latency or hosted recovery. No remote Supabase action or real-animal guidance occurred."
+}

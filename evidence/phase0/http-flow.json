@@ -1,0 +1,93 @@
+{
+  "checked_at": "2026-09-16T09:56:14.396Z",
+  "started_at": "2026-09-16T09:56:09.123Z",
+  "scope": "Local fictional Phase 0 HTTP proof; tokens and user IDs omitted.",
+  "authentication": {
+    "provider": "local Supabase Auth",
+    "owner_cookie_received": true,
+    "caregiver_cookie_received": true
+  },
+  "initial": {
+    "household_id": "ec804a94-7955-4091-90ae-4571d2c70b1f",
+    "pairing": "cat_dog",
+    "protocol_status": "demo_only",
+    "safety_epoch": 1
+  },
+  "mcp": [
+    {
+      "method": "initialize",
+      "http_status": 200,
+      "protocol": "2025-11-25"
+    },
+    {
+      "method": "notifications/initialized",
+      "http_status": 202,
+      "protocol": "2025-11-25"
+    },
+    {
+      "method": "tools/list",
+      "http_status": 200,
+      "protocol": "2025-11-25"
+    },
+    {
+      "method": "tools/call",
+      "http_status": 200,
+      "protocol": "2025-11-25"
+    },
+    {
+      "method": "tools/call",
+      "http_status": 200,
+      "protocol": "2025-11-25"
+    }
+  ],
+  "first_answer_source": "database_template",
+  "bedrock_attempt": {
+    "status": "blocked",
+    "detail": "BEDROCK_ValidationException"
+  },
+  "observation": {
+    "status": "guidance_paused",
+    "observation_status": "draft",
+    "safety_epoch": 2,
+    "physical_state_verified": false
+  },
+  "stale_caregiver": {
+    "http_status": 409,
+    "body": {
+      "error": "STALE_STATE"
+    }
+  },
+  "fresh_conversation": {
+    "chat_history_used": false,
+    "safety_epoch": 2,
+    "answer": "The fictional plan for Finn & Nora is paused. A fictional report awaits human confirmation. Software guidance is paused for clarification. This is update 2. No physical state has been verified.",
+    "mcp": [
+      {
+        "method": "initialize",
+        "http_status": 200,
+        "protocol": "2025-11-25"
+      },
+      {
+        "method": "notifications/initialized",
+        "http_status": 202,
+        "protocol": "2025-11-25"
+      },
+      {
+        "method": "tools/list",
+        "http_status": 200,
+        "protocol": "2025-11-25"
+      },
+      {
+        "method": "tools/call",
+        "http_status": 200,
+        "protocol": "2025-11-25"
+      },
+      {
+        "method": "tools/call",
+        "http_status": 200,
+        "protocol": "2025-11-25"
+      }
+    ]
+  },
+  "result": "PASS"
+}

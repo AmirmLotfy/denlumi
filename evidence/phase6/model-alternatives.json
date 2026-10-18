@@ -1,0 +1,12 @@
+{
+  "checked_date": "2026-09-22",
+  "region": "us-east-1",
+  "scope": "Read-only Bedrock availability checks using the authenticated default profile. No alternate model was invoked, provisioned, enabled, or selected.",
+  "models": [
+    {"model_id":"amazon.nova-micro-v1","authorization":"NOT_AUTHORIZED","entitlement":"AVAILABLE","region":"AVAILABLE"},
+    {"model_id":"amazon.nova-lite-v1","authorization":"NOT_AUTHORIZED","entitlement":"AVAILABLE","region":"AVAILABLE"},
+    {"model_id":"amazon.nova-pro-v1","authorization":"NOT_AUTHORIZED","entitlement":"AVAILABLE","region":"AVAILABLE"},
+    {"model_id":"amazon.nova-2-lite-v1","authorization":"NOT_AUTHORIZED","entitlement":"AVAILABLE","region":"AVAILABLE"}
+  ],
+  "conclusion": "The checked Nova alternatives do not provide an authorized substitute for the configured model. This does not prove every Bedrock model is unauthorized."
+}

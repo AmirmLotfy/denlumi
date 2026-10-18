@@ -1,0 +1,2038 @@
+{
+  "model_status": "logical_design_not_migration",
+  "entity_count": 37,
+  "entities": [
+    {
+      "name": "profiles",
+      "purpose": "Human identity without implicit household access",
+      "tenant_owned": false,
+      "release": "R0",
+      "fields": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "meaning": "Primary key"
+        },
+        {
+          "name": "auth_subject",
+          "type": "text",
+          "meaning": "Unique verified auth subject"
+        },
+        {
+          "name": "display_name",
+          "type": "text",
+          "meaning": "Chosen name"
+        },
+        {
+          "name": "status",
+          "type": "enum",
+          "meaning": "active/disabled"
+        },
+        {
+          "name": "reviewer_scope",
+          "type": "jsonb?",
+          "meaning": "Verified content-review scopes; not self-asserted"
+        },
+        {
+          "name": "created_at",
+          "type": "timestamptz",
+          "meaning": "Server timestamp"
+        }
+      ],
+      "constraints": "UNIQUE(auth_subject). Never infer membership from an email domain."
+    },
+    {
+      "name": "households",
+      "purpose": "Root scope and monotonic safety state",
+      "tenant_owned": true,
+      "release": "R0",
+      "fields": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "meaning": "Primary key"
+        },
+        {
+          "name": "owner_id",
+          "type": "uuid",
+          "meaning": "Sole plan decision owner",
+          "references": "profiles"
+        },
+        {
+          "name": "nickname",
+          "type": "text",
+          "meaning": "Private home name"
+        },
+        {
+          "name": "mode",
+          "type": "enum",
+          "meaning": "demo/live; server-administered"
+        },
+        {
+          "name": "timezone",
+          "type": "text",
+          "meaning": "IANA timezone"
+        },
+        {
+          "name": "locale",
+          "type": "text",
+          "meaning": "Approved-content locale"
+        },
+        {
+          "name": "home_version",
+          "type": "bigint",
+          "meaning": "Increments on relevant layout edits"
+        },
+        {
+          "name": "safety_epoch",
+          "type": "bigint",
+          "meaning": "Monotonic invalidation sequence"
+        },
+        {
+          "name": "status",
+          "type": "enum",
+          "meaning": "active/suspended/deleting"
+        },
+        {
+          "name": "created_at",
+          "type": "timestamptz",
+          "meaning": "Server timestamp"
+        }
+      ],
+      "constraints": "Epoch/version nonnegative; mode cannot be changed by a client."
+    },
+    {
+      "name": "memberships",
+      "purpose": "Adult household roles and temporary access",
+      "tenant_owned": true,
+      "release": "R0",
+      "fields": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "meaning": "Primary key"
+        },
+        {
+          "name": "household_id",
+          "type": "uuid",
+          "meaning": "Tenant boundary",
+          "references": "households"
+        },
+        {
+          "name": "profile_id",
+          "type": "uuid",
+          "meaning": "Member",
+          "references": "profiles"
+        },
+        {
+          "name": "role",
+          "type": "enum",
+          "meaning": "owner/caregiver/sitter/reader"
+        },
+        {
+          "name": "pet_scope",
+          "type": "uuid[]?",
+          "meaning": "Explicit pets; validate same household"
+        },
+        {
+          "name": "case_scope",
+          "type": "uuid[]?",
+          "meaning": "Explicit cases; validate same household"
+        },
+        {
+          "name": "expires_at",
+          "type": "timestamptz?",
+          "meaning": "Required for sitter"
+        },
+        {
+          "name": "revoked_at",
+          "type": "timestamptz?",
+          "meaning": "Effective immediately"
+        },
+        {
+          "name": "created_at",
+          "type": "timestamptz",
+          "meaning": "Server timestamp"
+        }
+      ],
+      "constraints": "One active owner; partial unique active household/profile. Scoped arrays require validated membership."
+    },
+    {
+      "name": "pets",
+      "purpose": "Pet identity and owner-reported characteristics",
+      "tenant_owned": true,
+      "release": "R0",
+      "fields": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "meaning": "Primary key"
+        },
+        {
+          "name": "household_id",
+          "type": "uuid",
+          "meaning": "Tenant boundary",
+          "references": "households"
+        },
+        {
+          "name": "nickname",
+          "type": "text",
+          "meaning": "Name; not necessarily unique"
+        },
+        {
+          "name": "species",
+          "type": "enum",
+          "meaning": "cat/dog"
+        },
+        {
+          "name": "age_band",
+          "type": "text?",
+          "meaning": "Unknown allowed"
+        },
+        {
+          "name": "approx_birth_date",
+          "type": "date?",
+          "meaning": "Optional"
+        },
+        {
+          "name": "arrival_date",
+          "type": "date?",
+          "meaning": "Owner reported"
+        },
+        {
+          "name": "context_notes",
+          "type": "jsonb",
+          "meaning": "Minimal relevant reported history"
+        },
+        {
+          "name": "archived_at",
+          "type": "timestamptz?",
+          "meaning": "Soft archive preserving history"
+        },
+        {
+          "name": "created_at",
+          "type": "timestamptz",
+          "meaning": "Server timestamp"
+        }
+      ],
+      "constraints": "No compatibility, diagnosis, or happiness-score fields."
+    },
+    {
+      "name": "home_zones",
+      "purpose": "Versioned human-planned space",
+      "tenant_owned": true,
+      "release": "R0",
+      "fields": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "meaning": "Primary key"
+        },
+        {
+          "name": "household_id",
+          "type": "uuid",
+          "meaning": "Tenant boundary",
+          "references": "households"
+        },
+        {
+          "name": "label",
+          "type": "text",
+          "meaning": "Kitchen, quiet room, etc."
+        },
+        {
+          "name": "home_version",
+          "type": "bigint",
+          "meaning": "Version this record belongs to"
+        },
+        {
+          "name": "arrangement_note",
+          "type": "text?",
+          "meaning": "Plan, not sensor evidence"
+        },
+        {
+          "name": "reported_by",
+          "type": "uuid?",
+          "meaning": "Last human reporting arrangement",
+          "references": "profiles"
+        },
+        {
+          "name": "reported_at",
+          "type": "timestamptz?",
+          "meaning": "No report remains unknown"
+        },
+        {
+          "name": "created_at",
+          "type": "timestamptz",
+          "meaning": "Server timestamp"
+        }
+      ],
+      "constraints": ""
+    },
+    {
+      "name": "resources",
+      "purpose": "Named care/retreat resources in a zone",
+      "tenant_owned": true,
+      "release": "R0",
+      "fields": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "meaning": "Primary key"
+        },
+        {
+          "name": "household_id",
+          "type": "uuid",
+          "meaning": "Tenant boundary",
+          "references": "households"
+        },
+        {
+          "name": "zone_id",
+          "type": "uuid",
+          "meaning": "Same household zone",
+          "references": "home_zones"
+        },
+        {
+          "name": "kind",
+          "type": "enum",
+          "meaning": "water/food/litter/rest/retreat/enrichment/barrier/other"
+        },
+        {
+          "name": "label",
+          "type": "text",
+          "meaning": "Human description"
+        },
+        {
+          "name": "status",
+          "type": "enum",
+          "meaning": "planned/reported_present/unknown/removed"
+        },
+        {
+          "name": "created_at",
+          "type": "timestamptz",
+          "meaning": "Server timestamp"
+        }
+      ],
+      "constraints": ""
+    },
+    {
+      "name": "pet_resource_access",
+      "purpose": "Planned per-pet access",
+      "tenant_owned": true,
+      "release": "R0",
+      "fields": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "meaning": "Primary key"
+        },
+        {
+          "name": "household_id",
+          "type": "uuid",
+          "meaning": "Tenant boundary",
+          "references": "households"
+        },
+        {
+          "name": "pet_id",
+          "type": "uuid",
+          "meaning": "Pet",
+          "references": "pets"
+        },
+        {
+          "name": "resource_id",
+          "type": "uuid",
+          "meaning": "Resource",
+          "references": "resources"
+        },
+        {
+          "name": "access_plan",
+          "type": "enum",
+          "meaning": "exclusive/shared/separate_times/unknown"
+        },
+        {
+          "name": "version",
+          "type": "bigint",
+          "meaning": "Versioned assignment"
+        },
+        {
+          "name": "created_at",
+          "type": "timestamptz",
+          "meaning": "Server timestamp"
+        }
+      ],
+      "constraints": "Same-household composite references; plan is not proof of actual access."
+    },
+    {
+      "name": "pet_pairs",
+      "purpose": "Canonical unordered pair",
+      "tenant_owned": true,
+      "release": "R0",
+      "fields": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "meaning": "Primary key"
+        },
+        {
+          "name": "household_id",
+          "type": "uuid",
+          "meaning": "Tenant boundary",
+          "references": "households"
+        },
+        {
+          "name": "pet_a_id",
+          "type": "uuid",
+          "meaning": "Canonical lower UUID",
+          "references": "pets"
+        },
+        {
+          "name": "pet_b_id",
+          "type": "uuid",
+          "meaning": "Canonical higher UUID",
+          "references": "pets"
+        },
+        {
+          "name": "created_at",
+          "type": "timestamptz",
+          "meaning": "Server timestamp"
+        }
+      ],
+      "constraints": "pet_a_id < pet_b_id; UNIQUE(household_id,pet_a_id,pet_b_id); no species field that can drift from pets."
+    },
+    {
+      "name": "cases",
+      "purpose": "Situation record and product support route",
+      "tenant_owned": true,
+      "release": "R0",
+      "fields": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "meaning": "Primary key"
+        },
+        {
+          "name": "household_id",
+          "type": "uuid",
+          "meaning": "Tenant boundary",
+          "references": "households"
+        },
+        {
+          "name": "scenario_code",
+          "type": "text",
+          "meaning": "SC01-SC17 or later registered scenario"
+        },
+        {
+          "name": "title",
+          "type": "text",
+          "meaning": "Owner-friendly name"
+        },
+        {
+          "name": "support_level",
+          "type": "enum",
+          "meaning": "guided_preparation/coordination_only/clarification_required/professional_required/urgent_help"
+        },
+        {
+          "name": "intake",
+          "type": "jsonb",
+          "meaning": "Versioned confirmed/unknown intake responses"
+        },
+        {
+          "name": "intake_schema_version",
+          "type": "text",
+          "meaning": "Rule schema used"
+        },
+        {
+          "name": "status",
+          "type": "enum",
+          "meaning": "draft/active/paused/archived"
+        },
+        {
+          "name": "created_at",
+          "type": "timestamptz",
+          "meaning": "Server timestamp"
+        }
+      ],
+      "constraints": ""
+    },
+    {
+      "name": "case_pets",
+      "purpose": "Single or multi-pet case membership",
+      "tenant_owned": true,
+      "release": "R0",
+      "fields": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "meaning": "Primary key"
+        },
+        {
+          "name": "household_id",
+          "type": "uuid",
+          "meaning": "Tenant boundary",
+          "references": "households"
+        },
+        {
+          "name": "case_id",
+          "type": "uuid",
+          "meaning": "Case",
+          "references": "cases"
+        },
+        {
+          "name": "pet_id",
+          "type": "uuid",
+          "meaning": "Pet",
+          "references": "pets"
+        },
+        {
+          "name": "role",
+          "type": "enum",
+          "meaning": "resident/newcomer/returning/affected"
+        },
+        {
+          "name": "created_at",
+          "type": "timestamptz",
+          "meaning": "Server timestamp"
+        }
+      ],
+      "constraints": "UNIQUE(household_id,case_id,pet_id); single-pet cases valid."
+    },
+    {
+      "name": "pair_contexts",
+      "purpose": "Pair outcome within a specific case/context",
+      "tenant_owned": true,
+      "release": "R0",
+      "fields": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "meaning": "Primary key"
+        },
+        {
+          "name": "household_id",
+          "type": "uuid",
+          "meaning": "Tenant boundary",
+          "references": "households"
+        },
+        {
+          "name": "case_id",
+          "type": "uuid",
+          "meaning": "Case",
+          "references": "cases"
+        },
+        {
+          "name": "pair_id",
+          "type": "uuid",
+          "meaning": "Pair",
+          "references": "pet_pairs"
+        },
+        {
+          "name": "context_key",
+          "type": "text",
+          "meaning": "Home/room/outing context"
+        },
+        {
+          "name": "status",
+          "type": "enum",
+          "meaning": "unreviewed/in_progress/paused/management_plan"
+        },
+        {
+          "name": "last_observation_at",
+          "type": "timestamptz?",
+          "meaning": "Unknown allowed"
+        },
+        {
+          "name": "created_at",
+          "type": "timestamptz",
+          "meaning": "Server timestamp"
+        }
+      ],
+      "constraints": "Pair pets must be case participants; context-specific status never implies group compatibility."
+    },
+    {
+      "name": "protocols",
+      "purpose": "Global content identity",
+      "tenant_owned": false,
+      "release": "R0",
+      "fields": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "meaning": "Primary key"
+        },
+        {
+          "name": "slug",
+          "type": "text",
+          "meaning": "Stable original-content key"
+        },
+        {
+          "name": "scenario_family",
+          "type": "text",
+          "meaning": "Introduction, settling, coordination"
+        },
+        {
+          "name": "pairing",
+          "type": "enum",
+          "meaning": "cat_cat/dog_dog/cat_dog/single_cat/single_dog/coordination"
+        },
+        {
+          "name": "created_at",
+          "type": "timestamptz",
+          "meaning": "Server timestamp"
+        }
+      ],
+      "constraints": "UNIQUE(slug). Source material licensing reviewed."
+    },
+    {
+      "name": "protocol_versions",
+      "purpose": "Immutable authored version with lifecycle gate",
+      "tenant_owned": false,
+      "release": "R0",
+      "fields": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "meaning": "Primary key"
+        },
+        {
+          "name": "protocol_id",
+          "type": "uuid",
+          "meaning": "Parent protocol",
+          "references": "protocols"
+        },
+        {
+          "name": "version",
+          "type": "text",
+          "meaning": "Semantic content version"
+        },
+        {
+          "name": "locale",
+          "type": "text",
+          "meaning": "Reviewed locale"
+        },
+        {
+          "name": "status",
+          "type": "enum",
+          "meaning": "draft/in_review/approved/demo_only/revoked/expired"
+        },
+        {
+          "name": "content",
+          "type": "jsonb",
+          "meaning": "Original structured module"
+        },
+        {
+          "name": "digest",
+          "type": "text",
+          "meaning": "SHA-256 content digest"
+        },
+        {
+          "name": "review_due_at",
+          "type": "timestamptz?",
+          "meaning": "Required for approved content"
+        },
+        {
+          "name": "revoked_at",
+          "type": "timestamptz?",
+          "meaning": "Instant suppression of further guidance"
+        },
+        {
+          "name": "created_at",
+          "type": "timestamptz",
+          "meaning": "Server timestamp"
+        }
+      ],
+      "constraints": "UNIQUE(protocol_id,version,locale). Approved requires attributable review of exact digest."
+    },
+    {
+      "name": "protocol_reviews",
+      "purpose": "Scoped human expert approval record",
+      "tenant_owned": false,
+      "release": "R0",
+      "fields": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "meaning": "Primary key"
+        },
+        {
+          "name": "protocol_version_id",
+          "type": "uuid",
+          "meaning": "Exact version",
+          "references": "protocol_versions"
+        },
+        {
+          "name": "reviewer_id",
+          "type": "uuid",
+          "meaning": "Verified relevant reviewer",
+          "references": "profiles"
+        },
+        {
+          "name": "reviewed_digest",
+          "type": "text",
+          "meaning": "Must equal approved version digest"
+        },
+        {
+          "name": "decision",
+          "type": "enum",
+          "meaning": "changes_requested/approved/rejected"
+        },
+        {
+          "name": "scope_note",
+          "type": "text",
+          "meaning": "Limits of review"
+        },
+        {
+          "name": "evidence_ref",
+          "type": "text",
+          "meaning": "Private credential/review evidence pointer"
+        },
+        {
+          "name": "created_at",
+          "type": "timestamptz",
+          "meaning": "Server timestamp"
+        }
+      ],
+      "constraints": "Reviewer credentials/scope verified outside model; no demo fixture asserts approval."
+    },
+    {
+      "name": "source_references",
+      "purpose": "Attribution for original reviewed content",
+      "tenant_owned": false,
+      "release": "R0",
+      "fields": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "meaning": "Primary key"
+        },
+        {
+          "name": "source_key",
+          "type": "text",
+          "meaning": "S1 etc."
+        },
+        {
+          "name": "title",
+          "type": "text",
+          "meaning": "Source title"
+        },
+        {
+          "name": "url",
+          "type": "text",
+          "meaning": "Public source URL"
+        },
+        {
+          "name": "checked_at",
+          "type": "date",
+          "meaning": "Review date"
+        },
+        {
+          "name": "license_note",
+          "type": "text",
+          "meaning": "What may be stored/reused"
+        },
+        {
+          "name": "created_at",
+          "type": "timestamptz",
+          "meaning": "Server timestamp"
+        }
+      ],
+      "constraints": "No full copied guides without license."
+    },
+    {
+      "name": "protocol_sources",
+      "purpose": "Version-to-source association",
+      "tenant_owned": false,
+      "release": "R0",
+      "fields": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "meaning": "Primary key"
+        },
+        {
+          "name": "protocol_version_id",
+          "type": "uuid",
+          "meaning": "Content version",
+          "references": "protocol_versions"
+        },
+        {
+          "name": "source_id",
+          "type": "uuid",
+          "meaning": "Attribution",
+          "references": "source_references"
+        },
+        {
+          "name": "use_note",
+          "type": "text",
+          "meaning": "Specific source relevance"
+        },
+        {
+          "name": "created_at",
+          "type": "timestamptz",
+          "meaning": "Server timestamp"
+        }
+      ],
+      "constraints": "UNIQUE(protocol_version_id,source_id)."
+    },
+    {
+      "name": "plan_revisions",
+      "purpose": "Exact proposed/current case plan",
+      "tenant_owned": true,
+      "release": "R0",
+      "fields": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "meaning": "Primary key"
+        },
+        {
+          "name": "household_id",
+          "type": "uuid",
+          "meaning": "Tenant boundary",
+          "references": "households"
+        },
+        {
+          "name": "case_id",
+          "type": "uuid",
+          "meaning": "Case",
+          "references": "cases"
+        },
+        {
+          "name": "protocol_version_id",
+          "type": "uuid",
+          "meaning": "Applicable content",
+          "references": "protocol_versions"
+        },
+        {
+          "name": "revision_number",
+          "type": "integer",
+          "meaning": "Case-local increasing number"
+        },
+        {
+          "name": "home_version",
+          "type": "bigint",
+          "meaning": "Bound home state"
+        },
+        {
+          "name": "safety_epoch",
+          "type": "bigint",
+          "meaning": "Bound safety state"
+        },
+        {
+          "name": "participant_digest",
+          "type": "text",
+          "meaning": "Exact selected pets and roles"
+        },
+        {
+          "name": "status",
+          "type": "enum",
+          "meaning": "draft/reviewed/active/paused/stale/superseded"
+        },
+        {
+          "name": "digest",
+          "type": "text",
+          "meaning": "Exact plan hash"
+        },
+        {
+          "name": "created_at",
+          "type": "timestamptz",
+          "meaning": "Server timestamp"
+        }
+      ],
+      "constraints": "UNIQUE(household_id,case_id,revision_number). No in-place edits of reviewed revisions."
+    },
+    {
+      "name": "plan_steps",
+      "purpose": "Ordered allowed steps from the applicable protocol",
+      "tenant_owned": true,
+      "release": "R0",
+      "fields": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "meaning": "Primary key"
+        },
+        {
+          "name": "household_id",
+          "type": "uuid",
+          "meaning": "Tenant boundary",
+          "references": "households"
+        },
+        {
+          "name": "plan_revision_id",
+          "type": "uuid",
+          "meaning": "Plan",
+          "references": "plan_revisions"
+        },
+        {
+          "name": "step_key",
+          "type": "text",
+          "meaning": "Stable authored step identifier"
+        },
+        {
+          "name": "sequence",
+          "type": "integer",
+          "meaning": "UI ordering only"
+        },
+        {
+          "name": "status",
+          "type": "enum",
+          "meaning": "locked/available/in_progress/review_needed/completed/canceled"
+        },
+        {
+          "name": "prerequisite_snapshot",
+          "type": "jsonb",
+          "meaning": "Explicit current/unknown prerequisites"
+        },
+        {
+          "name": "created_at",
+          "type": "timestamptz",
+          "meaning": "Server timestamp"
+        }
+      ],
+      "constraints": "Ordering does not authorize progression; UNIQUE(plan_revision_id,step_key)."
+    },
+    {
+      "name": "plan_reviews",
+      "purpose": "Owner acknowledgment of exact plan state",
+      "tenant_owned": true,
+      "release": "R0",
+      "fields": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "meaning": "Primary key"
+        },
+        {
+          "name": "household_id",
+          "type": "uuid",
+          "meaning": "Tenant boundary",
+          "references": "households"
+        },
+        {
+          "name": "plan_revision_id",
+          "type": "uuid",
+          "meaning": "Plan",
+          "references": "plan_revisions"
+        },
+        {
+          "name": "reviewer_id",
+          "type": "uuid",
+          "meaning": "Owner",
+          "references": "profiles"
+        },
+        {
+          "name": "reviewed_digest",
+          "type": "text",
+          "meaning": "Exact reviewed plan"
+        },
+        {
+          "name": "safety_epoch",
+          "type": "bigint",
+          "meaning": "Epoch at review"
+        },
+        {
+          "name": "expires_at",
+          "type": "timestamptz?",
+          "meaning": "Optional protocol-bounded freshness"
+        },
+        {
+          "name": "invalidated_at",
+          "type": "timestamptz?",
+          "meaning": "Set when dependencies change"
+        },
+        {
+          "name": "created_at",
+          "type": "timestamptz",
+          "meaning": "Server timestamp"
+        }
+      ],
+      "constraints": "Only household owner; not a clinical clearance."
+    },
+    {
+      "name": "sessions",
+      "purpose": "One real or fictional guided software session",
+      "tenant_owned": true,
+      "release": "R0",
+      "fields": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "meaning": "Primary key"
+        },
+        {
+          "name": "household_id",
+          "type": "uuid",
+          "meaning": "Tenant boundary",
+          "references": "households"
+        },
+        {
+          "name": "case_id",
+          "type": "uuid",
+          "meaning": "Case",
+          "references": "cases"
+        },
+        {
+          "name": "plan_revision_id",
+          "type": "uuid",
+          "meaning": "Exact plan",
+          "references": "plan_revisions"
+        },
+        {
+          "name": "started_by",
+          "type": "uuid",
+          "meaning": "Authorized adult",
+          "references": "profiles"
+        },
+        {
+          "name": "state",
+          "type": "enum",
+          "meaning": "preflight/active/paused/interrupted/finished/canceled"
+        },
+        {
+          "name": "safety_epoch",
+          "type": "bigint",
+          "meaning": "Bound current epoch"
+        },
+        {
+          "name": "last_checkpoint_at",
+          "type": "timestamptz?",
+          "meaning": "Last verified app interaction"
+        },
+        {
+          "name": "ended_at",
+          "type": "timestamptz?",
+          "meaning": "End record"
+        },
+        {
+          "name": "idempotency_key",
+          "type": "text",
+          "meaning": "Request uniqueness"
+        },
+        {
+          "name": "created_at",
+          "type": "timestamptz",
+          "meaning": "Server timestamp"
+        }
+      ],
+      "constraints": "One unresolved active/paused/interrupted session per household. Interrupted requires fresh checkpoint, not automatic release."
+    },
+    {
+      "name": "session_pets",
+      "purpose": "Actual session participants",
+      "tenant_owned": true,
+      "release": "R0",
+      "fields": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "meaning": "Primary key"
+        },
+        {
+          "name": "household_id",
+          "type": "uuid",
+          "meaning": "Tenant boundary",
+          "references": "households"
+        },
+        {
+          "name": "session_id",
+          "type": "uuid",
+          "meaning": "Session",
+          "references": "sessions"
+        },
+        {
+          "name": "pet_id",
+          "type": "uuid",
+          "meaning": "Same-household case participant",
+          "references": "pets"
+        },
+        {
+          "name": "created_at",
+          "type": "timestamptz",
+          "meaning": "Server timestamp"
+        }
+      ],
+      "constraints": "UNIQUE(session_id,pet_id); at least one participant; must be in plan participant digest."
+    },
+    {
+      "name": "observations",
+      "purpose": "Attributed reports, never unmarked objective truth",
+      "tenant_owned": true,
+      "release": "R0",
+      "fields": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "meaning": "Primary key"
+        },
+        {
+          "name": "household_id",
+          "type": "uuid",
+          "meaning": "Tenant boundary",
+          "references": "households"
+        },
+        {
+          "name": "case_id",
+          "type": "uuid",
+          "meaning": "Case",
+          "references": "cases"
+        },
+        {
+          "name": "session_id",
+          "type": "uuid?",
+          "meaning": "Optional session",
+          "references": "sessions"
+        },
+        {
+          "name": "actor_pet_id",
+          "type": "uuid?",
+          "meaning": "Confirmed when report unambiguous",
+          "references": "pets"
+        },
+        {
+          "name": "target_pet_id",
+          "type": "uuid?",
+          "meaning": "Optional other pet",
+          "references": "pets"
+        },
+        {
+          "name": "reporter_id",
+          "type": "uuid",
+          "meaning": "Verified reporting person",
+          "references": "profiles"
+        },
+        {
+          "name": "raw_report",
+          "type": "text",
+          "meaning": "Private exact report"
+        },
+        {
+          "name": "behavior_code",
+          "type": "text?",
+          "meaning": "Versioned reviewed lexicon"
+        },
+        {
+          "name": "assertion",
+          "type": "enum",
+          "meaning": "affirmed/negated/uncertain"
+        },
+        {
+          "name": "status",
+          "type": "enum",
+          "meaning": "draft/confirmed/corrected"
+        },
+        {
+          "name": "source_kind",
+          "type": "enum",
+          "meaning": "typed/voice/structured/professional_note"
+        },
+        {
+          "name": "observed_at",
+          "type": "timestamptz?",
+          "meaning": "May be unknown"
+        },
+        {
+          "name": "reported_at",
+          "type": "timestamptz",
+          "meaning": "Actual reporting time"
+        },
+        {
+          "name": "supersedes_id",
+          "type": "uuid?",
+          "meaning": "Append-only correction",
+          "references": "observations"
+        },
+        {
+          "name": "created_at",
+          "type": "timestamptz",
+          "meaning": "Server timestamp"
+        }
+      ],
+      "constraints": "No pet IDs outside case/household; no inferred observed_at=reported_at by default."
+    },
+    {
+      "name": "safety_holds",
+      "purpose": "Software guidance restrictions with scope",
+      "tenant_owned": true,
+      "release": "R0",
+      "fields": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "meaning": "Primary key"
+        },
+        {
+          "name": "household_id",
+          "type": "uuid",
+          "meaning": "Tenant boundary",
+          "references": "households"
+        },
+        {
+          "name": "case_id",
+          "type": "uuid?",
+          "meaning": "Affected case",
+          "references": "cases"
+        },
+        {
+          "name": "pet_id",
+          "type": "uuid?",
+          "meaning": "Affected pet",
+          "references": "pets"
+        },
+        {
+          "name": "pair_id",
+          "type": "uuid?",
+          "meaning": "Affected pair",
+          "references": "pet_pairs"
+        },
+        {
+          "name": "origin_observation_id",
+          "type": "uuid?",
+          "meaning": "Evidence",
+          "references": "observations"
+        },
+        {
+          "name": "policy_level",
+          "type": "enum",
+          "meaning": "clarification/professional/urgent"
+        },
+        {
+          "name": "reason_code",
+          "type": "text",
+          "meaning": "Reviewed policy rule"
+        },
+        {
+          "name": "state",
+          "type": "enum",
+          "meaning": "active/resolved"
+        },
+        {
+          "name": "created_epoch",
+          "type": "bigint",
+          "meaning": "Household epoch at creation"
+        },
+        {
+          "name": "resolution_note",
+          "type": "text?",
+          "meaning": "Attributable policy review, never automatic"
+        },
+        {
+          "name": "resolved_by",
+          "type": "uuid?",
+          "meaning": "Verified authorized actor",
+          "references": "profiles"
+        },
+        {
+          "name": "created_at",
+          "type": "timestamptz",
+          "meaning": "Server timestamp"
+        }
+      ],
+      "constraints": "Scope explicit; owner cannot clear professional/urgent holds. No duration-based auto-resolution."
+    },
+    {
+      "name": "handovers",
+      "purpose": "Versioned household/case change summary",
+      "tenant_owned": true,
+      "release": "R0",
+      "fields": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "meaning": "Primary key"
+        },
+        {
+          "name": "household_id",
+          "type": "uuid",
+          "meaning": "Tenant boundary",
+          "references": "households"
+        },
+        {
+          "name": "case_id",
+          "type": "uuid?",
+          "meaning": "Optional case",
+          "references": "cases"
+        },
+        {
+          "name": "safety_epoch",
+          "type": "bigint",
+          "meaning": "State summarized"
+        },
+        {
+          "name": "body",
+          "type": "jsonb",
+          "meaning": "Factual original-content summary"
+        },
+        {
+          "name": "status",
+          "type": "enum",
+          "meaning": "draft/published/superseded"
+        },
+        {
+          "name": "digest",
+          "type": "text",
+          "meaning": "Exact published summary"
+        },
+        {
+          "name": "created_at",
+          "type": "timestamptz",
+          "meaning": "Server timestamp"
+        }
+      ],
+      "constraints": ""
+    },
+    {
+      "name": "handover_acks",
+      "purpose": "Read acknowledgment of exact update",
+      "tenant_owned": true,
+      "release": "R0",
+      "fields": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "meaning": "Primary key"
+        },
+        {
+          "name": "household_id",
+          "type": "uuid",
+          "meaning": "Tenant boundary",
+          "references": "households"
+        },
+        {
+          "name": "handover_id",
+          "type": "uuid",
+          "meaning": "Update",
+          "references": "handovers"
+        },
+        {
+          "name": "profile_id",
+          "type": "uuid",
+          "meaning": "Reader",
+          "references": "profiles"
+        },
+        {
+          "name": "acknowledged_digest",
+          "type": "text",
+          "meaning": "Exact content"
+        },
+        {
+          "name": "acknowledged_at",
+          "type": "timestamptz",
+          "meaning": "Acknowledged time"
+        },
+        {
+          "name": "created_at",
+          "type": "timestamptz",
+          "meaning": "Server timestamp"
+        }
+      ],
+      "constraints": "UNIQUE(handover_id,profile_id,acknowledged_digest); reading does not establish physical action."
+    },
+    {
+      "name": "routine_rules",
+      "purpose": "Owner-entered recurring care task",
+      "tenant_owned": true,
+      "release": "R0",
+      "fields": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "meaning": "Primary key"
+        },
+        {
+          "name": "household_id",
+          "type": "uuid",
+          "meaning": "Tenant boundary",
+          "references": "households"
+        },
+        {
+          "name": "pet_id",
+          "type": "uuid",
+          "meaning": "Pet",
+          "references": "pets"
+        },
+        {
+          "name": "created_by",
+          "type": "uuid",
+          "meaning": "Owner",
+          "references": "profiles"
+        },
+        {
+          "name": "kind",
+          "type": "enum",
+          "meaning": "meal/water/walk/litter/rest/enrichment/other_nonmedical"
+        },
+        {
+          "name": "instruction",
+          "type": "text",
+          "meaning": "Owner instructions, not AI prescription"
+        },
+        {
+          "name": "schedule_spec",
+          "type": "jsonb",
+          "meaning": "IANA timezone and recurrence"
+        },
+        {
+          "name": "status",
+          "type": "enum",
+          "meaning": "active/paused/archived"
+        },
+        {
+          "name": "version",
+          "type": "integer",
+          "meaning": "Schedule version"
+        },
+        {
+          "name": "created_at",
+          "type": "timestamptz",
+          "meaning": "Server timestamp"
+        }
+      ],
+      "constraints": ""
+    },
+    {
+      "name": "task_occurrences",
+      "purpose": "Materialized routine/plan task",
+      "tenant_owned": true,
+      "release": "R0",
+      "fields": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "meaning": "Primary key"
+        },
+        {
+          "name": "household_id",
+          "type": "uuid",
+          "meaning": "Tenant boundary",
+          "references": "households"
+        },
+        {
+          "name": "routine_rule_id",
+          "type": "uuid?",
+          "meaning": "Routine parent",
+          "references": "routine_rules"
+        },
+        {
+          "name": "plan_step_id",
+          "type": "uuid?",
+          "meaning": "Plan task parent",
+          "references": "plan_steps"
+        },
+        {
+          "name": "assigned_to",
+          "type": "uuid?",
+          "meaning": "Authorized caregiver",
+          "references": "profiles"
+        },
+        {
+          "name": "due_at",
+          "type": "timestamptz",
+          "meaning": "Planned time"
+        },
+        {
+          "name": "expected_safety_epoch",
+          "type": "bigint?",
+          "meaning": "Required for plan-dependent tasks"
+        },
+        {
+          "name": "state",
+          "type": "enum",
+          "meaning": "planned/claimed/reported_done/skipped/uncertain/canceled"
+        },
+        {
+          "name": "occurrence_key",
+          "type": "text",
+          "meaning": "Deterministic recurrence key"
+        },
+        {
+          "name": "created_at",
+          "type": "timestamptz",
+          "meaning": "Server timestamp"
+        }
+      ],
+      "constraints": "Exactly one parent; unique parent+occurrence_key; future plan reminders revalidate epoch."
+    },
+    {
+      "name": "task_reports",
+      "purpose": "Independent attributed care reports",
+      "tenant_owned": true,
+      "release": "R0",
+      "fields": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "meaning": "Primary key"
+        },
+        {
+          "name": "household_id",
+          "type": "uuid",
+          "meaning": "Tenant boundary",
+          "references": "households"
+        },
+        {
+          "name": "task_occurrence_id",
+          "type": "uuid",
+          "meaning": "Task",
+          "references": "task_occurrences"
+        },
+        {
+          "name": "reporter_id",
+          "type": "uuid",
+          "meaning": "Person",
+          "references": "profiles"
+        },
+        {
+          "name": "report",
+          "type": "enum",
+          "meaning": "done/skipped/uncertain/correction"
+        },
+        {
+          "name": "performed_at",
+          "type": "timestamptz?",
+          "meaning": "Reported action time"
+        },
+        {
+          "name": "note",
+          "type": "text?",
+          "meaning": "Minimal context"
+        },
+        {
+          "name": "supersedes_id",
+          "type": "uuid?",
+          "meaning": "Correction",
+          "references": "task_reports"
+        },
+        {
+          "name": "idempotency_key",
+          "type": "text",
+          "meaning": "Duplicate submission protection"
+        },
+        {
+          "name": "created_at",
+          "type": "timestamptz",
+          "meaning": "Server timestamp"
+        }
+      ],
+      "constraints": "Multiple independent reports preserved; no inferred ingestion or action from a notification."
+    },
+    {
+      "name": "professional_summaries",
+      "purpose": "Private prepared report, not diagnosis",
+      "tenant_owned": true,
+      "release": "R0",
+      "fields": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "meaning": "Primary key"
+        },
+        {
+          "name": "household_id",
+          "type": "uuid",
+          "meaning": "Tenant boundary",
+          "references": "households"
+        },
+        {
+          "name": "case_id",
+          "type": "uuid",
+          "meaning": "Case",
+          "references": "cases"
+        },
+        {
+          "name": "body",
+          "type": "jsonb",
+          "meaning": "Reports, unknowns, current plan"
+        },
+        {
+          "name": "source_event_ids",
+          "type": "uuid[]",
+          "meaning": "Validated same-household provenance"
+        },
+        {
+          "name": "digest",
+          "type": "text",
+          "meaning": "Exact preview content"
+        },
+        {
+          "name": "status",
+          "type": "enum",
+          "meaning": "draft/reviewed/shared/superseded"
+        },
+        {
+          "name": "created_by",
+          "type": "uuid",
+          "meaning": "Owner/requestor",
+          "references": "profiles"
+        },
+        {
+          "name": "created_at",
+          "type": "timestamptz",
+          "meaning": "Server timestamp"
+        }
+      ],
+      "constraints": ""
+    },
+    {
+      "name": "action_authorizations",
+      "purpose": "Single-use approval for external/consequential actions",
+      "tenant_owned": true,
+      "release": "R0",
+      "fields": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "meaning": "Primary key"
+        },
+        {
+          "name": "household_id",
+          "type": "uuid",
+          "meaning": "Tenant boundary",
+          "references": "households"
+        },
+        {
+          "name": "owner_id",
+          "type": "uuid",
+          "meaning": "Authorizing owner",
+          "references": "profiles"
+        },
+        {
+          "name": "action_kind",
+          "type": "enum",
+          "meaning": "share/invite/export/plan_review"
+        },
+        {
+          "name": "payload_digest",
+          "type": "text",
+          "meaning": "Exact content and destination"
+        },
+        {
+          "name": "expires_at",
+          "type": "timestamptz",
+          "meaning": "Short authorization lifetime"
+        },
+        {
+          "name": "consumed_at",
+          "type": "timestamptz?",
+          "meaning": "Once only"
+        },
+        {
+          "name": "idempotency_key",
+          "type": "text",
+          "meaning": "Request de-duplication"
+        },
+        {
+          "name": "created_at",
+          "type": "timestamptz",
+          "meaning": "Server timestamp"
+        }
+      ],
+      "constraints": "No arbitrary action from an LLM; changing recipient/content invalidates authorization."
+    },
+    {
+      "name": "share_grants",
+      "purpose": "Scoped expiring external access",
+      "tenant_owned": true,
+      "release": "R0",
+      "fields": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "meaning": "Primary key"
+        },
+        {
+          "name": "household_id",
+          "type": "uuid",
+          "meaning": "Tenant boundary",
+          "references": "households"
+        },
+        {
+          "name": "summary_id",
+          "type": "uuid?",
+          "meaning": "Shared summary",
+          "references": "professional_summaries"
+        },
+        {
+          "name": "authorization_id",
+          "type": "uuid",
+          "meaning": "Exact approved action",
+          "references": "action_authorizations"
+        },
+        {
+          "name": "recipient_address",
+          "type": "text",
+          "meaning": "Private verified intended address"
+        },
+        {
+          "name": "token_hash",
+          "type": "text",
+          "meaning": "Store hash, not reusable plaintext secret"
+        },
+        {
+          "name": "scope",
+          "type": "jsonb",
+          "meaning": "Exact records/pets"
+        },
+        {
+          "name": "expires_at",
+          "type": "timestamptz",
+          "meaning": "Expiry"
+        },
+        {
+          "name": "revoked_at",
+          "type": "timestamptz?",
+          "meaning": "Immediate revocation"
+        },
+        {
+          "name": "created_at",
+          "type": "timestamptz",
+          "meaning": "Server timestamp"
+        }
+      ],
+      "constraints": "Raw token never in analytics; verified recipient does not prove professional qualification."
+    },
+    {
+      "name": "outbox_events",
+      "purpose": "Transactional side-effect requests",
+      "tenant_owned": true,
+      "release": "R0",
+      "fields": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "meaning": "Primary key"
+        },
+        {
+          "name": "household_id",
+          "type": "uuid",
+          "meaning": "Tenant boundary",
+          "references": "households"
+        },
+        {
+          "name": "event_type",
+          "type": "text",
+          "meaning": "Whitelisted event"
+        },
+        {
+          "name": "payload",
+          "type": "jsonb",
+          "meaning": "Minimal IDs; private body elsewhere"
+        },
+        {
+          "name": "expected_safety_epoch",
+          "type": "bigint?",
+          "meaning": "Freshness gate"
+        },
+        {
+          "name": "idempotency_key",
+          "type": "text",
+          "meaning": "Unique effect key"
+        },
+        {
+          "name": "state",
+          "type": "enum",
+          "meaning": "pending/processing/done/canceled/failed/uncertain"
+        },
+        {
+          "name": "not_before",
+          "type": "timestamptz?",
+          "meaning": "Schedule"
+        },
+        {
+          "name": "expires_at",
+          "type": "timestamptz?",
+          "meaning": "Stale event deadline"
+        },
+        {
+          "name": "created_at",
+          "type": "timestamptz",
+          "meaning": "Server timestamp"
+        }
+      ],
+      "constraints": "UNIQUE(household_id,idempotency_key); same transaction as domain event."
+    },
+    {
+      "name": "deliveries",
+      "purpose": "Delivery attempts separated from acknowledgment",
+      "tenant_owned": true,
+      "release": "R0",
+      "fields": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "meaning": "Primary key"
+        },
+        {
+          "name": "household_id",
+          "type": "uuid",
+          "meaning": "Tenant boundary",
+          "references": "households"
+        },
+        {
+          "name": "outbox_event_id",
+          "type": "uuid",
+          "meaning": "Origin",
+          "references": "outbox_events"
+        },
+        {
+          "name": "channel",
+          "type": "enum",
+          "meaning": "internal/email"
+        },
+        {
+          "name": "provider_message_id",
+          "type": "text?",
+          "meaning": "Provider result"
+        },
+        {
+          "name": "attempt",
+          "type": "integer",
+          "meaning": "Retry number"
+        },
+        {
+          "name": "status",
+          "type": "enum",
+          "meaning": "queued/provider_accepted/delivered/failed/uncertain/canceled"
+        },
+        {
+          "name": "last_error_code",
+          "type": "text?",
+          "meaning": "No sensitive payload in error"
+        },
+        {
+          "name": "created_at",
+          "type": "timestamptz",
+          "meaning": "Server timestamp"
+        }
+      ],
+      "constraints": "No delivered claim solely from queue success."
+    },
+    {
+      "name": "audit_events",
+      "purpose": "Minimal append-only application audit",
+      "tenant_owned": true,
+      "release": "R0",
+      "fields": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "meaning": "Primary key"
+        },
+        {
+          "name": "household_id",
+          "type": "uuid",
+          "meaning": "Tenant boundary",
+          "references": "households"
+        },
+        {
+          "name": "actor_id",
+          "type": "uuid?",
+          "meaning": "User or named service",
+          "references": "profiles"
+        },
+        {
+          "name": "event_type",
+          "type": "text",
+          "meaning": "Domain event"
+        },
+        {
+          "name": "entity_type",
+          "type": "text",
+          "meaning": "Whitelisted table/entity"
+        },
+        {
+          "name": "entity_id",
+          "type": "uuid",
+          "meaning": "Same-household record"
+        },
+        {
+          "name": "safety_epoch",
+          "type": "bigint",
+          "meaning": "Relevant state"
+        },
+        {
+          "name": "metadata",
+          "type": "jsonb",
+          "meaning": "Minimal IDs/hashes, not raw voice content"
+        },
+        {
+          "name": "created_at",
+          "type": "timestamptz",
+          "meaning": "Server timestamp"
+        }
+      ],
+      "constraints": "Append-only to normal application roles; deletion follows explicit privacy policy."
+    },
+    {
+      "name": "ai_runs",
+      "purpose": "Operational agent provenance",
+      "tenant_owned": true,
+      "release": "R0",
+      "fields": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "meaning": "Primary key"
+        },
+        {
+          "name": "household_id",
+          "type": "uuid",
+          "meaning": "Tenant boundary",
+          "references": "households"
+        },
+        {
+          "name": "case_id",
+          "type": "uuid?",
+          "meaning": "Scoped case",
+          "references": "cases"
+        },
+        {
+          "name": "model_id",
+          "type": "text",
+          "meaning": "Actually used model"
+        },
+        {
+          "name": "prompt_version",
+          "type": "text",
+          "meaning": "Instruction version"
+        },
+        {
+          "name": "protocol_version_id",
+          "type": "uuid?",
+          "meaning": "Relevant content",
+          "references": "protocol_versions"
+        },
+        {
+          "name": "tool_names",
+          "type": "text[]",
+          "meaning": "Actual allowed calls"
+        },
+        {
+          "name": "outcome",
+          "type": "enum",
+          "meaning": "completed/clarified/blocked/failed"
+        },
+        {
+          "name": "usage",
+          "type": "jsonb",
+          "meaning": "Token/audio totals; no raw prompts by default"
+        },
+        {
+          "name": "created_at",
+          "type": "timestamptz",
+          "meaning": "Server timestamp"
+        }
+      ],
+      "constraints": ""
+    },
+    {
+      "name": "assets",
+      "purpose": "Private objects and generated exports",
+      "tenant_owned": true,
+      "release": "R0",
+      "fields": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "meaning": "Primary key"
+        },
+        {
+          "name": "household_id",
+          "type": "uuid",
+          "meaning": "Tenant boundary",
+          "references": "households"
+        },
+        {
+          "name": "owner_id",
+          "type": "uuid",
+          "meaning": "Uploader/requestor",
+          "references": "profiles"
+        },
+        {
+          "name": "kind",
+          "type": "enum",
+          "meaning": "pet_image/private_document/export"
+        },
+        {
+          "name": "object_key",
+          "type": "text",
+          "meaning": "Private S3 key"
+        },
+        {
+          "name": "mime_type",
+          "type": "text",
+          "meaning": "Allowlisted MIME"
+        },
+        {
+          "name": "digest",
+          "type": "text",
+          "meaning": "Byte digest"
+        },
+        {
+          "name": "state",
+          "type": "enum",
+          "meaning": "uploading/quarantined/ready/deleting/deleted"
+        },
+        {
+          "name": "expires_at",
+          "type": "timestamptz?",
+          "meaning": "Optional retention"
+        },
+        {
+          "name": "created_at",
+          "type": "timestamptz",
+          "meaning": "Server timestamp"
+        }
+      ],
+      "constraints": "Object access derives from application scope, not a guessable path."
+    },
+    {
+      "name": "entitlements",
+      "purpose": "Future paid capabilities, independent of safety/access roles",
+      "tenant_owned": true,
+      "release": "R1",
+      "fields": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "meaning": "Primary key"
+        },
+        {
+          "name": "household_id",
+          "type": "uuid",
+          "meaning": "Tenant boundary",
+          "references": "households"
+        },
+        {
+          "name": "provider_reference",
+          "type": "text",
+          "meaning": "Verified billing event reference"
+        },
+        {
+          "name": "plan_key",
+          "type": "text",
+          "meaning": "Household pass"
+        },
+        {
+          "name": "starts_at",
+          "type": "timestamptz",
+          "meaning": "Access start"
+        },
+        {
+          "name": "ends_at",
+          "type": "timestamptz",
+          "meaning": "Access expiry"
+        },
+        {
+          "name": "status",
+          "type": "enum",
+          "meaning": "active/expired/refunded/revoked"
+        },
+        {
+          "name": "created_at",
+          "type": "timestamptz",
+          "meaning": "Server timestamp"
+        }
+      ],
+      "constraints": "No live R0 payment. Safety and export remain outside quota."
+    }
+  ]
+}

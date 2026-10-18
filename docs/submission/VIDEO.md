@@ -1,0 +1,35 @@
+# Denlumi demo video — 2:40 target
+
+Recording plan only, prepared 2026-10-18. No footage or upload is claimed. Keep the finished video below three minutes, with English narration/captions and a publicly visible YouTube or Vimeo link as required by the [official submission overview](https://amazonappdev2026.devpost.com/).
+
+Use only fictional records and original/authorized visuals. No real animals or stress demonstrations, no third-party music, no account chrome, tokens, deletion codes, private addresses or full provider request identifiers. Keep the on-screen label **“Alexa-style browser simulation · fictional records · demo_only content”** visible. Caption Stop as **“Stops software on this device”**. Screens must come from the real app; do not fabricate provider success, review approval or delivered messages.
+
+This revises the build pack's proposed three-pet session opening: the implemented SC07 household is coordination-only and must never be made to start a group session. Use the two-pet cat–dog sample for the connected session path, then show SC07's refusal separately.
+
+| Time | Actual screen/action to capture | Narration draft |
+|---|---|---|
+| 0:00–0:14 | Title over the fictional household's current-state view; include simulation label | “When two people care for the same pets, yesterday's plan can outlive today's information. Denlumi explores one current household record, with clear reports, handovers and reasons to pause.” |
+| 0:14–0:32 | Cat–dog sample; acknowledge fictional retention notice. Show pairing/newcomer context and owner review | “This is an Alexa-style browser simulation using fictional records. These protocols are demo-only. The owner reviews this exact plan; reviewing a sample is not professional approval.” |
+| 0:32–0:50 | Owner and separate sample caregiver handover acknowledgments; authenticated preflight/start | “Each caregiver acknowledges the current handover. A fresh server check gates the software session against the current household, plan and protocol state.” |
+| 0:50–1:12 | Type an uncertain report; explicit actor/target/assertion/time form. Save and explicitly confirm the intended fictional concern | “A report keeps direction, uncertainty and timing. Ambiguous identities need clarification. The assistant cannot confirm the observation for us. This human confirmation pauses the relevant software guidance.” |
+| 1:12–1:30 | Use separate caregiver controls bound to old state. Show actual stale refusal, then latest handover | “The other caregiver's old state is refused. A new conversation must retrieve the current pause and handover instead of repeating an earlier answer.” |
+| 1:30–1:48 | Fresh conversation, real HTTP MCP status/method trace cropped to nonprivate fields; private factual preview | “These are real authenticated HTTP MCP calls to our local application. This answer comes from database state. The factual preview remains private; nothing is sent externally.” |
+| 1:48–2:03 | Put browser offline; activate local Stop; capture actual pending-sync label | “Offline Stop still stops this device's software and audio. The household update remains pending synchronization. This does not stop or supervise animals.” |
+| 2:03–2:22 | Short real clips of cat–cat, dog–dog, single-pet target options and three-pet no-group-session state | “Cat–cat, dog–dog and both cat–dog newcomer contexts stay distinct. Single-pet care invents no second pet. Separate pair records never establish group readiness.” |
+| 2:22–2:40 | Actual provider-disabled/blocked label, then plain final status card | “Bedrock inference remains blocked; the fallback is explicit. Earlier speech-provider checks used synthetic input. Human usability, voice acceptance and qualified content review remain open. This is a working local coordination prototype.” |
+
+The narration is intentionally brief enough to leave interaction time. Rehearse against the actual UI and shorten within each segment; the table is not measured footage or a guarantee that an unrecorded interaction fits its slot.
+
+## Recording operator notes
+
+- Use the current local judge runbook and provider-disabled mode. This script grants no provider request budget and no deployment authorization.
+- Keep the exact observation values and sample names consistent with the real fixture. Show an actual refused response; do not present a stale window as a second simultaneous human participant.
+- Use cuts for repetitive intake fields, preserving before/after state and human confirmations. Label a sped-up section if used. Never hide a refusal and replace it with a success screen.
+- Crop tool traces to methods, status, protocol and tool names. Avoid full URLs with identifiers, auth headers, console payloads or account details.
+- Record from clean fictional state created by the authorized local operator. No new real-user data or practical handling content belongs in the video.
+- If the app cannot complete a step, document the failure and revise the video honestly; do not use prior evidence as a live successful recording.
+- After export, measure actual runtime, review captions and frame-by-frame privacy, and verify the uploaded link outside the owner's session. None of those checks has run here.
+
+## Footage acceptance references
+
+The proposed path is supported historically by [seven-shape browser evidence](../../evidence/phase8/browser.json), [HTTP/MCP pairing evidence](../../evidence/phase8/pairings.json), [Phase 6 HTTP proof](../../evidence/phase6/http.json) and [local Stop evidence](../../evidence/phase9/stop-latency.json). All remain local/automated evidence, with the limits in [the current handoff](../PHASE_8_9_HANDOFF.md). New footage must show its own actual result.

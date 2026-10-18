@@ -1,0 +1,13 @@
+{
+  "checked_date": "2026-09-22",
+  "region": "us-east-1",
+  "command": "aws bedrock get-foundation-model-availability --region us-east-1 --model-id amazon.nova-micro-v1:0 --profile default",
+  "result": {
+    "modelId": "amazon.nova-micro-v1",
+    "agreementAvailability": {"status": "AVAILABLE"},
+    "authorizationStatus": "NOT_AUTHORIZED",
+    "entitlementAvailability": "AVAILABLE",
+    "regionAvailability": "AVAILABLE"
+  },
+  "scope": "Read-only AWS model-availability response; no IAM or model-access changes. Does not identify the underlying account-policy cause."
+}

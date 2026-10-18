@@ -1,0 +1,57 @@
+import { test,expect } from '@playwright/test';
+import { mkdir } from 'node:fs/promises';
+const evidence=process.env.DENLUMI_EVIDENCE_DIR??'evidence/phase0';
+test.beforeAll(()=>mkdir(evidence,{recursive:true}));
+
+test('desktop: real MCP retrieval, fictional pause, stale refusal, fresh retrieval, offline stop',async({page,context})=>{
+ await page.setViewportSize({width:1440,height:900});
+ await page.goto('/');
+ await expect(page.getByRole('heading',{name:/One current plan/})).toBeVisible();
+ await expect(page.getByText('No protocol has professional approval')).toBeVisible();
+ await expect(page.locator('.entry-note')).toContainText(/access ends after 24 hours/i);
+ await expect(page.locator('.entry-note')).toContainText('seven days');
+ await expect(page.getByRole('button',{name:'Open sample household'})).toBeDisabled();
+ await page.getByRole('checkbox',{name:/I understand the fictional sample/}).check();
+ await expect(page.getByRole('button',{name:'Open sample household'})).toBeEnabled();
+ await page.getByRole('button',{name:'Open sample household'}).click();
+ await expect(page.getByRole('heading',{name:'Finn & Nora'})).toBeVisible();
+ await expect(page.getByText('Demo-only protocol')).toBeVisible();
+ await page.getByRole('button',{name:'Read current plan'}).click();
+ await expect(page.getByText(/fictional record for Finn & Nora is on update 1/)).toBeVisible();
+ await page.locator('summary').filter({hasText:'Demo evidence & connections'}).click();
+ const trace=page.getByLabel('Actual MCP request trace');
+ await expect(trace).toContainText('initialize');await expect(trace).toContainText('tools/list');await expect(trace).toContainText('tools/call');await expect(trace).toContainText('2025-11-25');
+ await page.getByLabel('The exact fictional report').fill('I am not sure whether Finn moved quickly toward Nora.');
+ await page.getByRole('button',{name:'Save fictional observation'}).click();
+ await expect(page.getByRole('heading',{name:'Guidance is paused.'})).toBeVisible();
+ await expect(page.getByText('Update 2').first()).toBeVisible();
+ await page.getByRole('button',{name:'Check Sam’s saved view'}).click();
+ await expect(page.getByText(/Sam’s saved view was refused/)).toBeVisible();
+ await page.getByRole('button',{name:'New conversation'}).click();
+ await expect(page.getByLabel('Your check-in')).toHaveValue('Why is the current plan paused?');
+ await page.getByRole('button',{name:'Read current plan'}).click();
+ await expect(page.getByText(/This is update 2/)).toBeVisible();
+ await context.setOffline(true);
+ await page.getByRole('button',{name:'Stop guidance'}).click();
+ await expect(page.getByText('Stopped on this device.')).toBeVisible();
+ await expect(page.getByText('Household update not yet synchronized.')).toBeVisible();
+ await context.setOffline(false);
+ await page.getByRole('button',{name:'Retry sync'}).click().catch(()=>{});
+ await expect(page.getByText('The software pause is saved to the household.')).toBeVisible();
+ await page.screenshot({path:`${evidence}/desktop-paused.png`,fullPage:true});
+ expect(await page.evaluate(()=>document.documentElement.scrollWidth<=document.documentElement.clientWidth)).toBe(true);
+});
+
+test('320px mobile: all household shapes, typed controls, and Stop remain usable',async({page})=>{
+ await page.setViewportSize({width:320,height:800});await page.goto('/');
+ await page.getByLabel(/A multi-pet home/).check();
+ await page.screenshot({path:`${evidence}/mobile-entry.png`,fullPage:true});
+ await page.getByRole('checkbox',{name:/I understand the fictional sample/}).check();await page.getByRole('button',{name:'Open sample household'}).click();
+ await expect(page.getByRole('heading',{name:'Finn, Nora & Milo'})).toBeVisible();
+ await expect(page.getByText('Separate records. No assumption of group readiness.')).toBeVisible();
+ await expect(page.getByRole('button',{name:'Stop guidance'})).toBeVisible();
+ await expect(page.getByLabel('The exact fictional report')).toBeEditable();
+ await expect(page.getByRole('button',{name:'Read update aloud'})).toBeDisabled();
+ expect(await page.evaluate(()=>document.documentElement.scrollWidth<=document.documentElement.clientWidth)).toBe(true);
+ await page.screenshot({path:`${evidence}/mobile-workspace.png`,fullPage:true});
+});

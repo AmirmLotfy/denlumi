@@ -1,0 +1,204 @@
+{
+  "checked_at": "2026-09-22T21:43:12.271Z",
+  "result": "PASS",
+  "scope": "Actual authenticated localhost HTTP, MCP and isolated Supabase with fictional demo accounts. No Bedrock request, live guidance, external send, hosted resource or human usability observation.",
+  "protocol_status": "demo_only",
+  "fixtures": [
+    {
+      "fixture": "cat_cat",
+      "scenario": "SC03",
+      "protocol_slug": "demo-cc-v1",
+      "pairing": "cat_cat",
+      "newcomer_species": "cat",
+      "pet_count": 2,
+      "pair_count": 1,
+      "group_contexts_unreviewed": false,
+      "mcp_first": [
+        "initialize",
+        "notifications/initialized",
+        "tools/list",
+        "tools/call"
+      ],
+      "mcp_fresh": [
+        "initialize",
+        "notifications/initialized",
+        "tools/list",
+        "tools/call"
+      ],
+      "fictional_preflight": true,
+      "observation_draft_paused": true,
+      "stale_caregiver_error": "STALE_STATE",
+      "fresh_epoch": 2,
+      "private_summary_preview": true,
+      "physical_state_verified": false
+    },
+    {
+      "fixture": "dog_dog",
+      "scenario": "SC04",
+      "protocol_slug": "demo-dd-v1",
+      "pairing": "dog_dog",
+      "newcomer_species": "dog",
+      "pet_count": 2,
+      "pair_count": 1,
+      "group_contexts_unreviewed": false,
+      "mcp_first": [
+        "initialize",
+        "notifications/initialized",
+        "tools/list",
+        "tools/call"
+      ],
+      "mcp_fresh": [
+        "initialize",
+        "notifications/initialized",
+        "tools/list",
+        "tools/call"
+      ],
+      "fictional_preflight": true,
+      "observation_draft_paused": true,
+      "stale_caregiver_error": "STALE_STATE",
+      "fresh_epoch": 2,
+      "private_summary_preview": true,
+      "physical_state_verified": false
+    },
+    {
+      "fixture": "cat_dog_new_cat",
+      "scenario": "SC05",
+      "protocol_slug": "demo-dc-new-cat-v1",
+      "pairing": "cat_dog",
+      "newcomer_species": "cat",
+      "pet_count": 2,
+      "pair_count": 1,
+      "group_contexts_unreviewed": false,
+      "mcp_first": [
+        "initialize",
+        "notifications/initialized",
+        "tools/list",
+        "tools/call"
+      ],
+      "mcp_fresh": [
+        "initialize",
+        "notifications/initialized",
+        "tools/list",
+        "tools/call"
+      ],
+      "fictional_preflight": true,
+      "observation_draft_paused": true,
+      "stale_caregiver_error": "STALE_STATE",
+      "fresh_epoch": 2,
+      "private_summary_preview": true,
+      "physical_state_verified": false
+    },
+    {
+      "fixture": "cat_dog",
+      "scenario": "SC06",
+      "protocol_slug": "demo-dc-new-dog-v1",
+      "pairing": "cat_dog",
+      "newcomer_species": "dog",
+      "pet_count": 2,
+      "pair_count": 1,
+      "group_contexts_unreviewed": false,
+      "mcp_first": [
+        "initialize",
+        "notifications/initialized",
+        "tools/list",
+        "tools/call"
+      ],
+      "mcp_fresh": [
+        "initialize",
+        "notifications/initialized",
+        "tools/list",
+        "tools/call"
+      ],
+      "fictional_preflight": true,
+      "observation_draft_paused": true,
+      "stale_caregiver_error": "STALE_STATE",
+      "fresh_epoch": 2,
+      "private_summary_preview": true,
+      "physical_state_verified": false
+    },
+    {
+      "fixture": "single_cat",
+      "scenario": "SC01",
+      "protocol_slug": "demo-solo-cat-v1",
+      "pairing": "single_cat",
+      "newcomer_species": "cat",
+      "pet_count": 1,
+      "pair_count": 0,
+      "group_contexts_unreviewed": false,
+      "mcp_first": [
+        "initialize",
+        "notifications/initialized",
+        "tools/list",
+        "tools/call"
+      ],
+      "mcp_fresh": [
+        "initialize",
+        "notifications/initialized",
+        "tools/list",
+        "tools/call"
+      ],
+      "fictional_preflight": true,
+      "observation_draft_paused": true,
+      "stale_caregiver_error": "STALE_STATE",
+      "fresh_epoch": 2,
+      "private_summary_preview": true,
+      "physical_state_verified": false
+    },
+    {
+      "fixture": "single_dog",
+      "scenario": "SC02",
+      "protocol_slug": "demo-solo-dog-v1",
+      "pairing": "single_dog",
+      "newcomer_species": "dog",
+      "pet_count": 1,
+      "pair_count": 0,
+      "group_contexts_unreviewed": false,
+      "mcp_first": [
+        "initialize",
+        "notifications/initialized",
+        "tools/list",
+        "tools/call"
+      ],
+      "mcp_fresh": [
+        "initialize",
+        "notifications/initialized",
+        "tools/list",
+        "tools/call"
+      ],
+      "fictional_preflight": true,
+      "observation_draft_paused": true,
+      "stale_caregiver_error": "STALE_STATE",
+      "fresh_epoch": 2,
+      "private_summary_preview": true,
+      "physical_state_verified": false
+    },
+    {
+      "fixture": "multi_pet",
+      "scenario": "SC07",
+      "protocol_slug": "demo-care-v1",
+      "pairing": "coordination",
+      "newcomer_species": null,
+      "pet_count": 3,
+      "pair_count": 3,
+      "group_contexts_unreviewed": true,
+      "mcp_first": [
+        "initialize",
+        "notifications/initialized",
+        "tools/list",
+        "tools/call"
+      ],
+      "mcp_fresh": [
+        "initialize",
+        "notifications/initialized",
+        "tools/list",
+        "tools/call"
+      ],
+      "fictional_preflight": true,
+      "observation_draft_paused": true,
+      "stale_caregiver_error": "STALE_STATE",
+      "fresh_epoch": 2,
+      "private_summary_preview": true,
+      "physical_state_verified": false
+    }
+  ]
+}

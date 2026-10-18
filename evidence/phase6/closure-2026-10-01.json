@@ -1,0 +1,91 @@
+{
+  "checked_at": "2026-10-01T12:12:28.344901+00:00",
+  "status": "LOCAL_IMPLEMENTATION_CLOSED_WITH_DEFERRED_ACCEPTANCE",
+  "scope": "Phase 6/7 local closure refresh, fictional records only. No hosted Supabase or migrations/deployment. All protocols demo_only.",
+  "changes": [
+    "Clear transient drafts/provenance/captions/audio at household boundary, guard late responses, retain retry on unconfirmed logout",
+    "Retry same-origin token-bound logout after partial/already-completed revocation without weakening resource authentication",
+    "Six total MCP tool-call cap reserves current-state and selected detail reads"
+  ],
+  "checks": {
+    "focused_domain": {
+      "result": "PASS",
+      "passed": 58,
+      "total": 58,
+      "command": "node --env-file=.env.local --import=tsx --test --test-concurrency=1 tests/state.test.ts tests/provider.test.ts tests/local-stop.test.ts tests/conversation.test.ts tests/phase7.test.ts tests/speech-boundary.test.ts",
+      "log": ".local/phase67-oct1/domain-after.log"
+    },
+    "signout_auth": {
+      "result": "PASS",
+      "passed": 2,
+      "total": 2,
+      "command": "node --env-file=.env.local --import=tsx --test tests/signout.test.ts",
+      "log": ".local/phase67-oct1/signout.log",
+      "limits": "Real localhost Auth revocation/retry/isolation; caregiver Auth 503 is injected."
+    },
+    "typecheck": {
+      "result": "PASS",
+      "command": "npm run typecheck"
+    },
+    "production_build": {
+      "result": "PASS",
+      "command": "npm run build",
+      "log": ".local/phase67-oct1/build.log"
+    },
+    "browser": {
+      "result": "PASS",
+      "passed": 6,
+      "total": 6,
+      "command": "npx playwright test tests/e2e/phase6.spec.ts tests/e2e/phase7.spec.ts",
+      "log": ".local/phase67-oct1/browser.log",
+      "environment": "BEDROCK_ENABLED=false SPEECH_ENABLED=true",
+      "limits": "Desktop Chrome. Synthetic microphone, mocked speech/transcription responses, injected signout outage/delayed reads; real localhost Auth/database/MCP and private-record actions. No human voice or new AWS acceptance."
+    },
+    "phase6_http": {
+      "result": "PASS",
+      "command": "npm run test:phase6:http",
+      "evidence": "evidence/phase6/http.json"
+    },
+    "phase7_http": {
+      "result": "PASS",
+      "command": "npm run test:phase7:http",
+      "evidence": "evidence/phase7/http.json"
+    }
+  },
+  "full_checkout_suite": "NOT_RERUN; earlier Phase 9 full-regression attempts timed out/stopped. No current 109/109 or other full-suite pass claimed.",
+  "provider_recheck": {
+    "command": "aws bedrock get-foundation-model-availability --model-id amazon.nova-micro-v1:0 --region us-east-1 --profile default --cli-connect-timeout 5 --cli-read-timeout 10 --no-cli-pager",
+    "exit_code": 255,
+    "result": "AWS_SESSION_EXPIRED",
+    "new_inference_requests": 0,
+    "last_completed_documented_availability": "2026-09-28 NOT_AUTHORIZED; historical, not verified today"
+  },
+  "deferred": [
+    "Successful real Bedrock-driven HTTP MCP loop",
+    "Human microphone/audible playback/Stop and supported-device acceptance",
+    "Provider retention, backup expiry/erasure and continuous operations",
+    "Qualified exact-version practical-content review; no current approval"
+  ],
+  "prohibited": [
+    "Hosted Supabase linking/creation/remote migrations/deployment",
+    "Physical device actuation; native Alexa claims",
+    "Model plan advance/hold clearing/sharing/invitations/medication actions"
+  ],
+  "initial_failures": [
+    "Cross-sample browser test reproduced the prior voice draft in the next sample",
+    "Budget test initially failed because new budget helper was absent",
+    "Signout retry tests initially failed because missing-session SDK error was not treated as already inactive"
+  ],
+  "limitations": "No external send, reviewer approval, practical real-animal guidance, human participant, provider inference success, production readiness or hosted integration fabricated.",
+  "server_diagnostics": "Three generic TypeError log messages during browser/HTTP checks were not correlated to requests; all asserted checks passed, no error-free-server claim.",
+  "checkpoint": {
+    "cwd": "<local-workspace>",
+    "branch": "main",
+    "head": "No initial commit; project untracked",
+    "app_port_3400_listener": false,
+    "task_containers": "Stopped; persistent data preserved",
+    "colima": "Stopped",
+    "agents": "Read-only audit specialist finished",
+    "supabase_remote_actions": 0
+  }
+}

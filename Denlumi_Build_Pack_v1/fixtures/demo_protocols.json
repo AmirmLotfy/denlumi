@@ -1,0 +1,289 @@
+{
+  "fictional": true,
+  "protocols": [
+    {
+      "id": "demo-cc-v1",
+      "version": "1.0.0",
+      "pairing": "cat_cat",
+      "newcomer_species": "cat",
+      "locale": "en",
+      "status": "demo_only",
+      "approved_for_live_use": false,
+      "reviewer_id": null,
+      "reviewed_digest": null,
+      "source_ids": [
+        "S4",
+        "S5"
+      ],
+      "review_due_at": null,
+      "default_session_duration_seconds": null,
+      "demo_notice": "Fictional software demonstration. Not an approved plan for real animals.",
+      "steps": [
+        {
+          "key": "view-context",
+          "instruction": "Review the fictional household and its stated context.",
+          "kind": "demonstration"
+        },
+        {
+          "key": "record-report",
+          "instruction": "Record a fictional observation and verify the named pets.",
+          "kind": "record"
+        },
+        {
+          "key": "review-handover",
+          "instruction": "Inspect the shared software update and its acknowledgment state.",
+          "kind": "review"
+        }
+      ],
+      "invariants": {
+        "no_auto_advance": true,
+        "no_physical_actuation": true,
+        "unknown_is_not_safe": true,
+        "human_review_for_progression": true
+      }
+    },
+    {
+      "id": "demo-dd-v1",
+      "version": "1.0.0",
+      "pairing": "dog_dog",
+      "newcomer_species": "dog",
+      "locale": "en",
+      "status": "demo_only",
+      "approved_for_live_use": false,
+      "reviewer_id": null,
+      "reviewed_digest": null,
+      "source_ids": [
+        "S6",
+        "S8"
+      ],
+      "review_due_at": null,
+      "default_session_duration_seconds": null,
+      "demo_notice": "Fictional software demonstration. Not an approved plan for real animals.",
+      "steps": [
+        {
+          "key": "view-context",
+          "instruction": "Review the fictional household and its stated context.",
+          "kind": "demonstration"
+        },
+        {
+          "key": "record-report",
+          "instruction": "Record a fictional observation and verify the named pets.",
+          "kind": "record"
+        },
+        {
+          "key": "review-handover",
+          "instruction": "Inspect the shared software update and its acknowledgment state.",
+          "kind": "review"
+        }
+      ],
+      "invariants": {
+        "no_auto_advance": true,
+        "no_physical_actuation": true,
+        "unknown_is_not_safe": true,
+        "human_review_for_progression": true
+      }
+    },
+    {
+      "id": "demo-dc-new-cat-v1",
+      "version": "1.0.0",
+      "pairing": "cat_dog",
+      "newcomer_species": "cat",
+      "locale": "en",
+      "status": "demo_only",
+      "approved_for_live_use": false,
+      "reviewer_id": null,
+      "reviewed_digest": null,
+      "source_ids": [
+        "S7",
+        "S10"
+      ],
+      "review_due_at": null,
+      "default_session_duration_seconds": null,
+      "demo_notice": "Fictional software demonstration. Not an approved plan for real animals.",
+      "steps": [
+        {
+          "key": "view-context",
+          "instruction": "Review the fictional household and its stated context.",
+          "kind": "demonstration"
+        },
+        {
+          "key": "record-report",
+          "instruction": "Record a fictional observation and verify the named pets.",
+          "kind": "record"
+        },
+        {
+          "key": "review-handover",
+          "instruction": "Inspect the shared software update and its acknowledgment state.",
+          "kind": "review"
+        }
+      ],
+      "invariants": {
+        "no_auto_advance": true,
+        "no_physical_actuation": true,
+        "unknown_is_not_safe": true,
+        "human_review_for_progression": true
+      }
+    },
+    {
+      "id": "demo-dc-new-dog-v1",
+      "version": "1.0.0",
+      "pairing": "cat_dog",
+      "newcomer_species": "dog",
+      "locale": "en",
+      "status": "demo_only",
+      "approved_for_live_use": false,
+      "reviewer_id": null,
+      "reviewed_digest": null,
+      "source_ids": [
+        "S7",
+        "S10"
+      ],
+      "review_due_at": null,
+      "default_session_duration_seconds": null,
+      "demo_notice": "Fictional software demonstration. Not an approved plan for real animals.",
+      "steps": [
+        {
+          "key": "view-context",
+          "instruction": "Review the fictional household and its stated context.",
+          "kind": "demonstration"
+        },
+        {
+          "key": "record-report",
+          "instruction": "Record a fictional observation and verify the named pets.",
+          "kind": "record"
+        },
+        {
+          "key": "review-handover",
+          "instruction": "Inspect the shared software update and its acknowledgment state.",
+          "kind": "review"
+        }
+      ],
+      "invariants": {
+        "no_auto_advance": true,
+        "no_physical_actuation": true,
+        "unknown_is_not_safe": true,
+        "human_review_for_progression": true
+      }
+    },
+    {
+      "id": "demo-solo-cat-v1",
+      "version": "1.0.0",
+      "pairing": "single_cat",
+      "newcomer_species": "cat",
+      "locale": "en",
+      "status": "demo_only",
+      "approved_for_live_use": false,
+      "reviewer_id": null,
+      "reviewed_digest": null,
+      "source_ids": [
+        "S5"
+      ],
+      "review_due_at": null,
+      "default_session_duration_seconds": null,
+      "demo_notice": "Fictional software demonstration. Not an approved plan for real animals.",
+      "steps": [
+        {
+          "key": "view-context",
+          "instruction": "Review the fictional household and its stated context.",
+          "kind": "demonstration"
+        },
+        {
+          "key": "record-report",
+          "instruction": "Record a fictional observation and verify the named pets.",
+          "kind": "record"
+        },
+        {
+          "key": "review-handover",
+          "instruction": "Inspect the shared software update and its acknowledgment state.",
+          "kind": "review"
+        }
+      ],
+      "invariants": {
+        "no_auto_advance": true,
+        "no_physical_actuation": true,
+        "unknown_is_not_safe": true,
+        "human_review_for_progression": true
+      }
+    },
+    {
+      "id": "demo-solo-dog-v1",
+      "version": "1.0.0",
+      "pairing": "single_dog",
+      "newcomer_species": "dog",
+      "locale": "en",
+      "status": "demo_only",
+      "approved_for_live_use": false,
+      "reviewer_id": null,
+      "reviewed_digest": null,
+      "source_ids": [
+        "S6"
+      ],
+      "review_due_at": null,
+      "default_session_duration_seconds": null,
+      "demo_notice": "Fictional software demonstration. Not an approved plan for real animals.",
+      "steps": [
+        {
+          "key": "view-context",
+          "instruction": "Review the fictional household and its stated context.",
+          "kind": "demonstration"
+        },
+        {
+          "key": "record-report",
+          "instruction": "Record a fictional observation and verify the named pets.",
+          "kind": "record"
+        },
+        {
+          "key": "review-handover",
+          "instruction": "Inspect the shared software update and its acknowledgment state.",
+          "kind": "review"
+        }
+      ],
+      "invariants": {
+        "no_auto_advance": true,
+        "no_physical_actuation": true,
+        "unknown_is_not_safe": true,
+        "human_review_for_progression": true
+      }
+    },
+    {
+      "id": "demo-care-v1",
+      "version": "1.0.0",
+      "pairing": "coordination",
+      "newcomer_species": null,
+      "locale": "en",
+      "status": "demo_only",
+      "approved_for_live_use": false,
+      "reviewer_id": null,
+      "reviewed_digest": null,
+      "source_ids": [
+        "S8"
+      ],
+      "review_due_at": null,
+      "default_session_duration_seconds": null,
+      "demo_notice": "Fictional software demonstration. Not an approved plan for real animals.",
+      "steps": [
+        {
+          "key": "view-context",
+          "instruction": "Review the fictional household and its stated context.",
+          "kind": "demonstration"
+        },
+        {
+          "key": "record-report",
+          "instruction": "Record a fictional observation and verify the named pets.",
+          "kind": "record"
+        },
+        {
+          "key": "review-handover",
+          "instruction": "Inspect the shared software update and its acknowledgment state.",
+          "kind": "review"
+        }
+      ],
+      "invariants": {
+        "no_auto_advance": true,
+        "no_physical_actuation": true,
+        "unknown_is_not_safe": true,
+        "human_review_for_progression": true
+      }
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "checked_at": "2026-09-23T00:16:13.711Z",
+  "environment": "One local Chrome browser session; task-owned production Next.js process restarted against valid, nonexistent, then valid local Postgres database name; shared Supabase service never stopped",
+  "result": "PASS",
+  "checks": [
+    "Valid local current-plan turn returned 200",
+    "App connection to nonexistent local database returned 503 and hid old reply",
+    "Local Stop remained visible",
+    "Restart with valid local database returned 200 and restored a fresh reply"
+  ],
+  "limits": "Real app-to-Postgres database-selection failure, not a database-service outage, hosted restore, production failover, provider outage or supported-device test. No customer records or remote Supabase resources used."
+}

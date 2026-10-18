@@ -1,0 +1,37 @@
+{
+  "checked_at": "2026-09-28T05:03:25Z",
+  "scope": "Isolated localhost Supabase, production localhost Next.js app, fictional demo accounts and households",
+  "result": "PASS_LOCAL_SLICE",
+  "checks": {
+    "focused_domain": "3/3 passed after correcting an assertion from SCOPE_MISMATCH to the observed UNAUTHORIZED for a deleted session",
+    "browser": "1/1 passed on production build after fixing long-code overflow at 320 CSS pixels",
+    "full_local_suite": "105/105 passed",
+    "typecheck": "passed",
+    "production_build": "passed",
+    "local_schema_lint": "passed; no schema errors"
+  },
+  "verified_behaviors": [
+    "A code is issued only for a newly acknowledged fictional demo and stored as a SHA-256 digest in a private table inaccessible through the tested authenticated Data API role",
+    "A code for an unexpired household, a changed household ID, or a changed secret is refused without disabling the household",
+    "After sample expiry, deletion completes with no surviving owner browser session; ordinary household reads remain unauthorized",
+    "The code deletes only its named fictional household and is unavailable after successful primary cleanup",
+    "An unexpected tenant table leaves the household disabled and the request failed; retry with the same code reuses that request after the blocker is removed",
+    "An expired seven-day code is refused, older unconsented demos have no code, and the local due-household worker can still clean an eligible expired fixture",
+    "The browser rejects a wrong code, accepts the valid code after cookies are cleared, and reports verified primary cleanup",
+    "The opened code panel and recovery form do not widen the document beyond 320 CSS pixels in the tested Chrome browser"
+  ],
+  "not_verified": [
+    "Historical backup erasure or provider retention",
+    "Human usability, screen-reader speech, or supported-device matrix",
+    "Hosted scheduling, production networking, and customer policy publication",
+    "Owner account recovery or a deletion code for older unconsented samples"
+  ],
+  "post_run_local_cleanup_dry_run": {
+    "ready": 0,
+    "failed_pending_stalled_or_active_jobs": 0,
+    "older_unconsented_expired": 1923,
+    "older_unconsented_rows_selected": false
+  },
+  "secrets_recorded": false,
+  "hosted_supabase_actions": false
+}

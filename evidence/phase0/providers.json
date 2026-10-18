@@ -1,0 +1,30 @@
+{
+  "checked_at": "2026-09-22T12:04:22.872Z",
+  "region": "us-east-1",
+  "model_id": "us.amazon.nova-micro-v1:0",
+  "scope": "Live provider feasibility requests; fictional text only. No real animal guidance.",
+  "cost_guard": {
+    "max_bedrock_requests": 1,
+    "max_output_tokens": 96,
+    "retries": 0,
+    "max_polly_characters": 100,
+    "transcribe_seconds": 1
+  },
+  "tests": {
+    "bedrock": {
+      "status": "BLOCKED",
+      "error": "CredentialsProviderError",
+      "message": "Your session has expired. Please reauthenticate."
+    },
+    "polly": {
+      "status": "BLOCKED",
+      "error": "CredentialsProviderError",
+      "message": "Your session has expired. Please reauthenticate."
+    },
+    "transcribe": {
+      "status": "BLOCKED",
+      "error": "CredentialsProviderError",
+      "message": "Your session has expired. Please reauthenticate."
+    }
+  }
+}

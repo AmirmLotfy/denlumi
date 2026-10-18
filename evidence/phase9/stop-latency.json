@@ -1,0 +1,18 @@
+{
+  "checked_at": "2026-09-22T22:38:31.297Z",
+  "environment": "Local production Next.js, Chrome, fictional single-cat household, network put offline before every synthetic button activation",
+  "sample_size": 12,
+  "handler_ms": {
+    "median": 0.4,
+    "p95": 1.8,
+    "max": 1.8,
+    "target_p95_ms": 100
+  },
+  "stopped_ui_feedback_ms": {
+    "median": 2.7,
+    "p95": 4.9,
+    "max": 4.9
+  },
+  "result": "PASS for measured local Chrome handler",
+  "limits": "Synthetic browser activation, one desktop host and one Chrome build. Handler timing wraps the synchronous local cancel/latch function; UI timing ends at the stopped DOM update. No physical device, native browser zoom, audio output, human perception, production network or cross-device p95 measured. The offline server sync remains pending by design."
+}

@@ -1,0 +1,43 @@
+{
+  "checked_at": "2026-09-22T11:31:57.922Z",
+  "result": "PASS",
+  "scope": "Real local HTTP and Supabase Auth; only fictional records. No provider call, email, professional approval or practical guidance.",
+  "trace": [
+    {
+      "operation": "no_session",
+      "status": 401
+    },
+    {
+      "operation": "bearer_only",
+      "status": 401
+    },
+    {
+      "operation": "wrong_origin",
+      "status": 403
+    },
+    {
+      "operation": "create_household",
+      "status": 201
+    },
+    {
+      "operation": "pets_case_and_pair_context",
+      "status": 200
+    },
+    {
+      "operation": "caregiver_privileged_write_denied",
+      "status": 403
+    },
+    {
+      "operation": "foreign_tenant_read_denied",
+      "status": 403
+    },
+    {
+      "operation": "stale_owner_request_denied",
+      "status": 409
+    },
+    {
+      "operation": "revoked_caregiver_read_denied",
+      "status": 403
+    }
+  ]
+}

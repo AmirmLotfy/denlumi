@@ -1,0 +1,20 @@
+import { test,expect } from '@playwright/test';
+import { randomUUID } from 'node:crypto';
+import { testHousehold } from '../helpers';
+import { householdGraph } from '../../packages/domain/household';
+import { previewPrivateRecord,authorizePrivateRecord,revokePrivateShare } from '../../packages/domain/records';
+import { pool } from '../../packages/domain/db';
+test.afterAll(()=>pool.end());
+test('verified recipient signs in, reads exact private snapshot and loses access after owner revokes',async({page})=>{
+ const t=await testHousehold();
+ const versions=async()=>{const {household:h}=await householdGraph(t.owner.actor,t.householdId);return {expected_state_version:h.state_version,expected_safety_epoch:h.safety_epoch};};
+ const p=await previewPrivateRecord(t.owner.actor,{household_id:t.householdId,case_id:t.caseId,...await versions(),purpose:'share',format:'text',recipient_address:t.caregiver.email,expires_at:new Date(Date.now()+3600000).toISOString()},randomUUID());
+ const v=p.value;
+ const a=await authorizePrivateRecord(t.owner.actor,{household_id:t.householdId,summary_id:v.summary_id,...await versions(),reviewed_digest:v.digest,purpose:v.purpose,format:v.format,recipient_address:v.recipient_address,expires_at:v.expires_at,scope:v.scope,confirm_exact_content:true},randomUUID());
+ await page.goto('/login');await page.getByLabel('Email',{exact:true}).fill(t.caregiver.email);await page.getByLabel('Password',{exact:true}).fill(t.caregiver.password);await page.getByRole('button',{name:'Sign in',exact:true}).click();
+ await expect(page.getByText('Signed in.',{exact:false})).toBeVisible();
+ await page.getByRole('link',{name:'open a private shared record'}).click();await page.getByLabel('Access reference').fill(a.value.grant_id);
+ await page.getByRole('button',{name:'Retrieve private record'}).click();await expect(page.getByLabel('Exact shared snapshot')).toHaveValue(v.content);
+ await revokePrivateShare(t.owner.actor,{household_id:t.householdId,grant_id:a.value.grant_id,...await versions()},randomUUID());
+ await page.getByRole('button',{name:'Recheck access and download'}).click();await expect(page.getByRole('main').getByRole('alert')).toContainText('SHARE_UNAVAILABLE');await expect(page.getByLabel('Exact shared snapshot')).not.toBeVisible();
+});

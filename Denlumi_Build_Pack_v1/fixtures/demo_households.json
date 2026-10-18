@@ -1,0 +1,235 @@
+{
+  "households": [
+    {
+      "id": "e6318bf1-2084-5ebd-a7ec-091e79552257",
+      "nickname": "Sample cat-cat",
+      "mode": "demo",
+      "fictional": true,
+      "safety_epoch": 1,
+      "home_version": 1,
+      "owner": {
+        "id": "60bf071b-ae17-5ef2-b0eb-c9ac2700fdce",
+        "name": "Maya"
+      },
+      "caregiver": {
+        "id": "372764f3-88df-5569-aa98-d884fa9ef325",
+        "name": "Sam"
+      },
+      "pets": [
+        {
+          "id": "2799845c-b31b-543c-865c-c7eb66389d4d",
+          "household_id": "e6318bf1-2084-5ebd-a7ec-091e79552257",
+          "nickname": "Nora",
+          "species": "cat"
+        },
+        {
+          "id": "76fe1eaf-6471-580c-9774-d0af9a0fd664",
+          "household_id": "e6318bf1-2084-5ebd-a7ec-091e79552257",
+          "nickname": "Milo",
+          "species": "cat"
+        }
+      ],
+      "pairs": [
+        {
+          "id": "8ecd45e9-e55a-5414-ba0e-23474504e36e",
+          "household_id": "e6318bf1-2084-5ebd-a7ec-091e79552257",
+          "pet_a_id": "2799845c-b31b-543c-865c-c7eb66389d4d",
+          "pet_b_id": "76fe1eaf-6471-580c-9774-d0af9a0fd664",
+          "context_status": "unreviewed"
+        }
+      ],
+      "case": {
+        "id": "2829ba0c-a2ea-5968-97f0-259194d37c51",
+        "scenario_id": "SC03",
+        "participant_ids": [
+          "2799845c-b31b-543c-865c-c7eb66389d4d",
+          "76fe1eaf-6471-580c-9774-d0af9a0fd664"
+        ]
+      },
+      "professional_approval_claimed": false
+    },
+    {
+      "id": "2c4bf869-a543-5e9d-91b3-d99d726542bd",
+      "nickname": "Sample dog-dog",
+      "mode": "demo",
+      "fictional": true,
+      "safety_epoch": 1,
+      "home_version": 1,
+      "owner": {
+        "id": "4e33c030-82e9-5fda-b413-59fcb1ebe4b6",
+        "name": "Maya"
+      },
+      "caregiver": {
+        "id": "29f1430a-f335-5390-9809-83eda655dbff",
+        "name": "Sam"
+      },
+      "pets": [
+        {
+          "id": "a19cdcae-f5e1-5519-bba0-48500977d3c3",
+          "household_id": "2c4bf869-a543-5e9d-91b3-d99d726542bd",
+          "nickname": "Finn",
+          "species": "dog"
+        },
+        {
+          "id": "5d16f5ce-b160-505b-b679-e62fa1b3f386",
+          "household_id": "2c4bf869-a543-5e9d-91b3-d99d726542bd",
+          "nickname": "Rory",
+          "species": "dog"
+        }
+      ],
+      "pairs": [
+        {
+          "id": "95b87d31-d1e8-598d-b4e5-29fd511a034c",
+          "household_id": "2c4bf869-a543-5e9d-91b3-d99d726542bd",
+          "pet_a_id": "5d16f5ce-b160-505b-b679-e62fa1b3f386",
+          "pet_b_id": "a19cdcae-f5e1-5519-bba0-48500977d3c3",
+          "context_status": "unreviewed"
+        }
+      ],
+      "case": {
+        "id": "4a7bea21-25a5-56cb-bfca-b59b4a98ec5b",
+        "scenario_id": "SC04",
+        "participant_ids": [
+          "a19cdcae-f5e1-5519-bba0-48500977d3c3",
+          "5d16f5ce-b160-505b-b679-e62fa1b3f386"
+        ]
+      },
+      "professional_approval_claimed": false
+    },
+    {
+      "id": "a68ee93e-c8e3-5e9a-8697-56157ed6dbfc",
+      "nickname": "Sample mixed",
+      "mode": "demo",
+      "fictional": true,
+      "safety_epoch": 1,
+      "home_version": 1,
+      "owner": {
+        "id": "bbac619e-dbc5-5205-9f05-7972f2fd11aa",
+        "name": "Maya"
+      },
+      "caregiver": {
+        "id": "26d20ca4-e825-5e19-8de6-f7642cdaaeec",
+        "name": "Sam"
+      },
+      "pets": [
+        {
+          "id": "119186ee-05a1-5c4f-82dc-17e61d16d053",
+          "household_id": "a68ee93e-c8e3-5e9a-8697-56157ed6dbfc",
+          "nickname": "Finn",
+          "species": "dog"
+        },
+        {
+          "id": "ecba32f6-4139-5299-b8c9-1b12df34d7fd",
+          "household_id": "a68ee93e-c8e3-5e9a-8697-56157ed6dbfc",
+          "nickname": "Nora",
+          "species": "cat"
+        },
+        {
+          "id": "c867f460-db2b-5b86-9598-09ddbda204f0",
+          "household_id": "a68ee93e-c8e3-5e9a-8697-56157ed6dbfc",
+          "nickname": "Milo",
+          "species": "cat"
+        }
+      ],
+      "pairs": [
+        {
+          "id": "355cd39c-650b-51cb-9571-5557874c0737",
+          "household_id": "a68ee93e-c8e3-5e9a-8697-56157ed6dbfc",
+          "pet_a_id": "119186ee-05a1-5c4f-82dc-17e61d16d053",
+          "pet_b_id": "ecba32f6-4139-5299-b8c9-1b12df34d7fd",
+          "context_status": "unreviewed"
+        },
+        {
+          "id": "4699bbe7-56b9-51ea-98df-e2d06172d002",
+          "household_id": "a68ee93e-c8e3-5e9a-8697-56157ed6dbfc",
+          "pet_a_id": "119186ee-05a1-5c4f-82dc-17e61d16d053",
+          "pet_b_id": "c867f460-db2b-5b86-9598-09ddbda204f0",
+          "context_status": "unreviewed"
+        },
+        {
+          "id": "fe189afb-8b02-500e-adb6-a41e6b1bcbf3",
+          "household_id": "a68ee93e-c8e3-5e9a-8697-56157ed6dbfc",
+          "pet_a_id": "c867f460-db2b-5b86-9598-09ddbda204f0",
+          "pet_b_id": "ecba32f6-4139-5299-b8c9-1b12df34d7fd",
+          "context_status": "unreviewed"
+        }
+      ],
+      "case": {
+        "id": "36697a2f-cc9b-539c-bc3b-f69be537449a",
+        "scenario_id": "SC06",
+        "participant_ids": [
+          "119186ee-05a1-5c4f-82dc-17e61d16d053",
+          "ecba32f6-4139-5299-b8c9-1b12df34d7fd",
+          "c867f460-db2b-5b86-9598-09ddbda204f0"
+        ]
+      },
+      "professional_approval_claimed": false
+    },
+    {
+      "id": "8dbbb5b0-6f7a-51d2-88c4-a7cd3aba090f",
+      "nickname": "Sample single-cat",
+      "mode": "demo",
+      "fictional": true,
+      "safety_epoch": 1,
+      "home_version": 1,
+      "owner": {
+        "id": "9922d3e7-8caa-587f-8ab9-8da70a2dee4f",
+        "name": "Maya"
+      },
+      "caregiver": {
+        "id": "138918c6-ad55-5327-9ebd-684a57c5401a",
+        "name": "Sam"
+      },
+      "pets": [
+        {
+          "id": "322e32dc-f5ea-5651-9697-dcf8d292ac26",
+          "household_id": "8dbbb5b0-6f7a-51d2-88c4-a7cd3aba090f",
+          "nickname": "Nora",
+          "species": "cat"
+        }
+      ],
+      "pairs": [],
+      "case": {
+        "id": "148e3ecc-57df-5d4e-aff2-8b19be825013",
+        "scenario_id": "SC01",
+        "participant_ids": [
+          "322e32dc-f5ea-5651-9697-dcf8d292ac26"
+        ]
+      },
+      "professional_approval_claimed": false
+    },
+    {
+      "id": "9afa5673-fa17-5e5d-b215-bef3b4301e57",
+      "nickname": "Sample single-dog",
+      "mode": "demo",
+      "fictional": true,
+      "safety_epoch": 1,
+      "home_version": 1,
+      "owner": {
+        "id": "ccafe2c3-d6c0-5c6f-b494-a77008a2170b",
+        "name": "Maya"
+      },
+      "caregiver": {
+        "id": "0a766553-c102-5aaa-aa46-30724249faea",
+        "name": "Sam"
+      },
+      "pets": [
+        {
+          "id": "88ad49d9-24de-5e32-89b0-958007df6e87",
+          "household_id": "9afa5673-fa17-5e5d-b215-bef3b4301e57",
+          "nickname": "Finn",
+          "species": "dog"
+        }
+      ],
+      "pairs": [],
+      "case": {
+        "id": "20b382d1-4ad0-5b27-83c8-52eeef280217",
+        "scenario_id": "SC02",
+        "participant_ids": [
+          "88ad49d9-24de-5e32-89b0-958007df6e87"
+        ]
+      },
+      "professional_approval_claimed": false
+    }
+  ]
+}

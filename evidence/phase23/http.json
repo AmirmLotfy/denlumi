@@ -1,0 +1,20 @@
+{
+  "checked_at": "2026-09-22T12:06:35.409Z",
+  "result": "PASS",
+  "scope": "Real authenticated local HTTP against isolated Supabase. Fictional demo records only; no hosted project, deployment, professional approval, or practical animal guidance.",
+  "proof": {
+    "scenario": "SC06",
+    "support_level": "guided_preparation",
+    "home_version": 2,
+    "plan_status": "reviewed",
+    "exact_handover_ack": true,
+    "fresh_conversation_state": {
+      "id": "87f92606-45e6-4bc3-8020-37776b44a2d0",
+      "nickname": "The sample home",
+      "home_version": 2,
+      "safety_epoch": 3,
+      "state_version": 5
+    },
+    "stale_ack_rejected": "HANDOVER_CHANGED"
+  }
+}

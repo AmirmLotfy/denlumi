@@ -1,0 +1,187 @@
+{
+  "status": "fictional_routing_test_cases_not_veterinary_triage",
+  "scenarios": [
+    {
+      "id": "SC01",
+      "title": "First cat at home",
+      "species": [
+        "cat"
+      ],
+      "expected_demo_route": "guided_preparation",
+      "demo_protocol_id": "demo-solo-cat-v1",
+      "live_protocol_approval_required": true
+    },
+    {
+      "id": "SC02",
+      "title": "First dog at home",
+      "species": [
+        "dog"
+      ],
+      "expected_demo_route": "guided_preparation",
+      "demo_protocol_id": "demo-solo-dog-v1",
+      "live_protocol_approval_required": true
+    },
+    {
+      "id": "SC03",
+      "title": "New cat with resident cat",
+      "species": [
+        "cat",
+        "cat"
+      ],
+      "expected_demo_route": "guided_preparation",
+      "demo_protocol_id": "demo-cc-v1",
+      "live_protocol_approval_required": true
+    },
+    {
+      "id": "SC04",
+      "title": "New dog with resident dog",
+      "species": [
+        "dog",
+        "dog"
+      ],
+      "expected_demo_route": "guided_preparation",
+      "demo_protocol_id": "demo-dd-v1",
+      "live_protocol_approval_required": true
+    },
+    {
+      "id": "SC05",
+      "title": "New cat with resident dog",
+      "species": [
+        "dog",
+        "cat"
+      ],
+      "expected_demo_route": "guided_preparation",
+      "demo_protocol_id": "demo-dc-new-cat-v1",
+      "live_protocol_approval_required": true
+    },
+    {
+      "id": "SC06",
+      "title": "New dog with resident cat",
+      "species": [
+        "cat",
+        "dog"
+      ],
+      "expected_demo_route": "guided_preparation",
+      "demo_protocol_id": "demo-dc-new-dog-v1",
+      "live_protocol_approval_required": true
+    },
+    {
+      "id": "SC07",
+      "title": "Three-pet home",
+      "species": [
+        "cat",
+        "cat",
+        "dog"
+      ],
+      "expected_demo_route": "coordination_only",
+      "demo_protocol_id": "demo-care-v1",
+      "live_protocol_approval_required": false
+    },
+    {
+      "id": "SC08",
+      "title": "Young newcomer and senior resident",
+      "species": [
+        "dog",
+        "dog"
+      ],
+      "expected_demo_route": "clarification_required",
+      "demo_protocol_id": "demo-care-v1",
+      "live_protocol_approval_required": false
+    },
+    {
+      "id": "SC09",
+      "title": "Return after vet stay",
+      "species": [
+        "cat",
+        "cat"
+      ],
+      "expected_demo_route": "clarification_required",
+      "demo_protocol_id": "demo-care-v1",
+      "live_protocol_approval_required": false
+    },
+    {
+      "id": "SC10",
+      "title": "Move or home-layout change",
+      "species": [
+        "dog",
+        "cat"
+      ],
+      "expected_demo_route": "coordination_only",
+      "demo_protocol_id": "demo-care-v1",
+      "live_protocol_approval_required": false
+    },
+    {
+      "id": "SC11",
+      "title": "Temporary sitter",
+      "species": [
+        "cat",
+        "dog"
+      ],
+      "expected_demo_route": "coordination_only",
+      "demo_protocol_id": "demo-care-v1",
+      "live_protocol_approval_required": false
+    },
+    {
+      "id": "SC12",
+      "title": "Everyday care reports",
+      "species": [
+        "cat",
+        "dog"
+      ],
+      "expected_demo_route": "coordination_only",
+      "demo_protocol_id": "demo-care-v1",
+      "live_protocol_approval_required": false
+    },
+    {
+      "id": "SC13",
+      "title": "Persistent conflict or chase concern",
+      "species": [
+        "dog",
+        "cat"
+      ],
+      "expected_demo_route": "professional_required",
+      "demo_protocol_id": "demo-care-v1",
+      "live_protocol_approval_required": false
+    },
+    {
+      "id": "SC14",
+      "title": "Alone-time distress concern",
+      "species": [
+        "dog"
+      ],
+      "expected_demo_route": "professional_required",
+      "demo_protocol_id": "demo-care-v1",
+      "live_protocol_approval_required": false
+    },
+    {
+      "id": "SC15",
+      "title": "Visitor or child-related household change",
+      "species": [
+        "dog"
+      ],
+      "expected_demo_route": "coordination_only",
+      "demo_protocol_id": "demo-care-v1",
+      "live_protocol_approval_required": false
+    },
+    {
+      "id": "SC16",
+      "title": "Reported injury or severe distress",
+      "species": [
+        "cat"
+      ],
+      "expected_demo_route": "urgent_help",
+      "demo_protocol_id": "demo-care-v1",
+      "live_protocol_approval_required": false
+    },
+    {
+      "id": "SC17",
+      "title": "Pet leaves or dies",
+      "species": [
+        "cat"
+      ],
+      "expected_demo_route": "coordination_only",
+      "demo_protocol_id": "demo-care-v1",
+      "live_protocol_approval_required": false
+    }
+  ]
+}

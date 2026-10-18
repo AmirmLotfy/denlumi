@@ -1,0 +1,45 @@
+{
+  "checked_at": "2026-10-01T12:08:56.210Z",
+  "scope": "Actual authenticated local HTTP MCP and Supabase, no AWS request in this script.",
+  "result": "PASS",
+  "checks": [
+    "MCP discovery and calls",
+    "unsaved ambiguous/negated observation",
+    "due tasks",
+    "demo rationale unavailable",
+    "private handover",
+    "pause",
+    "stale caregiver rejected",
+    "new conversation current state",
+    "other household denied"
+  ],
+  "trace": [
+    {
+      "method": "initialize",
+      "http_status": 200,
+      "protocol": "2025-11-25"
+    },
+    {
+      "method": "notifications/initialized",
+      "http_status": 202,
+      "protocol": "2025-11-25"
+    },
+    {
+      "method": "tools/list",
+      "http_status": 200,
+      "protocol": "2025-11-25"
+    },
+    {
+      "method": "tools/call",
+      "tool_name": "get_household_brief",
+      "http_status": 200,
+      "protocol": "2025-11-25"
+    },
+    {
+      "method": "tools/call",
+      "tool_name": "get_household_brief",
+      "http_status": 200,
+      "protocol": "2025-11-25"
+    }
+  ]
+}

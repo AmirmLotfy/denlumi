@@ -1,0 +1,328 @@
+erDiagram
+    PROFILES {
+        uuid id PK
+        string status
+    }
+    HOUSEHOLDS {
+        uuid id PK
+        uuid owner_id FK
+        string locale
+        string safety_epoch
+        string status
+    }
+    MEMBERSHIPS {
+        uuid id PK
+        uuid household_id FK
+        uuid profile_id FK
+    }
+    PETS {
+        uuid id PK
+        uuid household_id FK
+        string species
+    }
+    HOME_ZONES {
+        uuid id PK
+        uuid household_id FK
+        uuid reported_by FK
+    }
+    RESOURCES {
+        uuid id PK
+        uuid household_id FK
+        uuid zone_id FK
+        string status
+    }
+    PET_RESOURCE_ACCESS {
+        uuid id PK
+        uuid household_id FK
+        uuid pet_id FK
+        uuid resource_id FK
+        string version
+    }
+    PET_PAIRS {
+        uuid id PK
+        uuid household_id FK
+        uuid pet_a_id FK
+        uuid pet_b_id FK
+    }
+    CASES {
+        uuid id PK
+        uuid household_id FK
+        string support_level
+        string status
+    }
+    CASE_PETS {
+        uuid id PK
+        uuid household_id FK
+        uuid case_id FK
+        uuid pet_id FK
+    }
+    PAIR_CONTEXTS {
+        uuid id PK
+        uuid household_id FK
+        uuid case_id FK
+        uuid pair_id FK
+        string status
+    }
+    PROTOCOLS {
+        uuid id PK
+    }
+    PROTOCOL_VERSIONS {
+        uuid id PK
+        uuid protocol_id FK
+        string version
+        string locale
+        string status
+        string digest
+    }
+    PROTOCOL_REVIEWS {
+        uuid id PK
+        uuid protocol_version_id FK
+        uuid reviewer_id FK
+    }
+    SOURCE_REFERENCES {
+        uuid id PK
+    }
+    PROTOCOL_SOURCES {
+        uuid id PK
+        uuid protocol_version_id FK
+        uuid source_id FK
+    }
+    PLAN_REVISIONS {
+        uuid id PK
+        uuid household_id FK
+        uuid case_id FK
+        uuid protocol_version_id FK
+        string safety_epoch
+        string status
+        string digest
+    }
+    PLAN_STEPS {
+        uuid id PK
+        uuid household_id FK
+        uuid plan_revision_id FK
+        string status
+    }
+    PLAN_REVIEWS {
+        uuid id PK
+        uuid household_id FK
+        uuid plan_revision_id FK
+        uuid reviewer_id FK
+        string safety_epoch
+    }
+    SESSIONS {
+        uuid id PK
+        uuid household_id FK
+        uuid case_id FK
+        uuid plan_revision_id FK
+        uuid started_by FK
+        string state
+        string safety_epoch
+    }
+    SESSION_PETS {
+        uuid id PK
+        uuid household_id FK
+        uuid session_id FK
+        uuid pet_id FK
+    }
+    OBSERVATIONS {
+        uuid id PK
+        uuid household_id FK
+        uuid case_id FK
+        uuid session_id FK
+        uuid actor_pet_id FK
+        uuid target_pet_id FK
+        uuid reporter_id FK
+        string assertion
+        string status
+        uuid supersedes_id FK
+    }
+    SAFETY_HOLDS {
+        uuid id PK
+        uuid household_id FK
+        uuid case_id FK
+        uuid pet_id FK
+        uuid pair_id FK
+        uuid origin_observation_id FK
+        string state
+        uuid resolved_by FK
+    }
+    HANDOVERS {
+        uuid id PK
+        uuid household_id FK
+        uuid case_id FK
+        string safety_epoch
+        string status
+        string digest
+    }
+    HANDOVER_ACKS {
+        uuid id PK
+        uuid household_id FK
+        uuid handover_id FK
+        uuid profile_id FK
+    }
+    ROUTINE_RULES {
+        uuid id PK
+        uuid household_id FK
+        uuid pet_id FK
+        uuid created_by FK
+        string status
+        string version
+    }
+    TASK_OCCURRENCES {
+        uuid id PK
+        uuid household_id FK
+        uuid routine_rule_id FK
+        uuid plan_step_id FK
+        uuid assigned_to FK
+        string state
+    }
+    TASK_REPORTS {
+        uuid id PK
+        uuid household_id FK
+        uuid task_occurrence_id FK
+        uuid reporter_id FK
+        uuid supersedes_id FK
+    }
+    PROFESSIONAL_SUMMARIES {
+        uuid id PK
+        uuid household_id FK
+        uuid case_id FK
+        string digest
+        string status
+        uuid created_by FK
+    }
+    ACTION_AUTHORIZATIONS {
+        uuid id PK
+        uuid household_id FK
+        uuid owner_id FK
+    }
+    SHARE_GRANTS {
+        uuid id PK
+        uuid household_id FK
+        uuid summary_id FK
+        uuid authorization_id FK
+    }
+    OUTBOX_EVENTS {
+        uuid id PK
+        uuid household_id FK
+        string state
+    }
+    DELIVERIES {
+        uuid id PK
+        uuid household_id FK
+        uuid outbox_event_id FK
+        string status
+    }
+    AUDIT_EVENTS {
+        uuid id PK
+        uuid household_id FK
+        uuid actor_id FK
+        string safety_epoch
+    }
+    AI_RUNS {
+        uuid id PK
+        uuid household_id FK
+        uuid case_id FK
+        uuid protocol_version_id FK
+    }
+    ASSETS {
+        uuid id PK
+        uuid household_id FK
+        uuid owner_id FK
+        string digest
+        string state
+    }
+    ENTITLEMENTS {
+        uuid id PK
+        uuid household_id FK
+        string status
+    }
+    PROFILES ||--o{ HOUSEHOLDS : owner_id
+    HOUSEHOLDS ||--o{ MEMBERSHIPS : household_id
+    PROFILES ||--o{ MEMBERSHIPS : profile_id
+    HOUSEHOLDS ||--o{ PETS : household_id
+    HOUSEHOLDS ||--o{ HOME_ZONES : household_id
+    PROFILES o|--o{ HOME_ZONES : reported_by
+    HOUSEHOLDS ||--o{ RESOURCES : household_id
+    HOME_ZONES ||--o{ RESOURCES : zone_id
+    HOUSEHOLDS ||--o{ PET_RESOURCE_ACCESS : household_id
+    PETS ||--o{ PET_RESOURCE_ACCESS : pet_id
+    RESOURCES ||--o{ PET_RESOURCE_ACCESS : resource_id
+    HOUSEHOLDS ||--o{ PET_PAIRS : household_id
+    PETS ||--o{ PET_PAIRS : pet_a_id
+    PETS ||--o{ PET_PAIRS : pet_b_id
+    HOUSEHOLDS ||--o{ CASES : household_id
+    HOUSEHOLDS ||--o{ CASE_PETS : household_id
+    CASES ||--o{ CASE_PETS : case_id
+    PETS ||--o{ CASE_PETS : pet_id
+    HOUSEHOLDS ||--o{ PAIR_CONTEXTS : household_id
+    CASES ||--o{ PAIR_CONTEXTS : case_id
+    PET_PAIRS ||--o{ PAIR_CONTEXTS : pair_id
+    PROTOCOLS ||--o{ PROTOCOL_VERSIONS : protocol_id
+    PROTOCOL_VERSIONS ||--o{ PROTOCOL_REVIEWS : protocol_version_id
+    PROFILES ||--o{ PROTOCOL_REVIEWS : reviewer_id
+    PROTOCOL_VERSIONS ||--o{ PROTOCOL_SOURCES : protocol_version_id
+    SOURCE_REFERENCES ||--o{ PROTOCOL_SOURCES : source_id
+    HOUSEHOLDS ||--o{ PLAN_REVISIONS : household_id
+    CASES ||--o{ PLAN_REVISIONS : case_id
+    PROTOCOL_VERSIONS ||--o{ PLAN_REVISIONS : protocol_version_id
+    HOUSEHOLDS ||--o{ PLAN_STEPS : household_id
+    PLAN_REVISIONS ||--o{ PLAN_STEPS : plan_revision_id
+    HOUSEHOLDS ||--o{ PLAN_REVIEWS : household_id
+    PLAN_REVISIONS ||--o{ PLAN_REVIEWS : plan_revision_id
+    PROFILES ||--o{ PLAN_REVIEWS : reviewer_id
+    HOUSEHOLDS ||--o{ SESSIONS : household_id
+    CASES ||--o{ SESSIONS : case_id
+    PLAN_REVISIONS ||--o{ SESSIONS : plan_revision_id
+    PROFILES ||--o{ SESSIONS : started_by
+    HOUSEHOLDS ||--o{ SESSION_PETS : household_id
+    SESSIONS ||--o{ SESSION_PETS : session_id
+    PETS ||--o{ SESSION_PETS : pet_id
+    HOUSEHOLDS ||--o{ OBSERVATIONS : household_id
+    CASES ||--o{ OBSERVATIONS : case_id
+    SESSIONS o|--o{ OBSERVATIONS : session_id
+    PETS o|--o{ OBSERVATIONS : actor_pet_id
+    PETS o|--o{ OBSERVATIONS : target_pet_id
+    PROFILES ||--o{ OBSERVATIONS : reporter_id
+    OBSERVATIONS o|--o{ OBSERVATIONS : supersedes_id
+    HOUSEHOLDS ||--o{ SAFETY_HOLDS : household_id
+    CASES o|--o{ SAFETY_HOLDS : case_id
+    PETS o|--o{ SAFETY_HOLDS : pet_id
+    PET_PAIRS o|--o{ SAFETY_HOLDS : pair_id
+    OBSERVATIONS o|--o{ SAFETY_HOLDS : origin_observation_id
+    PROFILES o|--o{ SAFETY_HOLDS : resolved_by
+    HOUSEHOLDS ||--o{ HANDOVERS : household_id
+    CASES o|--o{ HANDOVERS : case_id
+    HOUSEHOLDS ||--o{ HANDOVER_ACKS : household_id
+    HANDOVERS ||--o{ HANDOVER_ACKS : handover_id
+    PROFILES ||--o{ HANDOVER_ACKS : profile_id
+    HOUSEHOLDS ||--o{ ROUTINE_RULES : household_id
+    PETS ||--o{ ROUTINE_RULES : pet_id
+    PROFILES ||--o{ ROUTINE_RULES : created_by
+    HOUSEHOLDS ||--o{ TASK_OCCURRENCES : household_id
+    ROUTINE_RULES o|--o{ TASK_OCCURRENCES : routine_rule_id
+    PLAN_STEPS o|--o{ TASK_OCCURRENCES : plan_step_id
+    PROFILES o|--o{ TASK_OCCURRENCES : assigned_to
+    HOUSEHOLDS ||--o{ TASK_REPORTS : household_id
+    TASK_OCCURRENCES ||--o{ TASK_REPORTS : task_occurrence_id
+    PROFILES ||--o{ TASK_REPORTS : reporter_id
+    TASK_REPORTS o|--o{ TASK_REPORTS : supersedes_id
+    HOUSEHOLDS ||--o{ PROFESSIONAL_SUMMARIES : household_id
+    CASES ||--o{ PROFESSIONAL_SUMMARIES : case_id
+    PROFILES ||--o{ PROFESSIONAL_SUMMARIES : created_by
+    HOUSEHOLDS ||--o{ ACTION_AUTHORIZATIONS : household_id
+    PROFILES ||--o{ ACTION_AUTHORIZATIONS : owner_id
+    HOUSEHOLDS ||--o{ SHARE_GRANTS : household_id
+    PROFESSIONAL_SUMMARIES o|--o{ SHARE_GRANTS : summary_id
+    ACTION_AUTHORIZATIONS ||--o{ SHARE_GRANTS : authorization_id
+    HOUSEHOLDS ||--o{ OUTBOX_EVENTS : household_id
+    HOUSEHOLDS ||--o{ DELIVERIES : household_id
+    OUTBOX_EVENTS ||--o{ DELIVERIES : outbox_event_id
+    HOUSEHOLDS ||--o{ AUDIT_EVENTS : household_id
+    PROFILES o|--o{ AUDIT_EVENTS : actor_id
+    HOUSEHOLDS ||--o{ AI_RUNS : household_id
+    CASES o|--o{ AI_RUNS : case_id
+    PROTOCOL_VERSIONS o|--o{ AI_RUNS : protocol_version_id
+    HOUSEHOLDS ||--o{ ASSETS : household_id
+    PROFILES ||--o{ ASSETS : owner_id
+    HOUSEHOLDS ||--o{ ENTITLEMENTS : household_id

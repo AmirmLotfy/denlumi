@@ -1,0 +1,23 @@
+{
+  "checked_at": "2026-09-22T20:57:54.753Z",
+  "source": "Chrome synthetic microphone WAV, real authenticated local app, real Amazon Transcribe and Polly",
+  "human_microphone": "NOT_TESTED",
+  "human_audibility": "NOT_TESTED",
+  "transcription": {
+    "http_status": 200,
+    "request_id": "4d3bee0c-9abc-411b-9592-7ce2bc0fa6a7",
+    "transcript": "Fictional Dinlumi connection test, fictional Dinlumi.",
+    "saved": false,
+    "requires_review": true
+  },
+  "speech": {
+    "http_status": 200,
+    "source": "Amazon-Polly",
+    "audio_bytes": "NOT_MEASURED_IN_BROWSER"
+  },
+  "playback": {
+    "started_in_browser": true,
+    "stopped_while_offline": true,
+    "paused_after_stop": true
+  }
+}

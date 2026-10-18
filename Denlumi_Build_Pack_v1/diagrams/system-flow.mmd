@@ -1,0 +1,14 @@
+flowchart TD
+    A[Authenticated web app or disclosed simulation] --> B[Voice or text input]
+    B --> C[Bounded Bedrock orchestrator]
+    C --> D[Actual authenticated HTTP MCP]
+    D --> E[Domain permissions and current-state checks]
+    A --> E
+    E --> F[(PostgreSQL)]
+    E --> G[Approved protocol registry]
+    F --> H[Transactional outbox]
+    H --> I[SQS and Lambda]
+    I --> J[Recheck scope and safety epoch]
+    J --> K[Internal inbox or approved email]
+    A --> L[Immediate local stop and audio cancel]
+    L --> E

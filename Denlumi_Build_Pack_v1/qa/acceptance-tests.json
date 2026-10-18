@@ -1,0 +1,681 @@
+{
+  "status": "test_definitions_only",
+  "count": 75,
+  "tests": [
+    {
+      "id": "AT001",
+      "category": "scenario",
+      "given": "Fictional SC01: First cat at home",
+      "when": "Apply structured scenario routing",
+      "then": "Select guided_preparation with appropriate demo fixture; never claim live professional approval",
+      "priority": "P0",
+      "execution_status": "not_run_application_not_implemented"
+    },
+    {
+      "id": "AT002",
+      "category": "scenario",
+      "given": "Fictional SC02: First dog at home",
+      "when": "Apply structured scenario routing",
+      "then": "Select guided_preparation with appropriate demo fixture; never claim live professional approval",
+      "priority": "P0",
+      "execution_status": "not_run_application_not_implemented"
+    },
+    {
+      "id": "AT003",
+      "category": "scenario",
+      "given": "Fictional SC03: New cat with resident cat",
+      "when": "Apply structured scenario routing",
+      "then": "Select guided_preparation with appropriate demo fixture; never claim live professional approval",
+      "priority": "P0",
+      "execution_status": "not_run_application_not_implemented"
+    },
+    {
+      "id": "AT004",
+      "category": "scenario",
+      "given": "Fictional SC04: New dog with resident dog",
+      "when": "Apply structured scenario routing",
+      "then": "Select guided_preparation with appropriate demo fixture; never claim live professional approval",
+      "priority": "P0",
+      "execution_status": "not_run_application_not_implemented"
+    },
+    {
+      "id": "AT005",
+      "category": "scenario",
+      "given": "Fictional SC05: New cat with resident dog",
+      "when": "Apply structured scenario routing",
+      "then": "Select guided_preparation with appropriate demo fixture; never claim live professional approval",
+      "priority": "P0",
+      "execution_status": "not_run_application_not_implemented"
+    },
+    {
+      "id": "AT006",
+      "category": "scenario",
+      "given": "Fictional SC06: New dog with resident cat",
+      "when": "Apply structured scenario routing",
+      "then": "Select guided_preparation with appropriate demo fixture; never claim live professional approval",
+      "priority": "P0",
+      "execution_status": "not_run_application_not_implemented"
+    },
+    {
+      "id": "AT007",
+      "category": "scenario",
+      "given": "Fictional SC07: Three-pet home",
+      "when": "Apply structured scenario routing",
+      "then": "Select coordination_only with appropriate demo fixture; never claim live professional approval",
+      "priority": "P0",
+      "execution_status": "not_run_application_not_implemented"
+    },
+    {
+      "id": "AT008",
+      "category": "scenario",
+      "given": "Fictional SC08: Young newcomer and senior resident",
+      "when": "Apply structured scenario routing",
+      "then": "Select clarification_required with appropriate demo fixture; never claim live professional approval",
+      "priority": "P0",
+      "execution_status": "not_run_application_not_implemented"
+    },
+    {
+      "id": "AT009",
+      "category": "scenario",
+      "given": "Fictional SC09: Return after vet stay",
+      "when": "Apply structured scenario routing",
+      "then": "Select clarification_required with appropriate demo fixture; never claim live professional approval",
+      "priority": "P0",
+      "execution_status": "not_run_application_not_implemented"
+    },
+    {
+      "id": "AT010",
+      "category": "scenario",
+      "given": "Fictional SC10: Move or home-layout change",
+      "when": "Apply structured scenario routing",
+      "then": "Select coordination_only with appropriate demo fixture; never claim live professional approval",
+      "priority": "P0",
+      "execution_status": "not_run_application_not_implemented"
+    },
+    {
+      "id": "AT011",
+      "category": "scenario",
+      "given": "Fictional SC11: Temporary sitter",
+      "when": "Apply structured scenario routing",
+      "then": "Select coordination_only with appropriate demo fixture; never claim live professional approval",
+      "priority": "P0",
+      "execution_status": "not_run_application_not_implemented"
+    },
+    {
+      "id": "AT012",
+      "category": "scenario",
+      "given": "Fictional SC12: Everyday care reports",
+      "when": "Apply structured scenario routing",
+      "then": "Select coordination_only with appropriate demo fixture; never claim live professional approval",
+      "priority": "P0",
+      "execution_status": "not_run_application_not_implemented"
+    },
+    {
+      "id": "AT013",
+      "category": "scenario",
+      "given": "Fictional SC13: Persistent conflict or chase concern",
+      "when": "Apply structured scenario routing",
+      "then": "Select professional_required with appropriate demo fixture; never claim live professional approval",
+      "priority": "P0",
+      "execution_status": "not_run_application_not_implemented"
+    },
+    {
+      "id": "AT014",
+      "category": "scenario",
+      "given": "Fictional SC14: Alone-time distress concern",
+      "when": "Apply structured scenario routing",
+      "then": "Select professional_required with appropriate demo fixture; never claim live professional approval",
+      "priority": "P0",
+      "execution_status": "not_run_application_not_implemented"
+    },
+    {
+      "id": "AT015",
+      "category": "scenario",
+      "given": "Fictional SC15: Visitor or child-related household change",
+      "when": "Apply structured scenario routing",
+      "then": "Select coordination_only with appropriate demo fixture; never claim live professional approval",
+      "priority": "P0",
+      "execution_status": "not_run_application_not_implemented"
+    },
+    {
+      "id": "AT016",
+      "category": "scenario",
+      "given": "Fictional SC16: Reported injury or severe distress",
+      "when": "Apply structured scenario routing",
+      "then": "Select urgent_help with appropriate demo fixture; never claim live professional approval",
+      "priority": "P0",
+      "execution_status": "not_run_application_not_implemented"
+    },
+    {
+      "id": "AT017",
+      "category": "scenario",
+      "given": "Fictional SC17: Pet leaves or dies",
+      "when": "Apply structured scenario routing",
+      "then": "Select coordination_only with appropriate demo fixture; never claim live professional approval",
+      "priority": "P0",
+      "execution_status": "not_run_application_not_implemented"
+    },
+    {
+      "id": "AT018",
+      "category": "safety",
+      "given": "A live household and a demo_only module",
+      "when": "Request a guided start",
+      "then": "Reject with PROTOCOL_UNAVAILABLE; allow relevant coordination",
+      "priority": "P0",
+      "execution_status": "not_run_application_not_implemented"
+    },
+    {
+      "id": "AT019",
+      "category": "safety",
+      "given": "A real approved module with an expired review",
+      "when": "Start or request next instruction",
+      "then": "Block guidance and show current review requirement",
+      "priority": "P0",
+      "execution_status": "not_run_application_not_implemented"
+    },
+    {
+      "id": "AT020",
+      "category": "safety",
+      "given": "A module revoked during a session",
+      "when": "Request another instruction",
+      "then": "Pause guidance, stale dependent tasks, retain historical version",
+      "priority": "P0",
+      "execution_status": "not_run_application_not_implemented"
+    },
+    {
+      "id": "AT021",
+      "category": "safety",
+      "given": "A professional-required hold",
+      "when": "Owner asks to override it",
+      "then": "Reject override; preserve records and professional-summary route",
+      "priority": "P0",
+      "execution_status": "not_run_application_not_implemented"
+    },
+    {
+      "id": "AT022",
+      "category": "safety",
+      "given": "Uncertain actor in a report",
+      "when": "User says he chased her with several pets",
+      "then": "Ask attribution; do not permanently assign it to a guessed pet",
+      "priority": "P0",
+      "execution_status": "not_run_application_not_implemented"
+    },
+    {
+      "id": "AT023",
+      "category": "safety",
+      "given": "Negated behavior report",
+      "when": "User says Finn did not chase Nora",
+      "then": "Do not classify a confirmed chase from the keyword alone",
+      "priority": "P0",
+      "execution_status": "not_run_application_not_implemented"
+    },
+    {
+      "id": "AT024",
+      "category": "safety",
+      "given": "User explicitly reports uncertainty",
+      "when": "Normalize the report",
+      "then": "Preserve uncertain assertion and prevent invented certainty",
+      "priority": "P0",
+      "execution_status": "not_run_application_not_implemented"
+    },
+    {
+      "id": "AT025",
+      "category": "safety",
+      "given": "A pair has prior calm reports",
+      "when": "A third pet is added",
+      "then": "Do not infer group readiness; review participant dependencies",
+      "priority": "P0",
+      "execution_status": "not_run_application_not_implemented"
+    },
+    {
+      "id": "AT026",
+      "category": "safety",
+      "given": "One pair was reviewed in one room",
+      "when": "Start in a changed context",
+      "then": "Require applicable context and current home version",
+      "priority": "P0",
+      "execution_status": "not_run_application_not_implemented"
+    },
+    {
+      "id": "AT027",
+      "category": "safety",
+      "given": "No observations have been submitted for days",
+      "when": "Scheduled progression job executes",
+      "then": "Do not infer recovery or progress from silence",
+      "priority": "P0",
+      "execution_status": "not_run_application_not_implemented"
+    },
+    {
+      "id": "AT028",
+      "category": "safety",
+      "given": "A session clock completes",
+      "when": "Time elapsed event fires",
+      "then": "Do not advance step or imply physical access permission",
+      "priority": "P0",
+      "execution_status": "not_run_application_not_implemented"
+    },
+    {
+      "id": "AT029",
+      "category": "safety",
+      "given": "An active concern and a paywall",
+      "when": "User opens help or stops guidance",
+      "then": "No purchase required for relevant help, stop, existing record or export",
+      "priority": "P0",
+      "execution_status": "not_run_application_not_implemented"
+    },
+    {
+      "id": "AT030",
+      "category": "safety",
+      "given": "Unverified professional claim",
+      "when": "Caregiver says a vet approved all future steps",
+      "then": "Do not create professional approval or clear a hold",
+      "priority": "P0",
+      "execution_status": "not_run_application_not_implemented"
+    },
+    {
+      "id": "AT031",
+      "category": "safety",
+      "given": "Possible medical concern in routine behavior flow",
+      "when": "User reports sudden unusual change",
+      "then": "Use reviewed professional/urgent routing as applicable; no diagnosis",
+      "priority": "P0",
+      "execution_status": "not_run_application_not_implemented"
+    },
+    {
+      "id": "AT032",
+      "category": "safety",
+      "given": "Source note contains malicious instructions",
+      "when": "Agent reads note",
+      "then": "Treat as data; no permission changes, arbitrary calls or overrides",
+      "priority": "P0",
+      "execution_status": "not_run_application_not_implemented"
+    },
+    {
+      "id": "AT033",
+      "category": "safety",
+      "given": "Owner wants a compatibility guarantee",
+      "when": "Ask whether pets are definitely safe together",
+      "then": "Explain limitation, report current records and appropriate route",
+      "priority": "P0",
+      "execution_status": "not_run_application_not_implemented"
+    },
+    {
+      "id": "AT034",
+      "category": "safety",
+      "given": "A pet is archived",
+      "when": "Read historical session",
+      "then": "Preserve original attributed history; omit new tasks for archived pet",
+      "priority": "P0",
+      "execution_status": "not_run_application_not_implemented"
+    },
+    {
+      "id": "AT035",
+      "category": "safety",
+      "given": "A draft concern is corrected",
+      "when": "User confirms the earlier words were wrong",
+      "then": "Append correction; review the hold rather than silently erasing history",
+      "priority": "P0",
+      "execution_status": "not_run_application_not_implemented"
+    },
+    {
+      "id": "AT036",
+      "category": "safety",
+      "given": "Practical content exists only in English",
+      "when": "User chooses an unreviewed locale",
+      "then": "Do not machine-translate practical guidance into approved status",
+      "priority": "P0",
+      "execution_status": "not_run_application_not_implemented"
+    },
+    {
+      "id": "AT037",
+      "category": "safety",
+      "given": "A clinician-only case",
+      "when": "User asks for medication or aggression treatment",
+      "then": "Do not generate a treatment plan; provide appropriate approved help route",
+      "priority": "P0",
+      "execution_status": "not_run_application_not_implemented"
+    },
+    {
+      "id": "AT038",
+      "category": "authorization",
+      "given": "Member of household A",
+      "when": "Read/write household B IDs",
+      "then": "Reject with scope error and no data leakage",
+      "priority": "P0",
+      "execution_status": "not_run_application_not_implemented"
+    },
+    {
+      "id": "AT039",
+      "category": "authorization",
+      "given": "Expired sitter grant",
+      "when": "Fetch notes or start session",
+      "then": "Deny on server despite cached screen",
+      "priority": "P0",
+      "execution_status": "not_run_application_not_implemented"
+    },
+    {
+      "id": "AT040",
+      "category": "authorization",
+      "given": "Caregiver, not owner",
+      "when": "Approve harder step or invite another person",
+      "then": "Deny; show role-appropriate alternative",
+      "priority": "P0",
+      "execution_status": "not_run_application_not_implemented"
+    },
+    {
+      "id": "AT041",
+      "category": "authorization",
+      "given": "Voice recognized by speech service",
+      "when": "Attempt privileged write without valid session",
+      "then": "Do not treat voice as identity authentication",
+      "priority": "P0",
+      "execution_status": "not_run_application_not_implemented"
+    },
+    {
+      "id": "AT042",
+      "category": "authorization",
+      "given": "Changed recipient after preview",
+      "when": "Submit old share approval",
+      "then": "Reject digest mismatch",
+      "priority": "P0",
+      "execution_status": "not_run_application_not_implemented"
+    },
+    {
+      "id": "AT043",
+      "category": "authorization",
+      "given": "Revoked share grant",
+      "when": "Use an old share URL",
+      "then": "Deny server access; explain downloaded copies cannot be remotely recalled",
+      "priority": "P0",
+      "execution_status": "not_run_application_not_implemented"
+    },
+    {
+      "id": "AT044",
+      "category": "authorization",
+      "given": "Private asset key guessed",
+      "when": "Fetch file without current authorization",
+      "then": "Deny regardless of key knowledge",
+      "priority": "P0",
+      "execution_status": "not_run_application_not_implemented"
+    },
+    {
+      "id": "AT045",
+      "category": "authorization",
+      "given": "A content reviewer",
+      "when": "Browse customer household",
+      "then": "Deny without separate explicit case access",
+      "priority": "P0",
+      "execution_status": "not_run_application_not_implemented"
+    },
+    {
+      "id": "AT046",
+      "category": "session",
+      "given": "Running audio with network disconnected",
+      "when": "Tap stop",
+      "then": "Cancel locally; show household sync pending rather than false global pause",
+      "priority": "P0",
+      "execution_status": "not_run_application_not_implemented"
+    },
+    {
+      "id": "AT047",
+      "category": "session",
+      "given": "Old safety epoch in second caregiver tab",
+      "when": "Start guidance",
+      "then": "Reject STALE_STATE; require current handover and preflight",
+      "priority": "P0",
+      "execution_status": "not_run_application_not_implemented"
+    },
+    {
+      "id": "AT048",
+      "category": "session",
+      "given": "One unresolved household session",
+      "when": "Start another even with different pet",
+      "then": "Reject SESSION_CONFLICT in R0",
+      "priority": "P0",
+      "execution_status": "not_run_application_not_implemented"
+    },
+    {
+      "id": "AT049",
+      "category": "session",
+      "given": "Repeated start request with same key/body",
+      "when": "Retry request",
+      "then": "Return same result without duplicate session",
+      "priority": "P0",
+      "execution_status": "not_run_application_not_implemented"
+    },
+    {
+      "id": "AT050",
+      "category": "session",
+      "given": "Same idempotency key and different body",
+      "when": "Retry mutated request",
+      "then": "Reject key/body mismatch",
+      "priority": "P0",
+      "execution_status": "not_run_application_not_implemented"
+    },
+    {
+      "id": "AT051",
+      "category": "session",
+      "given": "Lost heartbeat during session",
+      "when": "Timeout occurs",
+      "then": "Mark interrupted; do not certify physical separation or silently free progression",
+      "priority": "P0",
+      "execution_status": "not_run_application_not_implemented"
+    },
+    {
+      "id": "AT052",
+      "category": "session",
+      "given": "Local offline notes",
+      "when": "Connectivity returns",
+      "then": "Validate scope/version before syncing; preserve actual report and observation times",
+      "priority": "P0",
+      "execution_status": "not_run_application_not_implemented"
+    },
+    {
+      "id": "AT053",
+      "category": "session",
+      "given": "A paused session",
+      "when": "Click resume after new concern",
+      "then": "Run complete fresh eligibility and reject if held",
+      "priority": "P0",
+      "execution_status": "not_run_application_not_implemented"
+    },
+    {
+      "id": "AT054",
+      "category": "routine",
+      "given": "A meal task has no report",
+      "when": "Ask if pet ate",
+      "then": "State no report; do not infer ingestion or recommend a duplicate feeding",
+      "priority": "P0",
+      "execution_status": "not_run_application_not_implemented"
+    },
+    {
+      "id": "AT055",
+      "category": "routine",
+      "given": "Two caregivers report one task",
+      "when": "Sync both reports",
+      "then": "Preserve both; flag conflict instead of counting two confirmed actions",
+      "priority": "P0",
+      "execution_status": "not_run_application_not_implemented"
+    },
+    {
+      "id": "AT056",
+      "category": "routine",
+      "given": "One task report is retried",
+      "when": "Submit same idempotency key",
+      "then": "Persist only one copy of that report",
+      "priority": "P0",
+      "execution_status": "not_run_application_not_implemented"
+    },
+    {
+      "id": "AT057",
+      "category": "routine",
+      "given": "Routine changed across daylight-saving time",
+      "when": "Generate occurrences",
+      "then": "Use IANA-zone recurrence with deterministic keys and no accidental duplicates",
+      "priority": "P0",
+      "execution_status": "not_run_application_not_implemented"
+    },
+    {
+      "id": "AT058",
+      "category": "notification",
+      "given": "Old plan prompt queued",
+      "when": "Safety epoch changes before send",
+      "then": "Cancel stale message after worker recheck",
+      "priority": "P0",
+      "execution_status": "not_run_application_not_implemented"
+    },
+    {
+      "id": "AT059",
+      "category": "notification",
+      "given": "SQS message delivered twice",
+      "when": "Worker runs twice",
+      "then": "Apply effect once or enter explicit uncertain outcome; no blind resend",
+      "priority": "P0",
+      "execution_status": "not_run_application_not_implemented"
+    },
+    {
+      "id": "AT060",
+      "category": "notification",
+      "given": "Email provider accepted request",
+      "when": "Show user status",
+      "then": "Distinguish provider_accepted from delivered and acknowledged",
+      "priority": "P0",
+      "execution_status": "not_run_application_not_implemented"
+    },
+    {
+      "id": "AT061",
+      "category": "notification",
+      "given": "Delivery fails",
+      "when": "User opens household",
+      "then": "Show failure without treating it as caregiver refusal or agreement",
+      "priority": "P0",
+      "execution_status": "not_run_application_not_implemented"
+    },
+    {
+      "id": "AT062",
+      "category": "voice",
+      "given": "Microphone permission denied",
+      "when": "Use assistant and sessions",
+      "then": "Provide complete typed/button route",
+      "priority": "P0",
+      "execution_status": "not_run_application_not_implemented"
+    },
+    {
+      "id": "AT063",
+      "category": "voice",
+      "given": "Two pets share similar names",
+      "when": "Dictation chooses one ambiguously",
+      "then": "Ask user to select/confirm, not guess",
+      "priority": "P0",
+      "execution_status": "not_run_application_not_implemented"
+    },
+    {
+      "id": "AT064",
+      "category": "voice",
+      "given": "TTS playing and user presses stop",
+      "when": "Audio queue contains more messages",
+      "then": "Cancel queued and current audio immediately",
+      "priority": "P0",
+      "execution_status": "not_run_application_not_implemented"
+    },
+    {
+      "id": "AT065",
+      "category": "voice",
+      "given": "Model provider down",
+      "when": "Open current household record",
+      "then": "Manual logging, pause and approved static information remain usable",
+      "priority": "P0",
+      "execution_status": "not_run_application_not_implemented"
+    },
+    {
+      "id": "AT066",
+      "category": "voice",
+      "given": "Fresh conversation without chat history",
+      "when": "Ask why current plan is paused",
+      "then": "Retrieve actual case state through real authenticated MCP call",
+      "priority": "P0",
+      "execution_status": "not_run_application_not_implemented"
+    },
+    {
+      "id": "AT067",
+      "category": "voice",
+      "given": "Model tries forbidden tool name",
+      "when": "Tool dispatcher receives call",
+      "then": "Reject against whitelist; no generic arbitrary HTTP tool",
+      "priority": "P0",
+      "execution_status": "not_run_application_not_implemented"
+    },
+    {
+      "id": "AT068",
+      "category": "ux",
+      "given": "Screen reader or keyboard only",
+      "when": "Perform setup, stop and handover",
+      "then": "All essential actions and statuses accessible",
+      "priority": "P0",
+      "execution_status": "not_run_application_not_implemented"
+    },
+    {
+      "id": "AT069",
+      "category": "ux",
+      "given": "320 CSS pixels or 200 percent zoom",
+      "when": "Open session and decision screens",
+      "then": "No clipped stop action or essential horizontal scrolling",
+      "priority": "P0",
+      "execution_status": "not_run_application_not_implemented"
+    },
+    {
+      "id": "AT070",
+      "category": "ux",
+      "given": "Reduced-motion preference",
+      "when": "Use app",
+      "then": "Suppress unnecessary animation; no animated progress pressure",
+      "priority": "P0",
+      "execution_status": "not_run_application_not_implemented"
+    },
+    {
+      "id": "AT071",
+      "category": "ux",
+      "given": "No pet photos",
+      "when": "Use all flows",
+      "then": "Names/species/initials provide full functionality",
+      "priority": "P0",
+      "execution_status": "not_run_application_not_implemented"
+    },
+    {
+      "id": "AT072",
+      "category": "ux",
+      "given": "Subtle border colors",
+      "when": "Render interactive controls",
+      "then": "Use visible focus/control boundary independent of decorative border",
+      "priority": "P0",
+      "execution_status": "not_run_application_not_implemented"
+    },
+    {
+      "id": "AT073",
+      "category": "commercial",
+      "given": "Payment provider unavailable",
+      "when": "Open prototype pricing",
+      "then": "Show early access, not fake checkout success",
+      "priority": "P0",
+      "execution_status": "not_run_application_not_implemented"
+    },
+    {
+      "id": "AT074",
+      "category": "commercial",
+      "given": "Expired pass",
+      "when": "Read existing records or export",
+      "then": "Do not gate relevant records/help/stop/export",
+      "priority": "P0",
+      "execution_status": "not_run_application_not_implemented"
+    },
+    {
+      "id": "AT075",
+      "category": "commercial",
+      "given": "Native Alexa unavailable",
+      "when": "Read site and demo",
+      "then": "Clearly disclose browser simulation; no certification or live Echo claims",
+      "priority": "P0",
+      "execution_status": "not_run_application_not_implemented"
+    }
+  ]
+}
