@@ -10,7 +10,7 @@ const roots=['apps/web','apps/showcase','packages','scripts','tests','supabase',
 const files=['.node-version','.nvmrc','.env.example','.gitignore','LICENSE','THIRD_PARTY_NOTICES.md','README.md','DECISIONS.md','package.json','package-lock.json','tsconfig.json','playwright.config.ts','full-erd.mmd','devpost-submission.md','evidence/phase6/providers.json'];
 const ignored=new Set(['node_modules','.next','.git','.local','.vercel','.temp','.branches','__pycache__','test-results','playwright-report']);
 const excluded=new Set(['AGENTS.md','CLAUDE.md','.DS_Store']);
-const permitted=/\.(?:tsx?|mjs|js|json|sql|toml|md|mmd|py|css|html|svg|png|txt|tap|mp4|vtt)$/;
+const permitted=/\.(?:tsx?|mjs|js|json|sql|toml|md|mmd|py|css|html|svg|png|jpe?g|txt|tap|mp4|vtt)$/;
 const secrets=[];
 try {for(const line of (await readFile(resolve(root,'.env.local'),'utf8')).split(/\r?\n/)){
  const at=line.indexOf('=');const key=line.slice(0,at),value=line.slice(at+1);
@@ -34,7 +34,7 @@ const manifest=[];
 for(const path of [...new Set(files)].sort()){
  let bytes=await readFile(resolve(root,path));
  const source_sha256=createHash('sha256').update(bytes).digest('hex'), source_bytes=bytes.length;
- if(!/\.(?:png|mp4)$/.test(path)){
+ if(!/\.(?:png|jpe?g|mp4)$/.test(path)){
   let text=bytes.toString('utf8');
   if(secrets.some(s=>text.includes(s))||patterns.some(p=>p.test(text)))throw new Error(`Secret candidate: ${path}; publication stopped`);
   text=sanitizePublication(text,path,root);
@@ -83,5 +83,5 @@ try {async function verify(dir){for(const entry of await readdir(dir,{withFileTy
  }}await verify(output);}catch(e){if(e.code!=='ENOENT')throw e;}
 for(const file of manifest){const path=resolve(output,file.path);await mkdir(dirname(path),{recursive:true});await writeFile(path,file.data);}
 await mkdir(resolve(root,'.local'),{recursive:true});
-await writeFile(manifestPath,JSON.stringify({created_at:new Date().toISOString(),scope:'Allowlisted source and historical fictional showcase media; no environment credentials',hash_provenance:'source_sha256/source_bytes describe input bytes; sha256/bytes describe sanitized output. Historical execution evidence is retained unchanged except text redaction and is not a claim that sanitized document bytes were executed.',files:manifest.map(({data,...m})=>m)},null,2)+'\n');
+await writeFile(manifestPath,JSON.stringify({created_at:new Date().toISOString(),scope:'Allowlisted source, original presentation assets and reviewed fictional captures; no environment credentials. Binary-image privacy requires separate visual review.',hash_provenance:'source_sha256/source_bytes describe input bytes; sha256/bytes describe sanitized output. Historical execution evidence is retained unchanged except text redaction and is not a claim that sanitized document bytes were executed.',files:manifest.map(({data,...m})=>m)},null,2)+'\n');
 console.log(JSON.stringify({status:'PASS',files:manifest.length,bytes:manifest.reduce((n,f)=>n+f.bytes,0),output,secret_scan:'No known local secret values or selected credential patterns found; this is not an exhaustive security audit.'}));

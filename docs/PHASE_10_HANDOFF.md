@@ -1,5 +1,7 @@
 # Phase 10 delivery handoff — 2026-10-18
 
+**October 22 technical continuation:** [Fresh setup and presentation report](P10_CLEAN_SETUP_2026-10-22.md) supersedes historical pending source/video notes below. The public helper was repaired against an actual fresh native stack; 227 domain,60 browser,5 mocked-voice,11 unit,11 setup,7 export and HTTP/security checks passed within the same-Mac scope. The exact public film now serves on the showcase. Devpost has a new original 3:2 cover, four additional actual screenshots, five useful links and owner-confirmed reuse feedback; personal/eligibility/rights/final submission remain owner-manual. Current source/archive/form outcomes are in [delivery status](submission/DELIVERY_STATUS.md). Docker replay remains unaccepted after VM I/O/journal failure.
+
 > Delivery resumed by the owner on October 21, 2026. The preparation-only upload pause below is historical; current progress and unresolved form/terms gates are in [delivery status](submission/DELIVERY_STATUS.md). This does not assert a completed upload or submitted entry.
 
 ## Scope and identity

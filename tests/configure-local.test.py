@@ -5,15 +5,19 @@ from pathlib import Path
 SCRIPT=Path(__file__).resolve().parents[1]/'scripts/configure-local.py'
 
 class ConfigureLocal(unittest.TestCase):
- def run_case(self, api='http://127.0.0.1:55431', db='postgresql://postgres:postgres@127.0.0.1:55432/postgres', existing=False, nested=False):
+ def run_case(self, api='http://127.0.0.1:55431', db='postgresql://postgres:postgres@127.0.0.1:55432/postgres', existing=False, nested=False, stack=False, cli_error=False):
   with tempfile.TemporaryDirectory() as folder:
    root=Path(folder); cli=root/'supabase'
    payload={'API_URL':api,'DB_URL':db,'ANON_KEY':'fictional-test-public-key','SERVICE_ROLE_KEY':'fictional-test-private-key'}
    if nested: payload={'runtime':'native','env':payload}
-   cli.write_text('#!/usr/bin/env python3\nimport os\nassert os.environ.get("DOCKER_HOST")=="test-context-preserved"\nprint('+repr(json.dumps(payload))+')\n')
+   expected=['stack','status','--output-format','json'] if stack else ['status','-o','json']
+   cli.write_text('#!/usr/bin/env python3\nimport os,sys\nassert os.environ.get("DOCKER_HOST")=="test-context-preserved"\nassert sys.argv[1:]=='+repr(expected)+'\n'+('sys.exit("fictional-test-private-key")\n' if cli_error else 'print('+repr(json.dumps(payload))+')\n'))
    cli.chmod(0o700)
    if existing: (root/'.env.local').write_text('do-not-overwrite')
-   result=subprocess.run(['python3',str(SCRIPT)],cwd=root,env={**os.environ,'PATH':str(root)+os.pathsep+os.environ['PATH'],'DOCKER_HOST':'test-context-preserved'},capture_output=True,text=True)
+   env={**os.environ,'PATH':str(root)+os.pathsep+os.environ['PATH'],'DOCKER_HOST':'test-context-preserved'}
+   env.pop('SUPABASE_EXPERIMENTAL_STACK',None)
+   if stack: env['SUPABASE_EXPERIMENTAL_STACK']='1'
+   result=subprocess.run(['python3',str(SCRIPT)],cwd=root,env=env,capture_output=True,text=True)
    target=root/'.env.local'
    return result,target.read_text() if target.exists() else None,stat.S_IMODE(target.stat().st_mode) if target.exists() else None
  def test_local_credentials_are_private_and_not_printed(self):
@@ -30,6 +34,17 @@ class ConfigureLocal(unittest.TestCase):
   self.assertIn('SUPABASE_URL=http://127.0.0.1:55431',content)
   r,content,_=self.run_case(nested=True,api='https://example.supabase.co')
   self.assertNotEqual(r.returncode,0);self.assertIsNone(content)
+ def test_experimental_stack_uses_documented_status_flags(self):
+  r,content,mode=self.run_case(nested=True,stack=True)
+  self.assertEqual(r.returncode,0,r.stderr);self.assertEqual(mode,0o600)
+  self.assertIn('BEDROCK_ENABLED=false',content)
+  self.assertNotIn('fictional-test-private-key',r.stdout+r.stderr)
+ def test_cli_failure_is_actionable_and_withholds_output(self):
+  r,content,_=self.run_case(cli_error=True)
+  self.assertNotEqual(r.returncode,0);self.assertIsNone(content)
+  self.assertIn('CLI output withheld',r.stderr)
+  self.assertNotIn('fictional-test-private-key',r.stdout+r.stderr)
+  self.assertNotIn('Traceback',r.stderr)
  def test_hosted_auth_is_refused(self):
   r,content,_=self.run_case(api='https://example.supabase.co')
   self.assertNotEqual(r.returncode,0);self.assertIsNone(content)

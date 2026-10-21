@@ -1,0 +1,15 @@
+# Denlumi project cover — October 22, 2026
+
+Original conceptual brand illustration generated through Codex's built-in image-generation tool at the owner's request. The tool did not expose a model selector or model identifier; no claim of GPT Images 2.5 is made. One generation was used. This is marketing artwork, not a product screenshot, implemented UI, animal outcome or provider success.
+
+File: `denlumi-devpost-thumbnail.png`; 1536 × 1024 pixels (3:2), 1,993,521 bytes, SHA-256 `b7a5ecf279ff69391a1a7f233ae7cb5af2f94f34c1ece53dafb311ca6be145d6`. Saved in the project and uploaded as the Devpost thumbnail. No reference screenshot, font binary, animal photograph or third-party logo was supplied.
+
+The owner requested this publication. Generated-output rights and the final entry declarations remain owner-controlled; the source MIT license is not a clearance of third-party platform terms. Gallery application screenshots are actual local captures and are identified separately.
+
+## Exact generation prompt
+
++Use case: ads-marketing. Create one original premium Devpost project thumbnail, exact landscape 3:2 aspect ratio, ideally 1536x1024. Project brand: denlumi, a shared-home records and caregiver handover application for cats and dogs. This is a designed editorial cover, NOT a screenshot, NOT a fake UI, NOT a device mockup.
+Art direction: striking Swiss editorial typography meets tactile monochrome paper sculpture, polished high-end technology product launch art. Warm-neutral near-white background, deep charcoal/black typography and forms, a single restrained vermilion red accent (#d34a3a), no other colors. Beautiful directional studio light, realistic matte paper fibers, subtle crisp contact shadows and ample breathing room. Strong composition legible at small thumbnail size, visual confidence, no template grid of little cards.
+Main artwork: one architectural shared record represented as a beautifully folded white paper dossier standing on a simple charcoal house-shaped base. Two distinct small solid charcoal caregiver tokens approach the dossier by two fine purposeful lines; those lines converge into one vermilion tab on the current record. This is conceptual brand illustration, no animal interaction, no fabricated software or professional approval. Keep artwork subordinate to a powerful typographic hierarchy.
+Text verbatim, perfectly spelled: a large bold lower-case "denlumi" as the brand, and "Same home." on one line followed by "Same update." on the next. A modest small label "Shared care for cats and dogs". Use clean modern sans serif with careful kerning. Arrange all text cleanly, generous safe margins, no tiny unreadable text. Composition must feel like a professionally art-directed launch cover, not an infographic or a flowchart.
+Avoid: gradients, purple, green, blue, paw prints, hearts, stars, rewards, chatbot bubbles, AI brains/chips, Alexa/Amazon logos, third-party brands, fake screen content, certification badges, animal safety claims, shiny plastic, glossy 3D spheres, excessive ornament, watermarks. Opaque background.

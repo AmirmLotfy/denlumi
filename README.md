@@ -6,18 +6,23 @@ All bundled protocols are `demo_only`. They are not professionally approved and 
 
 ## Local setup
 
-Requirements: Node 22.23.4 (see `.nvmrc` / `.node-version`) and npm 10.9.9, Supabase CLI, a running Docker-compatible runtime, and optional AWS credentials for provider probes. Select your Docker context first; `DOCKER_HOST` is respected if your runtime needs it. No hosted Supabase project is needed or permitted.
+Use Git, Python 3, Node **22.23.4** (`.nvmrc` / `.node-version`), npm **10.9.9** and Supabase CLI **2.121.0**. Install/check the pinned CLI through the official links in [judge setup](docs/JUDGE_SETUP.md). The verified fresh-clone route below uses experimental native services on **macOS Apple Silicon**; official Linux support is documented but not exercised here. Judge setup also retains the Docker alternative and its failed verification result.
+
+From a new clone with ports 3400 and 55430–55432 available:
 
 ```bash
 npm ci
-supabase start -x realtime,storage-api,imgproxy,mailpit,postgres-meta,studio,edge-runtime,logflare,vector,supavisor
-supabase migration up --local
+umask 077
+mkdir -p .local
+export SUPABASE_HOME="$PWD/.local/native-home"
+export SUPABASE_EXPERIMENTAL_STACK=1
+supabase stack start --runtime native --preparation on-demand --exclude realtime,storage,functions,studio,mail,analytics,pooler --eager --output-format json > .local/native-start.json 2> .local/native-start.log
 python3 scripts/configure-local.py
 npm run db:setup
 npm run dev
 ```
 
-Open `http://127.0.0.1:3400`. `configure-local.py` writes local credentials to the ignored `.env.local` without printing them. Review `.env.example` before using another environment. Do not use this demo configuration for customer data.
+Wait for successful stack startup before continuing. Native startup applies all fifteen local migrations. The helper creates this clone's own ignored mode-0600 `.env.local`; startup/status output may contain credentials and must remain private. Open `http://127.0.0.1:3400`. Use fictional records only, with Bedrock/speech disabled. No cloud account or paid provider call is needed. Stop your own app, then `supabase stack stop` from the same clone/environment to preserve its data. Do not reuse another project's keys or stop unrelated services. [Complete setup, prerequisites and limits](docs/JUDGE_SETUP.md).
 
 ## Household setup and management — October 20
 
@@ -31,7 +36,7 @@ The fictional Today console supports human session checkpoint/pause/resume/finis
 
 Dependencies and request/session limits are hardened, with final **227/227 domain**, **60/60 typed-browser**, **5/5 isolated mocked voice**, local HTTP/security/schema checks and a zero-known-vulnerability lockfile audit. See [P9_OPERATIONS_HANDOFF.md](docs/P9_OPERATIONS_HANDOFF.md) for exact versions, failures, verification and remaining gates. The isolated voice command requires a built app and free port 3400, uses fictional credentials and loopback-only AWS endpoints, and mocks successful speech responses. Human voice/provider acceptance is separate. The October 21 security release, [Node 22.23.4](https://nodejs.org/en/blog/vulnerability/october-2026-security-releases), is now the required runtime; earlier P9 results retain their executed Node 22.23.3 provenance. The final Node 22.23.4 rerun passed the same 227 domain/Auth/database, 60 typed-browser and five mocked-voice checks; [release evidence](evidence/phase10/node-security-2026-10-21.json) records exact execution.
 
-## Current hackathon status — 21 October 2026
+## Current hackathon status — 22 October 2026
 
 [Public source](https://github.com/AmirmLotfy/denlumi) · [Public presentation](https://denlumi-showcase.vercel.app) · [Judge setup](docs/JUDGE_SETUP.md)
 
@@ -39,13 +44,15 @@ The Alexa+ entry uses the permitted simulated-browser path. The [official deadli
 
 Historical October 19 isolated local native Supabase recovery passed **110/110 database/Auth/domain tests**, **29/29 typed browser tests**, six setup-boundary tests and typecheck. See [the runtime notes](docs/LOCAL_NATIVE_RUNTIME.md) for tested CLI/service versions, setup and evidence limits. This is a fresh fictional database; Docker replay and older accumulated-fixture performance remain unverified. No new AWS request or professional approval is claimed.
 
-The public presentation in `apps/showcase` is a static site with an original, historical fictional-app screenshot. It does not expose a live backend or collect household data. The actual interactive application remains local-only. Original source is licensed under [MIT](LICENSE); third-party rights remain in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
+The public presentation in `apps/showcase` now serves the exact 1:44 Grady submission film, matching captions/transcript, film-frame poster and a YouTube link, alongside a clearly historical original screenshot. It does not expose a live backend or collect household data. The actual interactive application remains local-only. Original source is licensed under [MIT](LICENSE); third-party rights remain in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
 
 ## Verification
 
+Browser checks require **installed Google Chrome**: `playwright.config.ts` selects the `chrome` channel. `npm ci` installs the test runner, not that browser. Install Chrome from [its official distribution](https://www.google.com/chrome/) if it is absent. The recorded October 22 host has Chrome 155.0.8059.85. No browser installation or system browser change is performed by this repository. Run the app before typed-browser/HTTP checks; free port 3400 before the mocked-voice harness.
+
 ```bash
-python3 tests/configure-local.test.py # nine private-file/local-boundary tests
-node --test tests/public-release.test.mjs # export path/link/provenance boundaries
+python3 tests/configure-local.test.py # eleven private-file/local-boundary tests
+node --test tests/public-release.test.mjs # seven export/link/binary/provenance boundaries
 npm run audit:dependencies
 npm run typecheck
 npm run test:unit # 11 database-free conversation/Stop checks
@@ -87,3 +94,5 @@ This workspace has no dedicated hosted Supabase project. Only the isolated local
 Current P10 local source reconciliation and exported-folder replay are recorded in [P10_SOURCE_RECONCILIATION.md](docs/P10_SOURCE_RECONCILIATION.md). The owner resumed delivery; [current delivery status](docs/submission/DELIVERY_STATUS.md) separates the source candidate from the public video, pending personal declarations and final submission.
 
 The submission film is [public on YouTube](https://www.youtube.com/watch?v=cbWwUAx-EMU), with selectable English captions. Devpost remains a draft pending owner-entered personal information and final declarations; [manual finish checklist](docs/submission/MANUAL_FINISH.md).
+
+Fresh October 22 setup: a new public-source clone, `npm ci`, cold native service downloads, new database/Auth and the repaired public helper passed 227 domain/Auth/database, 60 typed-browser, 5 mocked-voice, 11 unit, 11 setup and7 export checks, build/typecheck, actual HTTP MCP and9 security checks. [Exact fresh-setup report](docs/P10_CLEAN_SETUP_2026-10-22.md). This is same-Mac native evidence; the Docker VM attempt failed with image-store I/O/journal errors under storage pressure. No independent-machine, Linux, human, practical or live-provider acceptance is inferred.

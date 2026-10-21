@@ -1,153 +1,154 @@
 WEBVTT
 
 1
-00:00:00.000 --> 00:00:04.154
-When people share care of the same pets, yesterday's
-plan can
+00:00:00.000 --> 00:00:04.600
+When two people care for the same pets, an
+old plan can miss a new concern.
 
 2
-00:00:04.154 --> 00:00:08.308
-outlive today's information. Denlumi connects one
-current household record with clear
+00:00:05.380 --> 00:00:09.280
+Denlumi gives them one current record,
+with clear reports and handovers.
 
 3
-00:00:08.308 --> 00:00:09.441
-reports and handovers.
+00:00:09.760 --> 00:00:12.240
+You're watching a fictional Alexa-style
+browser demo.
 
 4
-00:00:09.941 --> 00:00:14.836
-This is a fictional Alexa-style browser simulation.
-All bundled protocols are
+00:00:12.840 --> 00:00:15.060
+These sample protocols have no
+professional approval.
 
 5
-00:00:14.836 --> 00:00:19.731
-demo-only, without professional approval. No native
-Alexa connection or animal supervision
+00:00:15.700 --> 00:00:17.260
+There is no native Alexa connection.
 
 6
-00:00:19.731 --> 00:00:20.621
-is claimed.
+00:00:18.160 --> 00:00:19.260
+Finn is the newcomer dog.
 
 7
-00:00:21.123 --> 00:00:24.937
-Here, Finn is the newcomer dog and Nora is the
-resident
+00:00:20.000 --> 00:00:21.080
+Nora is the resident cat.
 
 8
-00:00:24.937 --> 00:00:28.750
-cat. The owner reviews this exact fictional plan. Each
-caregiver then
+00:00:21.580 --> 00:00:23.080
+The owner reviews this sample plan,
 
 9
-00:00:28.750 --> 00:00:32.564
-acknowledges the same handover. Review of a sample is
-not professional
+00:00:23.400 --> 00:00:25.840
+and both caregivers acknowledge the same
+handover.
 
 10
-00:00:32.564 --> 00:00:32.910
-approval.
+00:00:26.160 --> 00:00:29.620
+Before a person starts the software
+session, the server checks the household,
 
 11
-00:00:33.412 --> 00:00:37.631
-A fresh server preflight checks the current household,
-plan and protocol
+00:00:29.620 --> 00:00:31.180
+current plan and protocol.
 
 12
-00:00:37.631 --> 00:00:40.700
-before a person explicitly starts this software
-session.
+00:00:31.900 --> 00:00:35.160
+A report keeps who observed what, which
+animal acted, the target,
 
 13
-00:00:41.201 --> 00:00:45.856
-An observation keeps the reporting person, actor,
-target, uncertainty and timing
+00:00:35.500 --> 00:00:36.400
+uncertainty and timing.
 
 14
-00:00:45.856 --> 00:00:50.511
-separate. The assistant cannot confirm it for us. A
-human confirms
+00:00:36.880 --> 00:00:37.860
+The assistant drafts it.
 
 15
-00:00:50.511 --> 00:00:55.166
-the exact draft. The resulting update pauses software
-guidance and invalidates
+00:00:38.320 --> 00:00:39.380
+A person confirms it.
 
 16
-00:00:55.166 --> 00:00:56.012
-dependent work.
+00:00:39.820 --> 00:00:42.760
+The update pauses guidance and invalidates
+older work.
 
 17
-00:00:56.516 --> 00:01:00.816
-Sam's older saved view is refused. A new conversation
-retrieves the
+00:00:43.260 --> 00:00:44.600
+Sam's old view is refused.
 
 18
-00:01:00.816 --> 00:01:05.117
-current record through real authenticated HTTP MCP.
-The answer shown here
+00:00:45.300 --> 00:00:47.720
+A new conversation gets the current record
+through real,
 
 19
-00:01:05.117 --> 00:01:09.417
-comes from a database template. It is not presented as
-a
+00:00:47.720 --> 00:00:50.220
+authenticated HTTP MCP calls.
 
 20
-00:01:09.417 --> 00:01:10.590
-successful model response.
+00:00:51.200 --> 00:00:55.720
+This answer uses a database template;
+Bedrock inference is still blocked.
 
 21
-00:01:11.094 --> 00:01:15.351
-The history preserves the report. A factual private
-preview remains under
+00:00:56.280 --> 00:00:57.360
+The report stays in history.
 
 22
-00:01:15.351 --> 00:01:18.060
-the owner's control. Nothing is sent automatically.
+00:00:57.360 --> 00:01:00.680
+The owner can preview a factual handover
+privately.
 
 23
-00:01:18.566 --> 00:01:23.312
-Even offline, Stop halts software on this device. The
-shared update
+00:01:01.560 --> 00:01:02.920
+Nothing is sent automatically.
 
 24
-00:01:23.312 --> 00:01:28.058
-waits for synchronization. This does not physically
-stop, separate or supervise
+00:01:03.980 --> 00:01:05.940
+Stop works offline on this device.
 
 25
-00:01:28.058 --> 00:01:28.489
-animals.
+00:01:06.740 --> 00:01:08.600
+Its shared update waits for a connection.
 
 26
-00:01:28.990 --> 00:01:33.711
-The same software contract has distinct cat-cat, dog-
-dog and both mixed
+00:01:09.380 --> 00:01:13.080
+It stops software, without physically
+stopping or supervising animals.
 
 27
-00:01:33.711 --> 00:01:38.432
-newcomer contexts. A single-pet home needs no invented
-second pet. Three-pet
+00:01:13.540 --> 00:01:16.967
+Each pairing has its own context: cat-cat,
+dog-dog,
 
 28
-00:01:38.432 --> 00:01:41.007
-coordination never authorizes a group session.
+00:01:17.900 --> 00:01:19.120
+and either mixed newcomer.
 
 29
-00:01:42.775 --> 00:01:48.001
-This demonstration runs on local Supabase. Bedrock
-inference remains blocked in
+00:01:19.120 --> 00:01:22.360
+Single-pet care needs no second pet.
 
 30
-00:01:48.001 --> 00:01:53.228
-the recorded provider checks. Earlier speech-provider
-success used synthetic input. Human
+00:01:22.360 --> 00:01:25.440
+Three-pet coordination does not authorize
+group sessions.
 
 31
-00:01:53.228 --> 00:01:58.454
-usability, voice acceptance, and qualified review
-remain open. Denlumi's claim is
+00:01:25.440 --> 00:01:28.260
+This working demo uses local Supabase.
 
 32
-00:01:58.454 --> 00:02:02.255
-a working coordination slice, not proven animal
-outcomes.
+00:01:28.880 --> 00:01:31.540
+Earlier speech-provider checks used
+synthetic input.
+
+33
+00:01:31.960 --> 00:01:35.840
+Human usability and qualified practical
+review remain open.
+
+34
+00:01:36.280 --> 00:01:40.140
+Denlumi helps people coordinate; animal
+outcomes have not been proven.

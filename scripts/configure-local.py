@@ -5,10 +5,23 @@ from urllib.parse import urlparse
 p=Path('.env.local')
 if p.exists(): raise SystemExit('.env.local already exists; preserve it and edit deliberately.')
 # Respect the caller's Docker context/DOCKER_HOST; do not assume a person's home directory.
-r = subprocess.run(['supabase','status','-o','json'], env=dict(os.environ), capture_output=True, text=True, check=True)
-s = json.loads(r.stdout)
+command = (['supabase','stack','status','--output-format','json']
+           if os.environ.get('SUPABASE_EXPERIMENTAL_STACK') == '1'
+           else ['supabase','status','-o','json'])
+try:
+ r = subprocess.run(command, env=dict(os.environ), capture_output=True, text=True)
+except OSError:
+ raise SystemExit('Install the pinned Supabase CLI and start the local stack first. CLI output withheld.')
+if r.returncode:
+ raise SystemExit('Could not read local Supabase status. Check the pinned CLI, runtime and working directory. CLI output withheld.')
+try:
+ s = json.loads(r.stdout)
+except json.JSONDecodeError:
+ raise SystemExit('Local Supabase status was not valid JSON. CLI output withheld.')
+if not isinstance(s,dict): raise SystemExit('Unexpected local status shape. CLI output withheld.')
 # CLI 2.121's experimental local stack nests the same connection keys in env.
 s = s.get('env', s)
+if not isinstance(s,dict): raise SystemExit('Unexpected local connection shape. CLI output withheld.')
 if any(not isinstance(s.get(key),str) or not s[key] or any(c in s[key] for c in '\r\n\x00') for key in ('API_URL','DB_URL','ANON_KEY','SERVICE_ROLE_KEY')):
  raise SystemExit('Local connection fields must be nonempty single-line strings; values withheld.')
 api=urlparse(s['API_URL']); database=urlparse(s['DB_URL'])

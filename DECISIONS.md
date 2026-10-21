@@ -1,5 +1,11 @@
 # Decisions — Phase 0
 
+## P10 clean setup and showcase alignment — 2026-10-22
+
+- Owner authorized fixing remaining technical submission gaps, verifying fresh setup and updating the existing showcase with the exact public Grady film. Personal answers, eligibility/rights declarations and final Devpost submission remain owner-manual.
+- Use a fresh public-source clone, a new task-owned Docker VM and new localhost credentials; preserve the existing native database. Keep the system runtime and global Docker selection unchanged. No hosted Supabase or provider enablement. Actual results are recorded separately, never inferred from service startup.
+- Keep the static native video player and an ordinary YouTube link. The exact film already contains English captions; offer the WebVTT track without forcing a duplicate overlay. Deploy only the existing static project, retain prior media privately and verify public file hashes/range playback.
+
 ## Phase 6/7 closure refresh — 2026-10-01
 
 - Clear transient household content and media immediately on leave, even if logout fails. Keep a visible retry; reject delayed reads at the household/generation boundary. No unsaved draft or voice provenance carries into a new sample.

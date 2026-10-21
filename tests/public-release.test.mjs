@@ -51,3 +51,14 @@ test('known private values and output symlinks stop export without copying sourc
  rmSync(resolve(folder,'docs/private.md'));mkdirSync(resolve(folder,'.local'),{recursive:true});mkdirSync(resolve(folder,'untouched'));symlinkSync(resolve(folder,'untouched'),resolve(folder,'.local/review'));
  r=run();assert.notEqual(r.status,0);assert.match(r.stderr,/symlink refused/);assert.equal(existsSync(resolve(folder,'untouched/README.md')),false);
 }));
+test('JPEG application captures retain exact binary bytes and source hashes',()=>fixture((folder,run)=>{
+ const image=Buffer.from([0xff,0xd8,0xff,0xe0,0,16,0x4a,0x46,0x49,0x46,0,0x80,0xfe,0xff,0xd9]);
+ writeFileSync(resolve(folder,'docs/real-capture.jpg'),image);
+ const r=run();assert.equal(r.status,0,r.stderr);
+ assert.ok(existsSync(resolve(folder,'.local/review/docs/real-capture.jpg')));
+ assert.deepEqual(readFileSync(resolve(folder,'.local/review/docs/real-capture.jpg')),image);
+ const manifest=JSON.parse(readFileSync(resolve(folder,'.local/review-manifest.json'),'utf8'));
+ const file=manifest.files.find(f=>f.path==='docs/real-capture.jpg');
+ assert.equal(file.source_sha256,createHash('sha256').update(image).digest('hex'));
+ assert.equal(file.sha256,file.source_sha256);
+}));

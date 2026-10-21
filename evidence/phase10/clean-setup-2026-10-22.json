@@ -1,0 +1,264 @@
+{
+  "checked_at": "2026-10-21T21:50:02.766622+00:00",
+  "scope": "Fresh public-source clone and cold native localhost setup on the same darwin-arm64 Mac; fictional records only",
+  "base_commit": "9ad14228bd9adf1d2a3d6608154146759c9f962e",
+  "local_repairs": [
+    "scripts/configure-local.py",
+    "tests/configure-local.test.py",
+    "scripts/prepare-public-release.mjs",
+    "tests/public-release.test.mjs"
+  ],
+  "runtime": {
+    "node": "22.23.4",
+    "npm": "10.9.9",
+    "supabase_cli": "2.121.0",
+    "browser": "Existing Google Chrome 155.0.8059.85",
+    "native_home": "New private directory; no existing stack data, credentials or private adapter reused",
+    "service_downloads": "Cold native archive downloads",
+    "supabase_scope": "Local only; API55431/DB55432",
+    "source_migrations": 15,
+    "seeded_protocols": 7,
+    "practical_approval": "demo_only; none approved"
+  },
+  "checks": [
+    {
+      "check": "typecheck",
+      "command": [
+        "npm",
+        "run",
+        "typecheck"
+      ],
+      "exit_code": 0,
+      "seconds": 4.267,
+      "log_sha256": "3bd22fd4a0ba8ff89129230a6497e6ab9b9a2b33106c58b101ea6a4352a83ee6"
+    },
+    {
+      "check": "pure-unit",
+      "command": [
+        "npm",
+        "run",
+        "test:unit"
+      ],
+      "exit_code": 0,
+      "seconds": 0.89,
+      "log_sha256": "5ee5d0db989340a3eed6679aa3ce9581aa13ffe90efe8a0d58a089998c5a4eb5",
+      "tests": 11,
+      "passed": 11,
+      "failed": 0
+    },
+    {
+      "check": "setup-boundaries",
+      "command": [
+        "python3",
+        "tests/configure-local.test.py"
+      ],
+      "exit_code": 0,
+      "seconds": 7.753,
+      "log_sha256": "bf3ef6e046a12b1ccf29273638a717d3f7c67f6790b36ed1b6ca79abb8677a1d",
+      "tests": 9,
+      "passed": 9,
+      "scope": "Historical helper before repair"
+    },
+    {
+      "check": "export-boundaries",
+      "command": [
+        "node",
+        "--test",
+        "tests/public-release.test.mjs"
+      ],
+      "exit_code": 0,
+      "seconds": 0.283,
+      "log_sha256": "14deb2624d6eebb1424d61df5c9c4b8c8e6dedf38afa48010668bb2c5be3ab57",
+      "tests": 6,
+      "passed": 6,
+      "scope": "Before JPEG publication support"
+    },
+    {
+      "check": "configure-fresh",
+      "command": [
+        "python3",
+        "scripts/configure-local.py"
+      ],
+      "exit_code": 1,
+      "seconds": 0.644,
+      "log_sha256": "75f93a6a79fb768642c6a7d38984004230ea19a5ea86717b270a5b69542206ae"
+    },
+    {
+      "check": "configure-fixed-fresh",
+      "command": [
+        "python3",
+        "scripts/configure-local.py"
+      ],
+      "exit_code": 0,
+      "seconds": 0.929,
+      "log_sha256": "e678587403c98cd50860c2e8a2d9e3ebd7d7f7bc4e3b8be10e13b7c1cd2ac521"
+    },
+    {
+      "check": "seed-fresh",
+      "command": [
+        "npm",
+        "run",
+        "db:setup"
+      ],
+      "exit_code": 0,
+      "seconds": 2.745,
+      "log_sha256": "dac1cd4353e852532a2930cb1cf4fb2dd29fff6c37aee1082924d9f2ecd8d4e9"
+    },
+    {
+      "check": "domain-fresh",
+      "command": [
+        "npm",
+        "test"
+      ],
+      "exit_code": 0,
+      "seconds": 120.705,
+      "log_sha256": "bcb7bd4049b26bf64c2c5abd843117193933c5b3f04f2755bf00c7513989f80b",
+      "tests": 227,
+      "passed": 227,
+      "failed": 0
+    },
+    {
+      "check": "build-fresh",
+      "command": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "exit_code": 0,
+      "seconds": 14.296,
+      "log_sha256": "2ccd746feb5f5127220c2c99567f0ffcf5e0da6000d9326ba198194d6847d6dd"
+    },
+    {
+      "check": "typed-browser-fresh",
+      "command": [
+        "npm",
+        "run",
+        "test:browser"
+      ],
+      "exit_code": 0,
+      "seconds": 280.421,
+      "log_sha256": "3837dfd9b7fcc519af7b2f022523431a0c6491e4737ea3687ff58c3ce57ad85f",
+      "tests": 60,
+      "passed": 60,
+      "failed": 0
+    },
+    {
+      "check": "mcp-http-fresh",
+      "command": [
+        "npm",
+        "run",
+        "test:mcp:http"
+      ],
+      "exit_code": 0,
+      "seconds": 1.019,
+      "log_sha256": "e1185283f41db6d94197552fca13837e6e4409c9af0672256170b24ba837963f"
+    },
+    {
+      "check": "security-http-fresh",
+      "command": [
+        "npm",
+        "run",
+        "test:p9:http"
+      ],
+      "exit_code": 0,
+      "seconds": 0.404,
+      "log_sha256": "750bc3b155d1805092f42a2afe136b34cfd65162c643dc98280d1447ceae0878",
+      "checks": 9
+    },
+    {
+      "check": "mocked-voice-fresh",
+      "command": [
+        "npm",
+        "run",
+        "test:browser:voice"
+      ],
+      "exit_code": 0,
+      "seconds": 22.02,
+      "log_sha256": "c02abb70fba1a14d7a84e9656135e0956b6c7907e4effaef2603fb91c790082f",
+      "tests": 5,
+      "passed": 5,
+      "failed": 0,
+      "provider_calls": 0
+    },
+    {
+      "check": "setup-boundaries-fixed",
+      "command": [
+        "python3",
+        "tests/configure-local.test.py"
+      ],
+      "exit_code": 0,
+      "seconds": 7.378,
+      "log_sha256": "06de3ba00381c0a4ed74bff7ab69db5b9b0020a44dede869cc74123e87d3ecf3",
+      "tests": 11,
+      "passed": 11,
+      "failed": 0
+    },
+    {
+      "check": "export-boundaries-jpeg",
+      "command": [
+        "node",
+        "--test",
+        "tests/public-release.test.mjs"
+      ],
+      "exit_code": 0,
+      "seconds": 0.497,
+      "log_sha256": "95882383189bbb3cf50d45389893d1c7de720392a39490384eb073a4be014b92",
+      "tests": 7,
+      "passed": 7,
+      "failed": 0
+    },
+    {
+      "check": "artifact-scan-fresh",
+      "command": [
+        "npm",
+        "run",
+        "check:artifacts"
+      ],
+      "exit_code": 0,
+      "seconds": 0.379,
+      "log_sha256": "18c00956b18b3d62fde8c1070aa96030b57386f9e9e5a548b5964855cfb7b225",
+      "browser_assets": 15
+    },
+    {
+      "check": "audit-fresh",
+      "command": [
+        "npm",
+        "run",
+        "audit:dependencies"
+      ],
+      "exit_code": 0,
+      "seconds": 1.005,
+      "log_sha256": "84b7f7ad89cf8829b30c72a2688952652efa3a5a76f19ecf5ac664d9a079ae1f",
+      "known_vulnerabilities": 0
+    }
+  ],
+  "pre_fix_regressions": {
+    "setup": {
+      "tests": 11,
+      "failed": 2
+    },
+    "jpeg_export": {
+      "tests": 7,
+      "failed": 1
+    }
+  },
+  "runtime_source_parity": {
+    "files": 105,
+    "sha256_of_path_list": "18bb30303a1714a602a027e0e6e83a40f2a2f083ed4d98fbd29e7807d431d124",
+    "all_match": true
+  },
+  "docker_attempt": {
+    "result": "NOT_ACCEPTED",
+    "engine": "New task-owned Colima Docker29.5.2 VM",
+    "failure": "Legacy initialization DbSetupError exit125; subsequent image inspect I/O failures. VM kernel reported vdb write I/O errors and aborted EXT4 journal under host storage pressure. No application replay completed.",
+    "cleanup": "Only newly created task-owned failed VM/data removed; original native database preserved; global Docker context remained default"
+  },
+  "limits": [
+    "Same Mac and existing Chrome; not independent-machine or Linux execution",
+    "No successful Docker replay; no old-data/full-platform recovery acceptance",
+    "Mocked voice is not real provider or human voice acceptance",
+    "No new real AWS request, provider enablement, hosted Supabase or customer records",
+    "Selected credential-pattern scan is not exhaustive leak or penetration coverage",
+    "Human H01-H08, qualified practical review, owner rights/eligibility/final submission remain separate"
+  ]
+}

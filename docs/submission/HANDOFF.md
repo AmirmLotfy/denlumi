@@ -1,5 +1,7 @@
 # Submission drafting handoff — 2026-10-18
 
+**Current October 22 continuation:** source and the exact Grady film are public; Devpost is a saved draft awaiting owner personal answers and final submission. The owner now authorizes clean local setup verification and the showcase film replacement. [Delivery status](DELIVERY_STATUS.md) and [manual finish](MANUAL_FINISH.md) supersede historical pause/preparation notes below. No hosted Supabase or final submission is authorized here.
+
 > Delivery resumed by the owner on October 21, 2026. The preparation-only upload pause below is historical; current progress and unresolved form/terms gates are in [delivery status](DELIVERY_STATUS.md). This does not assert a completed upload or submitted entry.
 
 ## Scope and ownership
