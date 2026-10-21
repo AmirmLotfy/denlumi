@@ -1,0 +1,27 @@
+{
+  "checked_at": "2026-10-21T22:16:41.442571+00:00",
+  "region": "us-east-1",
+  "model_id": "us.amazon.nova-micro-v1:0",
+  "aws_identity": "PASS_AFTER_OWNER_AUTHORIZED_LOGIN",
+  "status": "BLOCKED",
+  "request_sent": true,
+  "cost_guard": {
+    "max_requests": 1,
+    "max_output_tokens": 96,
+    "retries": 0
+  },
+  "scope": "One standalone real Converse connectivity request with fictional software text; not an application tool loop, guidance, latency benchmark or human acceptance.",
+  "error": "ValidationException",
+  "message": "Operation not allowed",
+  "profile": "default",
+  "model_discovery": "amazon.nova-micro-v1:0 ACTIVE",
+  "inference_profile": "us.amazon.nova-micro-v1:0 ACTIVE",
+  "docker": {
+    "status": "NOT_ACCEPTED",
+    "owner_decision": "Keep Docker blocked for now",
+    "host_free_bytes_at_recheck": 4407902208,
+    "new_vm_or_image_pull": false,
+    "prior_failure": "vdb I/O errors and aborted EXT4 journal; no successful Docker application replay"
+  },
+  "unchanged_software_validation": "Earlier October22 same-Mac native checks retained; no application code or dependency changed and no full suite rerun."
+}

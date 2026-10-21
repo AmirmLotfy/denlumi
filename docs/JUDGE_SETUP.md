@@ -57,6 +57,8 @@ npm run dev
 
 The helper uses legacy `supabase status -o json` for this route. No Supabase link, remote migration, cloud project or email invitation belongs in either setup.
 
+Before cold Docker setup, check physical host space on the filesystem storing the VM and images, plus guest free space and filesystem health. Denlumi uses a conservative 15 GiB host-free admission budget for a later retry; this is a project safeguard, not a vendor minimum. A larger sparse virtual disk does not create physical host space. The October 22 recheck found about 4.1 GiB free, and the owner chose to keep Docker blocked. Preserve existing databases and unrelated files rather than retrying unchanged image pulls. See the [current recovery/readiness record](P10_READINESS_RECHECK_2026-10-22.md).
+
 **Docker evidence remains unaccepted.** The October 22 isolated Colima attempt failed during VM storage initialization with vdb I/O and journal-abort errors under storage pressure; only the task-owned VM was cleaned up. No successful fresh Docker startup, migration or application replay is claimed. The earlier Docker instructions were originally exercised with CLI 2.90.0; pinning 2.121.0 here is not proof of a completed Docker replay. Prefer the tested native-host route where supported, and check [delivery status](submission/DELIVERY_STATUS.md) for actual subsequent outcomes.
 
 ## Exact demonstration

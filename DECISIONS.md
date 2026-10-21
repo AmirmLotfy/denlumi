@@ -169,3 +169,7 @@ The user requested "continue everything ... also submit everything for me in you
 ## 2026-10-22 — public delivery with owner-manual completion
 
 The owner explicitly approved YouTube Terms/Community Guidelines and public upload, and asked to complete needed personal inputs manually later. Published exact Grady film to Frameless, verified Public status, anonymous metadata, real muted playback and manually uploaded English caption selection. Application source 63ea233 fast-forwarded to GitHub and selected anonymous bytes matched. Devpost saved technical fields, source ZIP, video and gallery; draft 3/5 remains incomplete. Keep personal fields blank, eligibility/terms unchecked, and final Submit project unpressed. No automatic final submission or new external action is inferred while the owner completes those inputs.
+
+## October 22 renewed AWS and readiness recheck
+
+The owner authorized AWS login and chose to keep Docker blocked for now. Renewed STS identity and ACTIVE Nova Micro discovery/profile do not imply inference access: one 96-token-capped, no-retry real Converse request returned ValidationException: Operation not allowed. No application/dependency change or unchanged-suite rerun; same-Mac native checks remain the actual software evidence. Source/film requirements were rechecked against the official simulation/local-repository route. Personal declarations and final Submit remain owner-only; no hosted Supabase or resource enablement. See [dated report](docs/P10_READINESS_RECHECK_2026-10-22.md).
