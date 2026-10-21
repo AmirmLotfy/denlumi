@@ -4,7 +4,7 @@ Status verified October 22, 2026 Africa/Cairo: **Devpost draft, 3/5 steps comple
 
 - [Open Additional info](https://devpost.com/submit-to/30992-build-ship-shape-amazon-developer-hackathon/manage/submissions/1252467-denlumi/additional-info/edit).
 - [Public film](https://www.youtube.com/watch?v=cbWwUAx-EMU), Frameless, 1:44. English timed SRT uploaded; the public player's menu shows English selected separately from auto-generated captions. AI narration is disclosed. YouTube checks reported no copyright/Community Guidelines issues; this is not a legal-rights clearance or human listening acceptance.
-- [Current source](https://github.com/AmirmLotfy/denlumi). The October 22 technical release includes the repaired fresh-setup helper, JPEG export support, current showcase media, original cover and four real gallery captures. The current archive is `denlumi-source-2026-10-22.zip`; its exact commit/hash and actual upload are recorded in the delivery receipt. The earlier `denlumi-source-final.zip`/63ea233 snapshot is historical.
+- [Current source](https://github.com/AmirmLotfy/denlumi). The October 22 technical release includes the repaired fresh-setup helper, JPEG export support, current showcase media, original cover and four real gallery captures. The current archive is `denlumi-source-recheck-2026-10-22.zip`; its exact commit/hash and actual upload are recorded in the delivery receipt. The earlier `denlumi-source-final.zip`/63ea233 snapshot is historical.
 
 ## Review your owner-controlled fields
 
