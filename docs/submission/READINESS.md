@@ -1,8 +1,8 @@
 # Submission readiness — October 22, 2026 Africa/Cairo
 
-**Current authoritative state: source and the 1:44 Grady film are public; Devpost technical draft is saved at 3/5 steps. All nine personal fields, three eligibility declarations and final agreement remain for the owner, and Submit project is unpressed. The owner has authorized showcase deployment and clean-setup validation; both are in progress. Use [delivery status](DELIVERY_STATUS.md) for actual completed results and [manual finish](MANUAL_FINISH.md) for the owner's final actions.** No showcase or clean-machine Docker success is inferred here.
+**Current verified state: source and the 1:44 Grady film are public, the matching showcase is deployed, and the fresh native setup passed on the same Mac after the public helper repair. Devpost remains a saved draft at 3/5 steps. The original 3:2 cover, six captioned gallery images, five links and updated technical/reuse feedback are saved. Personal entries present in the form are preserved without coordinator changes; eligibility, rights review and final agreement/Submit project remain owner-controlled. [Delivery status](DELIVERY_STATUS.md) records exact results; [manual finish](MANUAL_FINISH.md) lists owner actions.** Docker replay remains unaccepted after the VM I/O/journal failure.
 
-The October 21 preparation pause was subsequently resumed. [Next steps](NEXT_STEPS.md) leads with the current authorized work. The updated local showcase assets match the public film and are listed in the [asset register](ASSET_REGISTER.md). Full human watch/listen, narration/output rights and personal declarations remain owner gates despite publication. Historical preparation sections below retain their date and original evidence limits.
+The October 21 preparation pause was subsequently resumed. [Next steps](NEXT_STEPS.md) leads with the current authorized work. The deployed showcase assets match the public film and are listed in the [asset register](ASSET_REGISTER.md). Full human watch/listen, narration/output rights and personal declarations remain owner gates despite publication. Historical preparation sections below retain their date and original evidence limits.
 
 ## Deadline and rules checked during October 21 preparation
 
@@ -22,16 +22,16 @@ The [overview submission requirements](https://amazonappdev2026.devpost.com/) re
 |---|---|---|
 | Project description | Factual copy, name/pitch and AI disclosure saved; owner editorial/rights review remains | Technical draft saved |
 | Video | [Public 1:44 Grady film](https://www.youtube.com/watch?v=cbWwUAx-EMU), exact local MP4 hash `1a8b63b138c151002519302703345e77008034805c8a43dac7f071d5b2f589ca`; matching selectable English captions | Published; full human listening/rights open |
-| GitHub source and instructions | [Application release `63ea233…`](https://github.com/AmirmLotfy/denlumi/commit/63ea23340909357bb4786f25dde8f43fbecc1570), anonymous source/license/setup/runtime readback matched | Published |
+| GitHub source and instructions | [Current technical source](https://github.com/AmirmLotfy/denlumi), including the actual helper repair, JPEG export support and current media; anonymous selected bytes matched | Published |
 | Reviewer delivery choice | Public MIT source selected; no collaborator invitations needed | Public source |
 | Portable source package | Selected application/source ZIP attached to Devpost; later metadata receipts are separate from the executed application snapshot | Saved; fresh native setup passed |
-| Judge run instructions | [Judge setup](../JUDGE_SETUP.md); prior native/source-folder replays are local evidence. Current authorized clean-setup work must report its actual environment and results | Fresh native route passed; Docker attempt failed |
-| Showcase | Current local player, 104-second film, poster, captions/transcript and public YouTube link prepared; static-only deployment authorized | Deployed; public bytes and muted playback verified |
-| Working demo replay | Node 22.23.4 typecheck/build, 227 domain/Auth/database, 60 typed-browser, five mocked voice, 11 unit, nine setup and six export checks passed; film capture is October 19 | Local software evidence; no human/provider acceptance |
-| Feedback | Factual questions 1–4, feature/friction entries saved; question 5 is saved with the owner-confirmed Yes; remaining personal/survey answers remain for owner | Technical feedback saved; personal fields blank |
+| Judge run instructions | [Judge setup](../JUDGE_SETUP.md); prior native/source-folder replays are local evidence. Fresh native source/service/database verification passed; same-Mac scope is documented | Fresh native route passed; Docker attempt failed |
+| Showcase | Existing static project deployed with exact 104-second film, matching poster/captions/transcript and YouTube link | Deployed; public bytes and muted playback verified |
+| Working demo replay | Node 22.23.4 typecheck/build, 227 domain/Auth/database, 60 typed-browser, five mocked voice, 11 unit, 11 setup and 7 export checks passed on the fresh native stack; film capture is October 19 and added gallery captures are October 22 | Local software evidence; no human/provider acceptance |
+| Feedback | Factual questions 1–4, feature/friction entries saved; question 5 is saved with the owner-confirmed Yes; remaining personal/survey answers remain for owner | Technical feedback saved; personal entries preserved |
 | Primary track | Alexa+ selected in saved actual form; no native Alexa connection claimed | Saved |
 | Mini-challenges | AWS Builder Yes with factual historical speech/blocked Bedrock write-up; Open Source No without additional verified contribution | Saved |
-| Eligibility, rights and team representation | Eight remaining personal fields blank; three age/jurisdiction/non-employee declarations unchecked. Source MIT does not settle narration/output rights | Owner manual completion |
+| Eligibility, rights and team representation | Personal fields remain owner-controlled; latest manual entries are preserved; three age/jurisdiction/non-employee declarations unchecked. Source MIT does not settle narration/output rights | Owner manual completion |
 | Public links and final submission | Source/video readback verified. Devpost is 3/5 draft; final rules/terms unchecked and Submit project unpressed | Not finally submitted |
 
 For private GitHub access, the refreshed rules/FAQ identify five Amazon users: `knmeiss`, `giolaq`, `anishamalde`, `mosesroth`, `emersonsklar`. The old `chris-trag` entry is absent. Confirm the live Devpost contact and instructions before any separately authorized invitation. Invitations expire after seven days and require acceptance. No collaborator was added here. Credentials belong in a private testing channel only, never public copy, source or video.
@@ -49,7 +49,7 @@ The [official judging criteria](https://amazonappdev2026.devpost.com/rules) are 
 
 ## Current engineering and product limits
 
-The selected runtime is task-local **Node 22.23.4 / npm 10.9.9**, checksum-verified without changing dependency versions or the system runtime. [Runtime evidence](../../evidence/phase10/node-security-2026-10-21.json) records typecheck/build, 227 domain/Auth/database, 60 typed-browser, five mocked voice, 11 unit, nine setup, six export and zero-known lockfile audit results. The showcase update is deployed and public file hashes/range playback are verified. Fresh native setup passed 227 domain/Auth/database,60 typed-browser,5 mocked-voice,11 unit,11 setup and7 export checks, real HTTP MCP and9 HTTP security checks. [Fresh setup](../P10_CLEAN_SETUP_2026-10-22.md) retains the same-Mac and failed-Docker boundaries.
+The selected runtime is task-local **Node 22.23.4 / npm 10.9.9**, checksum-verified without changing dependency versions or the system runtime. [Runtime evidence](../../evidence/phase10/node-security-2026-10-21.json) records typecheck/build, 227 domain/Auth/database, 60 typed-browser, five mocked voice, 11 unit, nine setup, six export and zero-known lockfile audit results. The showcase update is deployed and public file hashes/range playback are verified. Fresh native setup passed 227 domain/Auth/database, 60 typed-browser, 5 mocked-voice, 11 unit, 11 setup and 7 export checks, real HTTP MCP and9 HTTP security checks. [Fresh setup](../P10_CLEAN_SETUP_2026-10-22.md) retains the same-Mac and failed-Docker boundaries.
 
 Human [H01–H08](../P9_HUMAN_ACCEPTANCE.md) remain NOT_RUN, qualified practical content review remains absent, and voice/provider/retention/older-data/full-platform recovery gates remain open. Bedrock inference was historically refused and latest identity expired; authorization is unknown. Historical Polly/Transcribe generated-input calls and mocked voice checks do not establish human speech acceptance or current provider authorization. Film publication is not human listening, legal-rights clearance or animal-outcome evidence.
 
@@ -65,7 +65,7 @@ October 21 local operations also supplied a bounded nine-household withdrawal pr
 
 ## Smallest next action
 
-The coordinator has recorded the verified native setup and deployed showcase outcomes in [delivery status](DELIVERY_STATUS.md); current source/archive/form parity is reconciled there. The owner completes the full film watch/listen and [manual finish](MANUAL_FINISH.md): the eight remaining personal fields, three eligibility declarations and final agreement remain untouched. No final submission confirmation exists yet.
+The coordinator has recorded the verified native setup and deployed showcase outcomes in [delivery status](DELIVERY_STATUS.md); current source/archive/form parity is reconciled there. The owner completes the full film watch/listen and [manual finish](MANUAL_FINISH.md): the owner-controlled personal fields, three eligibility declarations and final agreement remain untouched. No final submission confirmation exists yet.
 
 ## Historical voice correction and source preparation
 

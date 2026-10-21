@@ -1,6 +1,6 @@
 # P10 delivery status — October 22, 2026 Africa/Cairo
 
-**Public source and video exist; the updated static showcase is deployed. The Devpost technical draft is saved at 3/5 steps and is not finally submitted.** The owner authorized the technical/setup/showcase/media work and explicitly confirmed Yes with documented limitations for Feedback Question 5. Eight remaining personal fields, three eligibility declarations, owner rights review and the final agreement/Submit project remain manual.
+**Public source and video exist; the updated static showcase is deployed. The Devpost technical draft is saved at 3/5 steps and is not finally submitted.** The owner authorized the technical/setup/showcase/media work and explicitly confirmed Yes with documented limitations for Feedback Question 5. Personal entries are now present in the latest form and were preserved without coordinator changes. Eligibility declarations, owner rights review and final agreement/Submit project remain owner-controlled.
 
 ## Fresh local setup and fixes
 
@@ -32,7 +32,7 @@ The original untracked workspace, its credentials and retained dirty historical 
 
 ## Owner and product gates
 
-Follow [manual finish](MANUAL_FINISH.md): eight remaining personal fields (including applicable conditional answers), three eligibility declarations, whole-film listening/rights review and final rules/terms/Submit project. Final agreement remains unchecked. No identity, residence, build-window, learning or career answer was invented. The owner alone performs final submission.
+Follow [manual finish](MANUAL_FINISH.md): your personal entries and applicable conditional answers, eligibility declarations, whole-film listening/rights review and final rules/terms/Submit project. Some personal fields now contain owner-controlled entries; the coordinator has not supplied them. Final agreement remains unchecked. No identity, residence, build-window, learning or career answer was invented. The owner alone performs final submission.
 
 Human H01–H08, qualified exact-version practical review, live-provider authorization/cost/latency/retention, older-record/full-platform recovery and retention-policy acceptance remain open. Bedrock inference was refused historically and current authorization is unknown after expired identity. No new real AWS request, provider enablement, hosted Supabase, paid resource, external invitation/message or recurring automation was performed. All practical content stays demo_only; passing software tests is not production or animal-safety acceptance.
 
