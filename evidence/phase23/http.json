@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-09-22T12:06:35.409Z",
+  "checked_at": "2026-10-20T21:53:29.474Z",
   "result": "PASS",
   "scope": "Real authenticated local HTTP against isolated Supabase. Fictional demo records only; no hosted project, deployment, professional approval, or practical animal guidance.",
   "proof": {
@@ -9,7 +9,7 @@
     "plan_status": "reviewed",
     "exact_handover_ack": true,
     "fresh_conversation_state": {
-      "id": "87f92606-45e6-4bc3-8020-37776b44a2d0",
+      "id": "281f031a-e237-4518-8d1d-18af54c0b7af",
       "nickname": "The sample home",
       "home_version": 2,
       "safety_epoch": 3,

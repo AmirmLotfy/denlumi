@@ -1,4 +1,4 @@
-import { test,expect } from '@playwright/test';
+import { test,expect } from './database-test';
 import { testHousehold } from '../helpers';
 import { pool } from '../../packages/domain/db';
 

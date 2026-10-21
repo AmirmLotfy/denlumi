@@ -5,11 +5,6 @@
   "artifact_kind": "specification_and_fictional_fixtures",
   "files": [
     {
-      "path": "AGENTS.md",
-      "bytes": 2248,
-      "sha256": "e9c86144b25d4552eeaf7eed425682154468591ef7645e63f736720157cdd7e7"
-    },
-    {
       "path": "MASTER_BLUEPRINT.md",
       "bytes": 100479,
       "sha256": "7b9bd411dc4bf754fe1ffa77a9da5d1c21a1b1e1217b5a02ddf5713b10adec76"
@@ -174,5 +169,6 @@
       "bytes": 1633,
       "sha256": "b512f88306c7dfb0dec0879c0b7a02ef5fb37cd3008682a9a5fc17272acbbd19"
     }
-  ]
+  ],
+  "publication_scope": "Sanitized public snapshot; operator instructions excluded; hashes describe these published bytes."
 }

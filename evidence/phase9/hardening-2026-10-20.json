@@ -1,0 +1,553 @@
+{
+  "checked_at": "2026-10-20T21:01:23.704Z",
+  "result": "PASS for scoped local software hardening",
+  "environment": {
+    "app": "localhost production Next 16.4.2",
+    "database": "existing isolated native Supabase on loopback; preserved",
+    "node": "22.23.3 task-local",
+    "npm": "10.9.9",
+    "system_node_unchanged": "22.13.1",
+    "branch": "main",
+    "head": "unborn",
+    "existing_untracked_work_preserved": true
+  },
+  "versions": {
+    "next": "16.4.2",
+    "react": "19.3.1",
+    "react_dom": "19.3.1",
+    "mcp": "1.32.1",
+    "sharp": "0.35.5",
+    "hono": "4.13.11",
+    "source_map_js": "1.2.2"
+  },
+  "audit": {
+    "before": {
+      "info": 0,
+      "low": 0,
+      "moderate": 1,
+      "high": 3,
+      "critical": 1,
+      "total": 5
+    },
+    "after": {
+      "info": 0,
+      "low": 0,
+      "moderate": 0,
+      "high": 0,
+      "critical": 0,
+      "total": 0
+    },
+    "limitation": "npm feed is not a complete bundled-code/runtime audit; maintainer October14 Next notices also informed pins"
+  },
+  "regressions": {
+    "body_before": {
+      "passed": 0,
+      "total": 8
+    },
+    "body_after": {
+      "passed": 8,
+      "total": 8
+    },
+    "read_before": {
+      "passed": 2,
+      "total": 4
+    },
+    "read_after": {
+      "passed": 4,
+      "total": 4
+    },
+    "mcp_initial_before": {
+      "passed": 1,
+      "total": 5
+    },
+    "mcp_final": {
+      "passed": 10,
+      "total": 10
+    },
+    "mcp_batch_hang_reproduced": true,
+    "independent_source_review_completed": true
+  },
+  "checks": {
+    "domain": {
+      "passed": 198,
+      "failed": 0,
+      "skipped": 0,
+      "duration_ms": 284846.710375
+    },
+    "typed_browser": {
+      "passed": 60,
+      "failed": 0
+    },
+    "mocked_voice_browser": {
+      "passed": 5,
+      "failed": 0,
+      "scope": "synthetic microphone and browser mock speech; task-owned app with fictional AWS credentials and loopback-only endpoints; no real provider acceptance"
+    },
+    "basics": [
+      {
+        "name": "typecheck",
+        "exit_code": 0,
+        "duration_ms": 13085
+      },
+      {
+        "name": "build",
+        "exit_code": 0,
+        "duration_ms": 35170
+      },
+      {
+        "name": "configure-local",
+        "exit_code": 0,
+        "duration_ms": 6101
+      },
+      {
+        "name": "db-lint",
+        "exit_code": 0,
+        "duration_ms": 2681
+      },
+      {
+        "name": "audit-after",
+        "exit_code": 0,
+        "duration_ms": 2351
+      },
+      {
+        "name": "dependency-tree",
+        "exit_code": 0,
+        "duration_ms": 1076
+      },
+      {
+        "name": "artifacts",
+        "exit_code": 0,
+        "duration_ms": 976
+      }
+    ],
+    "http": [
+      {
+        "name": "test:http",
+        "exit_code": 0,
+        "duration_ms": 4174
+      },
+      {
+        "name": "test:household:http",
+        "exit_code": 0,
+        "duration_ms": 4297
+      },
+      {
+        "name": "test:phase23:http",
+        "exit_code": 0,
+        "duration_ms": 3151
+      },
+      {
+        "name": "test:phase45:http",
+        "exit_code": 0,
+        "duration_ms": 4399
+      },
+      {
+        "name": "test:mcp:http",
+        "exit_code": 0,
+        "duration_ms": 2262
+      },
+      {
+        "name": "test:phase6:http",
+        "exit_code": 0,
+        "duration_ms": 3609
+      },
+      {
+        "name": "test:phase7:http",
+        "exit_code": 0,
+        "duration_ms": 3599
+      }
+    ],
+    "operations": [
+      {
+        "name": "security-http",
+        "exit_code": 0,
+        "duration_ms": 1353
+      },
+      {
+        "name": "demo-cleanup-dry-run",
+        "exit_code": 0,
+        "duration_ms": 1024
+      },
+      {
+        "name": "view-prune-dry-run",
+        "exit_code": 0,
+        "duration_ms": 684
+      },
+      {
+        "name": "retention-cost-read-only",
+        "exit_code": 0,
+        "duration_ms": 783
+      },
+      {
+        "name": "pairings-http",
+        "exit_code": 0,
+        "duration_ms": 3596
+      },
+      {
+        "name": "latency",
+        "exit_code": 0,
+        "duration_ms": 2016
+      },
+      {
+        "name": "feedback",
+        "exit_code": 0,
+        "duration_ms": 16622
+      },
+      {
+        "name": "stop-latency",
+        "exit_code": 0,
+        "duration_ms": 16643
+      }
+    ],
+    "new_http_security": {
+      "checked_at": "2026-10-20T20:54:42.945Z",
+      "result": "PASS",
+      "checks": 9,
+      "scope": "Real localhost production HTTP: origin/host refusal, exact JSON media type, malformed JSON, UTF-8 byte cap, credential/schema refusal, private response caching and security headers. No valid provider call or account mutation.",
+      "limits": "Selected local boundaries; not an exhaustive penetration test, TLS/proxy/hosted review or human acceptance."
+    },
+    "db_connection_recovery": {
+      "checked_at": "2026-10-20T20:56:34.233Z",
+      "environment": "One local Chrome browser session; task-owned production Next.js process restarted against valid, nonexistent, then valid local Postgres database name; shared Supabase service never stopped",
+      "result": "PASS",
+      "checks": [
+        "Valid local current-plan turn returned 200",
+        "App connection to nonexistent local database returned 503 and hid old reply",
+        "Local Stop remained visible",
+        "Restart with valid local database returned 200 and restored a fresh reply"
+      ],
+      "limits": "Real app-to-Postgres database-selection failure, not a database-service outage, hosted restore, production failover, provider outage or supported-device test. No customer records or remote Supabase resources used."
+    },
+    "final_typecheck": "PASS",
+    "artifact_scan": {
+      "status": "PASS",
+      "mode": "read-only",
+      "source_files": 340,
+      "browser_assets": 15,
+      "limits": "Selected credential patterns and known local secret values only; no exhaustive leak audit, public refresh or publication."
+    }
+  },
+  "performance": {
+    "graph_http": {
+      "median": 13,
+      "p95": 18,
+      "max": 18,
+      "target_p95_ms": 800
+    },
+    "mcp_http": {
+      "median": 65,
+      "p95": 109,
+      "max": 109
+    },
+    "loading_acknowledgment": {
+      "median": 1.2,
+      "p95": 8.7,
+      "max": 8.7,
+      "target_ms": 1000
+    },
+    "stop": {
+      "median": 0.1,
+      "p95": 1.2,
+      "max": 1.2,
+      "target_p95_ms": 100
+    },
+    "limits": "12 serial synthetic samples per metric on one local desktop; no provider, human, supported-device or production-SLA inference"
+  },
+  "iteration_limits": [
+    "Intermediate Node22.13.1/Next16.3.8 test runs superseded by final runtime",
+    "Initial voice suite wrong server mode: 2failed,1passed,1interrupted,1notrun; corrected isolated harness passed5/5",
+    "Initial Host proof used fetch which ignored override; corrected rawHTTP proof enforces exactHost403",
+    "Independent harness review caught dotenv reintroducing AWS settings; isolated marker now prevents reload"
+  ],
+  "no_claims": [
+    "production ready",
+    "qualified practical protocol approval",
+    "human screen-reader/voice/device acceptance",
+    "live provider authorization, cost, retention or latency",
+    "hosted Supabase",
+    "clean-machine Docker replay or historical backup restoration",
+    "continuous cleanup or approved metadata purge",
+    "public snapshot refresh, upload, deployment or submission"
+  ],
+  "node_patch_availability": {
+    "checked_at": "2026-10-20T21:00:53Z",
+    "local_date": "2026-10-21 Africa/Cairo",
+    "latest_22": "22.23.3",
+    "announced_patch_available": false,
+    "source": "https://nodejs.org/dist/index.json"
+  },
+  "remaining": [
+    "announced October21 Node security release recheck and patch",
+    "human supported-device screen-reader/non-audio/voice usability",
+    "table-by-table retention policy review",
+    "continuous operations and complete backup/restore/expiry evidence",
+    "owner AWS login before current Bedrock authorization check",
+    "P10 film/source/submission gates; upload remains paused"
+  ],
+  "checkpoint": {
+    "manual_hash_verification": true,
+    "task_owned_app_browser_processes_stopped": true,
+    "app_port_free": true,
+    "existing_native_host_preserved": true,
+    "publication_snapshot_281_files_unchanged_during_final_check": true,
+    "film_and_publication_manifest_unchanged": true,
+    "kerno_recovery": "reconciliation-required; plugin cwd and stale indexed snapshot; manual handoff authoritative"
+  },
+  "files": [
+    {
+      "path": ".node-version",
+      "bytes": 8,
+      "sha256": "6d07ac247e81cd42c2c20abf8dfe504413d6b2422e4aba9b2c975a776f155921"
+    },
+    {
+      "path": ".nvmrc",
+      "bytes": 8,
+      "sha256": "6d07ac247e81cd42c2c20abf8dfe504413d6b2422e4aba9b2c975a776f155921"
+    },
+    {
+      "path": "package.json",
+      "bytes": 3218,
+      "sha256": "446706d8f90c5a96e0e21be77c7204397ae683e44f69d0f2a384e3408f1b8353"
+    },
+    {
+      "path": "package-lock.json",
+      "bytes": 121541,
+      "sha256": "63d67555b4c86095f6d21fdcd8d7baae2d42ddda43943a1b780c0951bed0ce50"
+    },
+    {
+      "path": "playwright.config.ts",
+      "bytes": 524,
+      "sha256": "ced72f78900f63136b566740b9ab53f2afa876a4858b0a80911183848914cc74"
+    },
+    {
+      "path": "apps/web/lib/http.ts",
+      "bytes": 3364,
+      "sha256": "aef65ab5a2c1301cf2b28ff8630173c3759754e106fb0223f2d54bf14884123e"
+    },
+    {
+      "path": "apps/web/lib/household-http.ts",
+      "bytes": 1389,
+      "sha256": "a6c30bc637106766b6d29e3244f33a191c3dc41ef92cf3c78e5659eb566802e9"
+    },
+    {
+      "path": "apps/web/lib/mcp.ts",
+      "bytes": 10276,
+      "sha256": "a9dcbb1c420fdd6b0d94397effe89938fd936a470906cf1d20daac7dfa201894"
+    },
+    {
+      "path": "apps/web/app/api/households/route.ts",
+      "bytes": 917,
+      "sha256": "4de1d034e810a5a46913ac357f7e636ad613c618d8134ec6dc8843632c973ccb"
+    },
+    {
+      "path": "apps/web/app/api/households/[id]/route.ts",
+      "bytes": 477,
+      "sha256": "1a73d9b0577e29359111f8dad02750d6d3cdce6b0013500086c987ddef91a8f5"
+    },
+    {
+      "path": "apps/web/app/api/households/[id]/graph/route.ts",
+      "bytes": 431,
+      "sha256": "97f2f972ba5d961cccb9285c51dadeb5eda2640451d9d9cb90a847f567d39a68"
+    },
+    {
+      "path": "apps/web/app/api/households/[id]/planning/route.ts",
+      "bytes": 405,
+      "sha256": "adf110a1c54553c3c8a00992922929f1e018ca8dc87be47ec9d832805b97240c"
+    },
+    {
+      "path": "apps/web/app/api/households/[id]/memberships/route.ts",
+      "bytes": 805,
+      "sha256": "d823f0faa3bf5bcae570820563e355e7f921a3f14783a3fd781c101a2ba95d41"
+    },
+    {
+      "path": "apps/web/app/api/households/[id]/routine-rules/route.ts",
+      "bytes": 678,
+      "sha256": "5b8161f270deb86617b5e1b000a3be1f0c34805a04192d0a9ebdeeb8ecb97909"
+    },
+    {
+      "path": "apps/web/app/api/cases/[id]/context/route.ts",
+      "bytes": 393,
+      "sha256": "682906bb773794fac7611b50a16e2a19da4db6152cd20659a18a51d53a26c4d2"
+    },
+    {
+      "path": "apps/web/app/api/caregiver/route.ts",
+      "bytes": 540,
+      "sha256": "f0366cffb18348710df6c221941cde3d9c213d71701744f6537e223a406d7311"
+    },
+    {
+      "path": "apps/web/app/api/caregiver/planning/route.ts",
+      "bytes": 579,
+      "sha256": "2c037c4696aff797047ab2923d0709ed0939b170f03d68d34ff5b49e99111070"
+    },
+    {
+      "path": "apps/web/app/api/mcp/route.ts",
+      "bytes": 1005,
+      "sha256": "1557bc8284a62a68f064ccd0450b82a5d3587ed507820a111c8d78ded951457f"
+    },
+    {
+      "path": "apps/web/app/api/assistant/turn/route.ts",
+      "bytes": 4521,
+      "sha256": "9862b932e76f16e845276cab9d2475d7d9f02b7e7b2084847b8048b44f8d2e77"
+    },
+    {
+      "path": "scripts/prepare-public-release.mjs",
+      "bytes": 6919,
+      "sha256": "29a275d5bf7a90de799e6b91590d0f7116285f091605df5e7ed00c388e0a1b64"
+    },
+    {
+      "path": "scripts/prove-phase45-http.ts",
+      "bytes": 7532,
+      "sha256": "88f856575f55fd86fa7a547940cfae7137c50d224537c927769b10e688661e01"
+    },
+    {
+      "path": "scripts/prove-p9-security-http.ts",
+      "bytes": 3253,
+      "sha256": "2f1c0141632febff0d77e4769dfcca1b910558d9470ed0bf4b0bfcfc02a1a64a"
+    },
+    {
+      "path": "scripts/run-mocked-voice-check.mjs",
+      "bytes": 3734,
+      "sha256": "16071cff2d565cc370d90ab5ebbe88c6c19f7c99064866ea4afcb3ceb55be225"
+    },
+    {
+      "path": "tests/http-security.test.ts",
+      "bytes": 3455,
+      "sha256": "e2ff41e1d81f65bd6af1afa7259326c4acb2cb8fdeb74e8687a4350a76c1a4f4"
+    },
+    {
+      "path": "tests/mcp-security.test.ts",
+      "bytes": 7085,
+      "sha256": "9c7a0d578f3b6251aaac38cf0bdb78c3a8feb84f1153cfcd9bf60322a90809bf"
+    },
+    {
+      "path": "tests/p9-read-budgets.test.ts",
+      "bytes": 4662,
+      "sha256": "1d5c97a17e6225b78da495af4fb5e77fbeba5efd208a8c40b88e61f920d926cc"
+    },
+    {
+      "path": "apps/showcase/index.html",
+      "bytes": 7821,
+      "sha256": "e272a0f17dd5e25ea7159afa811e5a222199ecdb964bfb489a405e90c09bec6e"
+    },
+    {
+      "path": "README.md",
+      "bytes": 8784,
+      "sha256": "433f959a43d9c5ec1ce6e5334a576ef548a90761da0c3f5820e37c9c362e5692"
+    },
+    {
+      "path": "TASKS.md",
+      "bytes": 3303,
+      "sha256": "297c8581329eead6e6cca7068c3db8a1a260c4cb57110e0428de25c40b739870"
+    },
+    {
+      "path": "DECISIONS.md",
+      "bytes": 27946,
+      "sha256": "b5a68f063da56146a14bf15c2b85b9214a2935b634669b14260659879e05ffeb"
+    },
+    {
+      "path": "docs/ROADMAP.md",
+      "bytes": 19879,
+      "sha256": "dd4dda6387d68e50b3fbb4aa6a863cab2d0baffc6bdc2b0430d52987cf88f945"
+    },
+    {
+      "path": "docs/P9_HARDENING_HANDOFF.md",
+      "bytes": 13364,
+      "sha256": "ae20bd21a195cf9727effd7c9c456e66759dd17cae41bc7997a6eee25387ad88"
+    },
+    {
+      "path": "docs/READINESS_AUDIT_2026-10-20.md",
+      "bytes": 21359,
+      "sha256": "345fde2fa5f9f74dbec84701a443655d1716726d805fef4b6097b0f20e364df0"
+    },
+    {
+      "path": "docs/PHASE_8_9_HANDOFF.md",
+      "bytes": 33088,
+      "sha256": "e87eb6f9059d9261c5d06ffecce66ee897109abc3233bdbe6aead993eaf2bd9c"
+    },
+    {
+      "path": "docs/PHASE_9_GAP_AUDIT.md",
+      "bytes": 10324,
+      "sha256": "b93b72b4aee3346e6f65704324b642dfc03badf8d55f3163679d8e52a1b61313"
+    },
+    {
+      "path": "docs/LOCAL_NATIVE_RUNTIME.md",
+      "bytes": 4335,
+      "sha256": "dfc3a891749a92619bc4dc394559f763b64123e6b8474432619ab6d3420ebd99"
+    },
+    {
+      "path": "docs/JUDGE_SETUP.md",
+      "bytes": 4356,
+      "sha256": "39e3df2cb50bc59f50607766deb7a3a523783b3665312ed74bd1160b5d5ef047"
+    },
+    {
+      "path": "evidence/phase0/http-flow.json",
+      "bytes": 2463,
+      "sha256": "718e3f164752c4d2563c0588c372372e24170ac1d3f7d5b1ff5fbaf7974285f8"
+    },
+    {
+      "path": "evidence/phase1/http.json",
+      "bytes": 920,
+      "sha256": "1cd10e3907e4e05f94a9ca6bf01c5535179f504d6afd2adbfdfc65bee93537a7"
+    },
+    {
+      "path": "evidence/phase23/http.json",
+      "bytes": 672,
+      "sha256": "e94cded0de7ab026903e1096fd4ce5283c532e7341f6f459250d025fef593290"
+    },
+    {
+      "path": "evidence/phase23/mcp-http.json",
+      "bytes": 974,
+      "sha256": "0a96f06fe901c76e2390c16eac743e8fcf050b6132a0339f47f413dafea382ef"
+    },
+    {
+      "path": "evidence/phase45/http.json",
+      "bytes": 2420,
+      "sha256": "a1533afb91a2da751bd0b736d6ff687efb54fa1da99eba37879f505e952ac092"
+    },
+    {
+      "path": "evidence/phase6/http.json",
+      "bytes": 1060,
+      "sha256": "6a63bcc32ce8d7a0dee5edd2f370975aba0b31339c57057e412deb375622a767"
+    },
+    {
+      "path": "evidence/phase7/http.json",
+      "bytes": 534,
+      "sha256": "c946b16c9ae368b640dc651bd4c12d47f314d51b94befc09d2850d10cb820936"
+    },
+    {
+      "path": "evidence/phase8/pairings.json",
+      "bytes": 5554,
+      "sha256": "22726b5fada99c57b87fd0c37ab8d1b8fd256cb394e5f6d7b3df20386977b58c"
+    },
+    {
+      "path": "evidence/phase9/security-http-2026-10-20.json",
+      "bytes": 445,
+      "sha256": "68bd13ef8519551b9b3c481a062ac11c5759567ecf00e101d50bc33e3056f4f8"
+    },
+    {
+      "path": "evidence/phase9/latency.json",
+      "bytes": 583,
+      "sha256": "1194abb5712e9594e2cc40f3228c82bc340d1d4d0091bc9f563afe012d9e4ce5"
+    },
+    {
+      "path": "evidence/phase9/feedback.json",
+      "bytes": 741,
+      "sha256": "6311c4fefc71f6d3ade0cbf0c3f20ac0d2c8fcb7320a9278b3f71fc902cd9237"
+    },
+    {
+      "path": "evidence/phase9/stop-latency.json",
+      "bytes": 818,
+      "sha256": "f84e63309155b552be7cedd9306c08c07cbda335d9655c74ec2864aa52d19d38"
+    },
+    {
+      "path": "evidence/phase9/retention-cost.json",
+      "bytes": 3506,
+      "sha256": "a181fdd2a2245a5f8bad3f757fe1811269956493334cd4dd3f09ec27bf57416b"
+    },
+    {
+      "path": "evidence/phase9/db-recovery.json",
+      "bytes": 772,
+      "sha256": "2ee9ef0cbaa561d7277808a7377c929c31159dfa48033f57ffea383f30b125bb"
+    }
+  ]
+}

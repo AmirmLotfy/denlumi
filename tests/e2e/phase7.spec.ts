@@ -1,4 +1,4 @@
-import { test,expect } from '@playwright/test';
+import { test,expect } from './database-test';
 test('owner previews exact HTML, explicitly authorizes download, archives, and sees deletion completion',async({page})=>{
  await page.goto('/');await page.getByRole('checkbox',{name:/I understand the fictional sample/}).check();await page.getByRole('button',{name:'Open sample household'}).click();
  await page.getByRole('button',{name:'History',exact:true}).click();

@@ -1,22 +1,35 @@
 {
-  "checked_at": "2026-09-22T13:25:05.192Z",
+  "checked_at": "2026-10-20T21:53:31.513Z",
   "result": "PASS",
   "scope": "Real authenticated local HTTP, Streamable HTTP MCP, and local internal worker against isolated Supabase. Fictional demo records only; no hosted project, deployment, external send, professional approval, or practical animal guidance.",
   "proof": {
     "explicit_human_start": {
-      "session_id": "98bd30f6-08ac-4521-a2ea-bd22fff8dfe4",
+      "session_id": "723226cf-ba5a-4fb0-803f-ad609594490d",
       "state": "active",
       "safety_epoch": 3,
-      "plan_revision_id": "94b837a3-c260-4526-9900-5667024bab4f",
+      "plan_revision_id": "5dec7b5d-4826-4a66-a9cf-87153b6cc7ca",
       "current_step": "owner-review",
       "elapsed_seconds": 0,
       "physical_state_verified": false,
-      "notice": "Fictional software session. No practical animal handling is authorized."
+      "notice": "Fictional software session. No practical animal handling is authorized.",
+      "session_state": "active",
+      "guidance_available": true,
+      "guidance_state": "available",
+      "operation_receipt": {
+        "session_id": "723226cf-ba5a-4fb0-803f-ad609594490d",
+        "state": "active",
+        "safety_epoch": 3,
+        "plan_revision_id": "5dec7b5d-4826-4a66-a9cf-87153b6cc7ca",
+        "current_step": "owner-review",
+        "elapsed_seconds": 0,
+        "physical_state_verified": false,
+        "notice": "Fictional software session. No practical animal handling is authorized."
+      }
     },
-    "start_retry_same_session": "98bd30f6-08ac-4521-a2ea-bd22fff8dfe4",
+    "start_retry_same_session": "723226cf-ba5a-4fb0-803f-ad609594490d",
     "second_start_rejected": "SESSION_CONFLICT",
     "confirmed_pause": {
-      "observation_id": "e1d6ffa0-211d-42f1-96c0-47f0ab45a504",
+      "observation_id": "4f6a1444-0765-4291-b585-e233f7f49318",
       "safety_epoch": 4
     },
     "stale_resume_rejected": "STALE_STATE",
@@ -25,7 +38,7 @@
       "guidance_available": false
     },
     "routine": {
-      "rule_id": "cb5fc1f2-2884-4df6-86f4-38f28555d3eb",
+      "rule_id": "e7e66753-52a5-4938-bbb5-468035042bea",
       "occurrences": 1,
       "no_report_not_ingestion": "No report means no recorded completion or ingestion.",
       "report_state": "reported_done"
@@ -45,6 +58,7 @@
         },
         {
           "method": "tools/call",
+          "tool_name": "list_due_tasks",
           "http_status": 200,
           "protocol": "2025-11-25"
         }

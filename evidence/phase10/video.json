@@ -1,0 +1,53 @@
+{
+  "duration_seconds": 122.76,
+  "bytes": 5640915,
+  "sha256": "a5502a051c06ff41edb2fc89e8c8b96e484aa20605b75c4420800925341a57e4",
+  "streams": [
+    {
+      "type": "video",
+      "codec": "h264",
+      "width": 1440,
+      "height": 1000
+    },
+    {
+      "type": "audio",
+      "codec": "aac",
+      "width": null,
+      "height": null
+    },
+    {
+      "type": "subtitle",
+      "codec": "mov_text",
+      "width": null,
+      "height": null
+    }
+  ],
+  "narration": "Local macOS Samantha synthesized English voice; no paid/provider request",
+  "initial_blank_trim_seconds": 1.1280000000000001,
+  "limitations": [
+    "Actual automated browser footage, not human usability or voice acceptance",
+    "Local macOS synthesized narration is not in-app AWS speech evidence",
+    "Public YouTube/Vimeo upload still required"
+  ],
+  "visual_privacy_review": {
+    "sampled_actual_frames_seconds": [
+      2,
+      35,
+      65,
+      88,
+      106,
+      120
+    ],
+    "result": "PASS - readable real UI, fictional records, no visible secrets/recovery codes/account chrome",
+    "capture_guards": "Seeded fictional authenticated records; deletion-code panel asserted absent on each fixture load; no mocked responses or speech endpoints",
+    "limit": "Sampled-frame and source/capture-path inspection, not a human frame-by-frame or audible review"
+  },
+  "network": {
+    "successful_statuses": [
+      200,
+      201
+    ],
+    "stale_refusal_status": 409,
+    "speech_endpoint_requests": 0
+  }
+}

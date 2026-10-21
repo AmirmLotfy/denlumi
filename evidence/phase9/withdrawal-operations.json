@@ -1,0 +1,47 @@
+{
+  "checked_at": "2026-10-20T21:16:53.374Z",
+  "result": "PASS",
+  "environment": "Bounded fictional localhost Auth/Postgres drill; task-owned exact-species demo_only protocol clones",
+  "affected_households": 9,
+  "protocol_versions": 3,
+  "pairings": [
+    "cat_cat",
+    "dog_dog",
+    "cat_dog"
+  ],
+  "paused_sessions": 6,
+  "no_session_plans": 3,
+  "unrelated_controls": 2,
+  "invalidated_plans": 9,
+  "canceled_progression_events": 9,
+  "replay_additional_mutations": 0,
+  "worker_elapsed_ms": 219.21,
+  "fixture_household_ids": [
+    "b5740490-a5d6-448e-9afe-107b40947747",
+    "711c2a8c-8298-4618-8a50-921451d9e8d1",
+    "86734219-d7a2-4d4a-a96d-553d155c870e",
+    "27c559f7-6c1d-4b4c-92a6-e5dcc83dfa9d",
+    "ba796d56-2864-43e1-910d-f4caa5401c0e",
+    "59dc0573-176f-425e-acc6-087e99268ef9",
+    "26a17b9a-1ff2-4a05-929f-206cc30f289f",
+    "3f3ed4e3-3b77-4e23-8910-5fb6389e3345",
+    "77d83f46-9684-4d06-8282-27467c64ae40"
+  ],
+  "fixture_protocol_version_ids": [
+    "b716612c-c494-4381-add7-3e908e2dac37",
+    "c78da8b4-d51a-484f-a937-3dc65f04c13e",
+    "0d864352-6c3b-46c2-9aca-b7b24a4ec90a"
+  ],
+  "checks": [
+    "Revocation disables fresh reads and preflight before worker reconciliation",
+    "Nine affected reviewed plans across cat-cat, dog-dog and cat-dog become stale",
+    "Six active/interrupted sessions pause; three never-started plans invalidate",
+    "Nine old-epoch queued progression events and dependent tasks cancel",
+    "Historical plan/session protocol bindings and digests remain intact",
+    "One unaffected active control and one revoked out-of-scope control remain unchanged",
+    "Stale preflight/start denied after reconciliation",
+    "Scoped replay adds no epochs, holds, handovers or audit events",
+    "Shared bundled protocol versions remain unrevoked"
+  ],
+  "limits": "Fictional bounded local software evidence only. No real animals, qualified content review, customer data, hosted services, provider calls, notification delivery, production scale, full-platform operational acceptance or purge. Companion regression tests separately inject an application failure and exercise lock ordering."
+}

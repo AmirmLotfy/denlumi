@@ -16,7 +16,7 @@ async function eligible(db:pg.PoolClient,actor:Actor,i:StateInput,lock=true){
  if(m.role==='reader')throw new DomainError('FORBIDDEN',403);
  const p=(await db.query('select * from plan_revisions where id=$1 and household_id=$2 and case_id=$3',[i.plan_revision_id,h.id,c.id])).rows[0];if(!p)throw new DomainError('SCOPE_MISMATCH',403);
  const current=(await db.query('select id from plan_revisions where household_id=$1 and case_id=$2 order by revision_number desc limit 1',[h.id,c.id])).rows[0];
- const v=(await db.query('select * from protocol_versions where id=$1',[i.protocol_version_id])).rows[0];
+ const v=(await db.query('select * from protocol_versions where id=$1 for share',[i.protocol_version_id])).rows[0];
  const participants=(await db.query('select cp.pet_id,cp.role,p.species,p.archived_at from case_pets cp join pets p on p.id=cp.pet_id and p.household_id=cp.household_id where cp.case_id=$1 order by cp.pet_id',[c.id])).rows;
  if((m.case_scope&&!m.case_scope.includes(c.id))||(m.pet_scope&&participants.some(x=>!m.pet_scope.includes(x.pet_id))))throw new DomainError('SCOPE_MISMATCH',403);
  if(participants.some(x=>x.archived_at))throw new DomainError('ARCHIVED_PARTICIPANT');
@@ -40,62 +40,182 @@ async function currentHandoverAck(db:pg.PoolClient,actor:Actor,householdId:strin
 export async function sessionPreflight(actor:Actor,raw:unknown){const i=stateInput.parse(raw);return transaction(async db=>{const s=await eligible(db,actor,i);const handover=await currentHandoverAck(db,actor,s.h.id,s.p.id);const conflict=(await db.query("select id,state from sessions where household_id=$1 and state in ('preflight','active','paused','interrupted')",[s.h.id])).rows[0];return {status:conflict?'blocked':'ready_for_human_start',blocker:conflict?'SESSION_CONFLICT':null,start_destination:conflict?null:'/api/sessions',handover_id:handover.id,as_of:new Date().toISOString(),safety_epoch:s.h.safety_epoch,support_level:s.c.support_level,source_ids:s.v.source_ids,physical_state_verified:false};});}
 
 export async function startSession(actor:Actor,raw:unknown,key:string){const i=sessionStartInput.parse(raw);keyCheck(key);const body={operation:'session_start',...i};return transaction(async db=>{
- const s=await eligible(db,actor,i);const prior=(await db.query('select * from private.idempotency where household_id=$1 and actor_id=$2 and key=$3',[s.h.id,actor.userId,key])).rows[0];if(prior){if(prior.body_hash!==digest(body))throw new DomainError('IDEMPOTENCY_MISMATCH');return prior.result;}
+ const s=await eligible(db,actor,i);const prior=(await db.query('select * from private.idempotency where household_id=$1 and actor_id=$2 and key=$3',[s.h.id,actor.userId,key])).rows[0];if(prior){if(prior.body_hash!==digest(body))throw new DomainError('IDEMPOTENCY_MISMATCH');return sessionResponse(db,actor,prior.result.session_id,prior.result);}
  await currentHandoverAck(db,actor,s.h.id,s.p.id,i.handover_id,i.handover_digest);
  if((await db.query("select 1 from sessions where household_id=$1 and state in ('preflight','active','paused','interrupted')",[s.h.id])).rowCount)throw new DomainError('SESSION_CONFLICT');
  const id=randomUUID();await db.query("insert into sessions(id,household_id,case_id,plan_revision_id,protocol_version_id,started_by,state,safety_epoch,home_version,plan_digest,last_checkpoint_at,idempotency_key) values($1,$2,$3,$4,$5,$6,'active',$7,$8,$9,now(),$10)",[id,s.h.id,s.c.id,s.p.id,s.v.id,actor.userId,s.h.safety_epoch,s.h.home_version,s.p.digest,key]);
  for(const p of s.participants)await db.query('insert into session_pets(household_id,session_id,case_id,pet_id) values($1,$2,$3,$4)',[s.h.id,id,s.c.id,p.pet_id]);
  await db.query("insert into audit_events(household_id,actor_id,event_type,safety_epoch,entity_type,entity_id,metadata) values($1,$2,'session_started',$3,'session',$4,$5)",[s.h.id,actor.userId,s.h.safety_epoch,id,JSON.stringify({plan_revision_id:s.p.id})]);
- const result={session_id:id,state:'active',safety_epoch:s.h.safety_epoch,plan_revision_id:s.p.id,current_step:s.p.current_step,elapsed_seconds:0,physical_state_verified:false,notice:'Fictional software session. No practical animal handling is authorized.'};await db.query('insert into private.idempotency(household_id,actor_id,key,body_hash,result) values($1,$2,$3,$4,$5)',[s.h.id,actor.userId,key,digest(body),JSON.stringify(result)]);return result;
+ const result={session_id:id,state:'active',safety_epoch:s.h.safety_epoch,plan_revision_id:s.p.id,current_step:s.p.current_step,elapsed_seconds:0,physical_state_verified:false,notice:'Fictional software session. No practical animal handling is authorized.'};await db.query('insert into private.idempotency(household_id,actor_id,key,body_hash,result) values($1,$2,$3,$4,$5)',[s.h.id,actor.userId,key,digest(body),JSON.stringify(result)]);return sessionResponse(db,actor,id,result);
 });}
 
-async function lockedSession(db:pg.PoolClient,actor:Actor,id:string,expected:{expected_safety_epoch:number;expected_state:string}){
- await assertSession(db,actor);const s=(await db.query('select * from sessions where id=$1 for update',[id])).rows[0];if(!s)throw new DomainError('SCOPE_MISMATCH',403);const h=(await db.query('select * from households where id=$1 for update',[s.household_id])).rows[0];const m=(await db.query('select * from memberships where household_id=$1 and profile_id=$2 and revoked_at is null and (expires_at is null or expires_at>now())',[h.id,actor.userId])).rows[0];if(!m||!m.accepted_at||m.role==='reader'||h.status!=='active')throw new DomainError('SCOPE_MISMATCH',403);const pets=(await db.query('select pet_id from session_pets where session_id=$1',[s.id])).rows.map(r=>r.pet_id);if(m.case_scope&&!m.case_scope.includes(s.case_id)||m.pet_scope&&pets.some(p=>!m.pet_scope.includes(p)))throw new DomainError('SCOPE_MISMATCH',403);if(h.safety_epoch!==expected.expected_safety_epoch||s.state!==expected.expected_state)throw new DomainError('STALE_STATE');return {s,h,m,pets};
+async function lockedSession(db:pg.PoolClient,actor:Actor,id:string){
+ await assertSession(db,actor);
+ const selected=(await db.query('select household_id from sessions where id=$1',[id])).rows[0];
+ if(!selected)throw new DomainError('SCOPE_MISMATCH',403);
+ // Starts and household-wide safety changes acquire the household first.
+ // Never hold a session while waiting for that shared serialization lock.
+ const h=(await db.query('select * from households where id=$1 for update',[selected.household_id])).rows[0];
+ const s=(await db.query('select * from sessions where id=$1 and household_id=$2 for update',[id,selected.household_id])).rows[0];
+ if(!h||!s)throw new DomainError('SCOPE_MISMATCH',403);
+ const m=(await db.query('select * from memberships where household_id=$1 and profile_id=$2 and revoked_at is null and (expires_at is null or expires_at>now()) for share',[h.id,actor.userId])).rows[0];
+ // Demo expiry ends server reads/writes, including cached responses. Local Stop
+ // remains a device action and needs no exception to household authorization.
+ if(!m||!m.accepted_at||m.role==='reader'||h.status!=='active'||(h.expires_at&&new Date(h.expires_at)<=new Date()))throw new DomainError('SCOPE_MISMATCH',403);
+ const pets=(await db.query('select pet_id from session_pets where session_id=$1',[s.id])).rows.map(r=>r.pet_id);
+ if(m.case_scope&&!m.case_scope.includes(s.case_id)||m.pet_scope&&pets.some(p=>!m.pet_scope.includes(p)))throw new DomainError('SCOPE_MISMATCH',403);
+ return {s,h,m,pets};
+}
+type SessionContext=Awaited<ReturnType<typeof lockedSession>>;
+function checkSessionState(x:SessionContext,expected:{expected_safety_epoch:number;expected_state:string}){
+ if(x.h.safety_epoch!==expected.expected_safety_epoch||x.s.state!==expected.expected_state)throw new DomainError('STALE_STATE');
+}
+async function sessionReplay(db:pg.PoolClient,actor:Actor,x:SessionContext,key:string,body:unknown){
+ const prior=(await db.query('select * from private.idempotency where household_id=$1 and actor_id=$2 and key=$3',[x.h.id,actor.userId,key])).rows[0];
+ if(prior&&prior.body_hash!==digest(body))throw new DomainError('IDEMPOTENCY_MISMATCH');
+ return prior;
+}
+async function currentSessionGuidance(db:pg.PoolClient,actor:Actor,x:SessionContext){
+ const s=await eligible(db,actor,{case_id:x.s.case_id,expected_safety_epoch:x.s.safety_epoch,plan_revision_id:x.s.plan_revision_id,home_version:x.s.home_version,protocol_version_id:x.s.protocol_version_id});
+ if(x.s.plan_digest!==s.p.digest)throw new DomainError('STALE_STATE');
+ return s;
+}
+async function sessionGuidanceAvailable(db:pg.PoolClient,actor:Actor,x:SessionContext){
+ try{await currentSessionGuidance(db,actor,x);return x.s.state==='active';}
+ catch(error){
+  if(error instanceof DomainError&&['PROTOCOL_UNAVAILABLE','GUIDANCE_PAUSED','STALE_STATE','ARCHIVED_PARTICIPANT'].includes(error.code))return false;
+  throw error;
+ }
+}
+async function sessionResponse<T extends Record<string,unknown>>(db:pg.PoolClient,actor:Actor,id:string,receipt:T){
+ // Idempotency preserves the committed operation receipt, not permission to
+ // continue a historical active session. Read current state on both original
+ // responses and retries so an immediate replay has the same response shape.
+ const x=await lockedSession(db,actor,id);
+ const guidanceAvailable=x.s.state==='active'&&await sessionGuidanceAvailable(db,actor,x);
+ return {...receipt,...('state' in receipt?{state:x.s.state}:{}),
+  session_state:x.s.state,safety_epoch:x.h.safety_epoch,
+  guidance_available:guidanceAvailable,guidance_state:guidanceAvailable?'available':'paused',
+  operation_receipt:receipt};
 }
 
-export async function checkpointSession(actor:Actor,id:string,raw:unknown){const i=sessionActionInput.parse(raw);return transaction(async db=>{const x=await lockedSession(db,actor,id,i);if(x.s.started_by!==actor.userId||x.s.state!=='active')throw new DomainError('FORBIDDEN',403);await db.query('update sessions set last_checkpoint_at=now() where id=$1',[id]);return {session_id:id,state:'active',checkpointed_at:new Date().toISOString(),physical_state_verified:false};});}
+export async function checkpointSession(actor:Actor,id:string,raw:unknown){
+ const i=sessionActionInput.parse(raw);
+ return transaction(async db=>{
+  const x=await lockedSession(db,actor,id);checkSessionState(x,i);
+  if(x.s.started_by!==actor.userId||x.s.state!=='active')throw new DomainError('FORBIDDEN',403);
+  await currentSessionGuidance(db,actor,x);
+  await db.query('update sessions set last_checkpoint_at=now() where id=$1',[id]);
+  return {session_id:id,state:'active',checkpointed_at:new Date().toISOString(),physical_state_verified:false};
+ });
+}
 
-export async function pauseSession(actor:Actor,id:string,raw:unknown,key:string){const i=sessionPauseInput.parse(raw);keyCheck(key);const body={operation:'session_pause',session_id:id,...i};return transaction(async db=>{const x=await lockedSession(db,actor,id,i);const prior=(await db.query('select * from private.idempotency where household_id=$1 and actor_id=$2 and key=$3',[x.h.id,actor.userId,key])).rows[0];if(prior){if(prior.body_hash!==digest(body))throw new DomainError('IDEMPOTENCY_MISMATCH');return prior.result;}if(x.s.state!=='active')throw new DomainError('STALE_STATE');await db.query("update sessions set state='paused',last_checkpoint_at=now(),interruption_reason=$2 where id=$1",[id,i.reason]);await db.query("insert into audit_events(household_id,actor_id,event_type,safety_epoch,entity_type,entity_id,metadata) values($1,$2,'session_paused',$3,'session',$4,'{}')",[x.h.id,actor.userId,x.h.safety_epoch,id]);const result={session_id:id,state:'paused',safety_epoch:x.h.safety_epoch,household_synchronized:true,physical_state_verified:false};await db.query('insert into private.idempotency(household_id,actor_id,key,body_hash,result) values($1,$2,$3,$4,$5)',[x.h.id,actor.userId,key,digest(body),JSON.stringify(result)]);return result;});}
+export async function pauseSession(actor:Actor,id:string,raw:unknown,key:string){
+ const i=sessionPauseInput.parse(raw);keyCheck(key);const body={operation:'session_pause',session_id:id,...i};
+ return transaction(async db=>{
+  const x=await lockedSession(db,actor,id),prior=await sessionReplay(db,actor,x,key,body);if(prior)return sessionResponse(db,actor,id,prior.result);
+  checkSessionState(x,i);if(x.s.state!=='active')throw new DomainError('STALE_STATE');
+  await db.query("update sessions set state='paused',last_checkpoint_at=now(),interruption_reason=$2 where id=$1",[id,i.reason]);
+  await db.query("insert into audit_events(household_id,actor_id,event_type,safety_epoch,entity_type,entity_id,metadata) values($1,$2,'session_paused',$3,'session',$4,'{}')",[x.h.id,actor.userId,x.h.safety_epoch,id]);
+  const result={session_id:id,state:'paused',safety_epoch:x.h.safety_epoch,household_synchronized:true,physical_state_verified:false};
+  await db.query('insert into private.idempotency(household_id,actor_id,key,body_hash,result) values($1,$2,$3,$4,$5)',[x.h.id,actor.userId,key,digest(body),JSON.stringify(result)]);return sessionResponse(db,actor,id,result);
+ });
+}
 
-export async function resumeSession(actor:Actor,id:string,raw:unknown,key:string){const i=sessionActionInput.parse(raw);keyCheck(key);return transaction(async db=>{const x=await lockedSession(db,actor,id,i);if(!['paused','interrupted'].includes(x.s.state))throw new DomainError('STALE_STATE');const s=await eligible(db,actor,{case_id:x.s.case_id,expected_safety_epoch:x.h.safety_epoch,plan_revision_id:x.s.plan_revision_id,home_version:x.s.home_version,protocol_version_id:x.s.protocol_version_id});await currentHandoverAck(db,actor,s.h.id,s.p.id);const body={operation:'session_resume',session_id:id,...i};const prior=(await db.query('select * from private.idempotency where household_id=$1 and actor_id=$2 and key=$3',[x.h.id,actor.userId,key])).rows[0];if(prior){if(prior.body_hash!==digest(body))throw new DomainError('IDEMPOTENCY_MISMATCH');return prior.result;}await db.query("update sessions set state='active',last_checkpoint_at=now(),interruption_reason=null where id=$1",[id]);const result={session_id:id,state:'active',safety_epoch:x.h.safety_epoch,physical_state_verified:false};await db.query('insert into private.idempotency(household_id,actor_id,key,body_hash,result) values($1,$2,$3,$4,$5)',[x.h.id,actor.userId,key,digest(body),JSON.stringify(result)]);return result;});}
+export async function resumeSession(actor:Actor,id:string,raw:unknown,key:string){
+ const i=sessionActionInput.parse(raw);keyCheck(key);const body={operation:'session_resume',session_id:id,...i};
+ return transaction(async db=>{
+  const x=await lockedSession(db,actor,id),prior=await sessionReplay(db,actor,x,key,body);if(prior)return sessionResponse(db,actor,id,prior.result);
+  checkSessionState(x,i);if(!['paused','interrupted'].includes(x.s.state))throw new DomainError('STALE_STATE');
+  const s=await currentSessionGuidance(db,actor,x);await currentHandoverAck(db,actor,s.h.id,s.p.id);
+  await db.query("update sessions set state='active',last_checkpoint_at=now(),interruption_reason=null where id=$1",[id]);
+  const result={session_id:id,state:'active',safety_epoch:x.h.safety_epoch,physical_state_verified:false};
+  await db.query('insert into private.idempotency(household_id,actor_id,key,body_hash,result) values($1,$2,$3,$4,$5)',[x.h.id,actor.userId,key,digest(body),JSON.stringify(result)]);return sessionResponse(db,actor,id,result);
+ });
+}
 
-export async function finishSession(actor:Actor,id:string,raw:unknown,key:string){const i=sessionActionInput.parse(raw);keyCheck(key);return transaction(async db=>{const x=await lockedSession(db,actor,id,i);if(x.s.started_by!==actor.userId)throw new DomainError('FORBIDDEN',403);const body={operation:'session_finish',session_id:id,...i};const prior=(await db.query('select * from private.idempotency where household_id=$1 and actor_id=$2 and key=$3',[x.h.id,actor.userId,key])).rows[0];if(prior){if(prior.body_hash!==digest(body))throw new DomainError('IDEMPOTENCY_MISMATCH');return prior.result;}await db.query("update sessions set state='finished',ended_at=now(),last_checkpoint_at=now() where id=$1",[id]);const result={session_id:id,state:'finished',plan_advanced:false,physical_state_verified:false};await db.query('insert into private.idempotency(household_id,actor_id,key,body_hash,result) values($1,$2,$3,$4,$5)',[x.h.id,actor.userId,key,digest(body),JSON.stringify(result)]);return result;});}
+export async function finishSession(actor:Actor,id:string,raw:unknown,key:string){
+ const i=sessionActionInput.parse(raw);keyCheck(key);const body={operation:'session_finish',session_id:id,...i};
+ return transaction(async db=>{
+  const x=await lockedSession(db,actor,id),prior=await sessionReplay(db,actor,x,key,body);if(prior)return sessionResponse(db,actor,id,prior.result);
+  checkSessionState(x,i);if(x.s.started_by!==actor.userId)throw new DomainError('FORBIDDEN',403);
+  await db.query("update sessions set state='finished',ended_at=now(),last_checkpoint_at=now() where id=$1",[id]);
+  const result={session_id:id,state:'finished',plan_advanced:false,physical_state_verified:false};
+  await db.query('insert into private.idempotency(household_id,actor_id,key,body_hash,result) values($1,$2,$3,$4,$5)',[x.h.id,actor.userId,key,digest(body),JSON.stringify(result)]);return sessionResponse(db,actor,id,result);
+ });
+}
 
-export async function recordSessionObservation(actor:Actor,id:string,raw:unknown,key:string){const i=sessionObservationInput.parse(raw);keyCheck(key);if(i.actor_pet_id&&i.actor_pet_id===i.target_pet_id)throw new DomainError('INVALID_DIRECTION',400);return transaction(async db=>{const x=await lockedSession(db,actor,id,i);if(x.s.state!=='active')throw new DomainError('GUIDANCE_PAUSED');for(const pet of [i.actor_pet_id,i.target_pet_id])if(pet&&!x.pets.includes(pet))throw new DomainError('SCOPE_MISMATCH',403);const body={operation:'session_observation',session_id:id,...i};const prior=(await db.query('select * from private.idempotency where household_id=$1 and actor_id=$2 and key=$3',[x.h.id,actor.userId,key])).rows[0];if(prior){if(prior.body_hash!==digest(body))throw new DomainError('IDEMPOTENCY_MISMATCH');return prior.result;}const oid=randomUUID(),hash=digest(i),context=(await db.query('select context_key from pair_contexts where household_id=$1 and case_id=$2 order by created_at limit 1',[x.h.id,x.s.case_id])).rows[0]?.context_key??'home';await db.query('insert into observations(id,household_id,case_id,session_id,reporter_id,raw_report,actor_pet_id,target_pet_id,assertion,source_kind,observed_at,reported_at,digest,behavior_code,normalized_observation,context_snapshot) values($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,coalesce($12,now()),$13,$14,$15,$16)',[oid,x.h.id,x.s.case_id,id,actor.userId,i.raw_report,i.actor_pet_id,i.target_pet_id,i.assertion,i.source_kind,i.observed_at,i.reported_at,hash,i.behavior_code,JSON.stringify(i.normalized_observation),JSON.stringify({schema_version:'1',context_key:context,home_version:x.s.home_version})]);const result={observation_id:oid,status:'draft',digest:hash,needs_attribution:!i.actor_pet_id&&x.pets.length>1,safety_epoch:x.h.safety_epoch,session_state:x.s.state,physical_state_verified:false};await db.query('insert into private.idempotency(household_id,actor_id,key,body_hash,result) values($1,$2,$3,$4,$5)',[x.h.id,actor.userId,key,digest(body),JSON.stringify(result)]);return result;});}
+export async function recordSessionObservation(actor:Actor,id:string,raw:unknown,key:string){
+ const i=sessionObservationInput.parse(raw);keyCheck(key);if(i.actor_pet_id&&i.actor_pet_id===i.target_pet_id)throw new DomainError('INVALID_DIRECTION',400);
+ const body={operation:'session_observation',session_id:id,...i};
+ return transaction(async db=>{
+  const x=await lockedSession(db,actor,id),prior=await sessionReplay(db,actor,x,key,body);if(prior)return sessionResponse(db,actor,id,prior.result);
+  checkSessionState(x,i);if(x.s.state!=='active')throw new DomainError('GUIDANCE_PAUSED');
+  for(const pet of [i.actor_pet_id,i.target_pet_id])if(pet&&!x.pets.includes(pet))throw new DomainError('SCOPE_MISMATCH',403);
+  await currentSessionGuidance(db,actor,x);
+  const oid=randomUUID(),hash=digest(i),context=(await db.query('select context_key from pair_contexts where household_id=$1 and case_id=$2 order by created_at limit 1',[x.h.id,x.s.case_id])).rows[0]?.context_key??'home';
+  await db.query('insert into observations(id,household_id,case_id,session_id,reporter_id,raw_report,actor_pet_id,target_pet_id,assertion,source_kind,observed_at,reported_at,digest,behavior_code,normalized_observation,context_snapshot) values($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,coalesce($12,now()),$13,$14,$15,$16)',[oid,x.h.id,x.s.case_id,id,actor.userId,i.raw_report,i.actor_pet_id,i.target_pet_id,i.assertion,i.source_kind,i.observed_at,i.reported_at,hash,i.behavior_code,JSON.stringify(i.normalized_observation),JSON.stringify({schema_version:'1',context_key:context,home_version:x.s.home_version})]);
+  const result={observation_id:oid,status:'draft',digest:hash,needs_attribution:!i.actor_pet_id&&x.pets.length>1,safety_epoch:x.h.safety_epoch,session_state:x.s.state,physical_state_verified:false};
+  await db.query('insert into private.idempotency(household_id,actor_id,key,body_hash,result) values($1,$2,$3,$4,$5)',[x.h.id,actor.userId,key,digest(body),JSON.stringify(result)]);return sessionResponse(db,actor,id,result);
+ });
+}
 
 async function confirmedConcern(db:pg.PoolClient,x:Awaited<ReturnType<typeof lockedSession>>,actor:Actor,o:any,level:'clarification'|'professional'|'urgent'){
  const epoch=x.h.safety_epoch+1,reasonCode=level==='urgent'?'REPORTED_URGENT_CONCERN':level==='professional'?'REPORTED_PROFESSIONAL_CONCERN':'CONFIRMED_CLARIFICATION_CONCERN';await db.query('update households set safety_epoch=$2 where id=$1',[x.h.id,epoch]);await db.query("update sessions set state='paused',interruption_reason='confirmed_concern' where household_id=$1 and state in ('active','interrupted')",[x.h.id]);await db.query("update plan_revisions set status='stale' where household_id=$1 and status in ('reviewed','active','paused','demo_ready')",[x.h.id]);await db.query('update plan_reviews set invalidated_at=coalesce(invalidated_at,now()) where household_id=$1',[x.h.id]);await db.query("update plan_steps set status='canceled' where household_id=$1 and status not in ('completed','canceled')",[x.h.id]);await db.query("update task_occurrences set state='canceled' where household_id=$1 and plan_step_id is not null and state not in ('reported_done','skipped','canceled')",[x.h.id]);await db.query("update cases set status='paused',support_level=case when $2='urgent' then 'urgent_help' when $2='professional' and support_level<>'urgent_help' then 'professional_required' when support_level='guided_preparation' then 'clarification_required' else support_level end,support_reason_code=$3 where id=$1",[x.s.case_id,level,reasonCode]);await db.query('insert into safety_holds(household_id,case_id,origin_observation_id,policy_level,reason,reason_code,created_epoch) values($1,$2,$3,$4,$5,$6,$7)',[x.h.id,x.s.case_id,o.id,level,'A confirmed fictional report requires review. No diagnosis or physical state is established.',reasonCode,epoch]);await db.query("update outbox_events set state='canceled' where household_id=$1 and state in ('pending','processing') and expected_safety_epoch<$2",[x.h.id,epoch]);await db.query("update handovers set status='superseded' where household_id=$1 and status='published'",[x.h.id]);const hb={schema_version:'1',summary:'A caregiver confirmed a fictional concern. Guidance is paused and the current plan requires review. No physical state is verified.',physical_state_verified:false,observation_id:o.id,assertion:o.assertion};const hid=randomUUID(),hd=digest(hb);await db.query("insert into handovers(id,household_id,case_id,safety_epoch,body,digest,status,published_at,actor_id,source_observation_id) values($1,$2,$3,$4,$5,$6,'published',now(),$7,$8)",[hid,x.h.id,x.s.case_id,epoch,JSON.stringify(hb),hd,actor.userId,o.id]);await db.query("insert into outbox_events(household_id,event_type,payload,expected_safety_epoch,idempotency_key,state) values($1,'internal_handover',$2,$3,$4,'pending')",[x.h.id,JSON.stringify({schema_version:'1',handover_id:hid,recipient_scope:'household'}),epoch,`handover:${hid}`]);await db.query("insert into audit_events(household_id,actor_id,event_type,safety_epoch,entity_type,entity_id,metadata) values($1,$2,'confirmed_concern_paused',$3,'observation',$4,$5)",[x.h.id,actor.userId,epoch,o.id,JSON.stringify({reason_code:reasonCode})]);return {epoch,handover_id:hid,level};
 }
 
-export async function confirmSessionObservation(actor:Actor,id:string,raw:unknown,key:string){const i=sessionConfirmInput.parse(raw);keyCheck(key);return transaction(async db=>{const x=await lockedSession(db,actor,id,i);const o=(await db.query('select * from observations where id=$1 and session_id=$2 for update',[i.observation_id,id])).rows[0];if(!o||o.reporter_id!==actor.userId)throw new DomainError('SCOPE_MISMATCH',403);if(o.status!=='draft'||o.digest!==i.digest)throw new DomainError('DRAFT_CHANGED');if(!o.actor_pet_id)throw new DomainError('CLARIFICATION_REQUIRED');const body={operation:'session_observation_confirm',session_id:id,...i};const prior=(await db.query('select * from private.idempotency where household_id=$1 and actor_id=$2 and key=$3',[x.h.id,actor.userId,key])).rows[0];if(prior){if(prior.body_hash!==digest(body))throw new DomainError('IDEMPOTENCY_MISMATCH');return prior.result;}await db.query("update observations set status='confirmed',confirmed_at=now() where id=$1",[o.id]);const values=o.normalized_observation?.values??{},pauseRequired=values.requires_pause===true&&o.assertion!=='negated';let consequence:any=null;if(pauseRequired){const requested=['urgent','professional','clarification'].includes(values.policy_level)?values.policy_level:'clarification';consequence=await confirmedConcern(db,x,actor,o,requested);}const result={observation_id:o.id,status:'confirmed',assertion:o.assertion,session_state:pauseRequired?'paused':x.s.state,safety_epoch:consequence?.epoch??x.h.safety_epoch,consequence:pauseRequired?'guidance_paused':'record_only',physical_state_verified:false};await db.query('insert into private.idempotency(household_id,actor_id,key,body_hash,result) values($1,$2,$3,$4,$5)',[x.h.id,actor.userId,key,digest(body),JSON.stringify(result)]);return result;});}
+export async function confirmSessionObservation(actor:Actor,id:string,raw:unknown,key:string){const i=sessionConfirmInput.parse(raw);keyCheck(key);return transaction(async db=>{const x=await lockedSession(db,actor,id),body={operation:'session_observation_confirm',session_id:id,...i},prior=await sessionReplay(db,actor,x,key,body);if(prior)return sessionResponse(db,actor,id,prior.result);checkSessionState(x,i);const o=(await db.query('select * from observations where id=$1 and session_id=$2 for update',[i.observation_id,id])).rows[0];if(!o||o.reporter_id!==actor.userId)throw new DomainError('SCOPE_MISMATCH',403);if(o.status!=='draft'||o.digest!==i.digest)throw new DomainError('DRAFT_CHANGED');if(!o.actor_pet_id)throw new DomainError('CLARIFICATION_REQUIRED');const guidanceAvailable=await sessionGuidanceAvailable(db,actor,x);await db.query("update observations set status='confirmed',confirmed_at=now() where id=$1",[o.id]);const values=o.normalized_observation?.values??{},pauseRequired=values.requires_pause===true&&o.assertion!=='negated';let consequence:any=null;if(pauseRequired){const requested=['urgent','professional','clarification'].includes(values.policy_level)?values.policy_level:'clarification';consequence=await confirmedConcern(db,x,actor,o,requested);}const result={observation_id:o.id,status:'confirmed',assertion:o.assertion,session_state:pauseRequired?'paused':x.s.state,safety_epoch:consequence?.epoch??x.h.safety_epoch,consequence:pauseRequired?'guidance_paused':'record_only',guidance_available:guidanceAvailable&&!pauseRequired,guidance_state:guidanceAvailable&&!pauseRequired?'available':'paused',physical_state_verified:false};await db.query('insert into private.idempotency(household_id,actor_id,key,body_hash,result) values($1,$2,$3,$4,$5)',[x.h.id,actor.userId,key,digest(body),JSON.stringify(result)]);return sessionResponse(db,actor,id,result);});}
 
-export async function correctSessionObservation(actor:Actor,id:string,raw:unknown,key:string){const i=observationCorrectionInput.parse(raw);keyCheck(key);if(!i.actor_pet_id)throw new DomainError('CLARIFICATION_REQUIRED');if(i.actor_pet_id===i.target_pet_id)throw new DomainError('INVALID_DIRECTION',400);return transaction(async db=>{const x=await lockedSession(db,actor,id,i);const old=(await db.query('select * from observations where id=$1 and session_id=$2 for update',[i.observation_id,id])).rows[0];if(!old||old.reporter_id!==actor.userId)throw new DomainError('SCOPE_MISMATCH',403);if(old.status!=='confirmed'||old.digest!==i.original_digest)throw new DomainError('DRAFT_CHANGED');for(const p of [i.actor_pet_id,i.target_pet_id])if(p&&!x.pets.includes(p))throw new DomainError('SCOPE_MISMATCH',403);const body={operation:'observation_correction',session_id:id,...i},prior=(await db.query('select * from private.idempotency where household_id=$1 and actor_id=$2 and key=$3',[x.h.id,actor.userId,key])).rows[0];if(prior){if(prior.body_hash!==digest(body))throw new DomainError('IDEMPOTENCY_MISMATCH');return prior.result;}const oid=randomUUID(),hash=digest(i);await db.query("insert into observations(id,household_id,case_id,session_id,reporter_id,raw_report,actor_pet_id,target_pet_id,assertion,source_kind,status,observed_at,reported_at,digest,supersedes_id,correction_reason,normalized_observation,context_snapshot,confirmed_at) values($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,'confirmed',$11,coalesce($12,now()),$13,$14,$15,$16,$17,now())",[oid,x.h.id,x.s.case_id,id,actor.userId,i.raw_report,i.actor_pet_id,i.target_pet_id,i.assertion,i.source_kind,i.observed_at,i.reported_at,hash,old.id,i.correction_reason,JSON.stringify({schema_version:'1',values:{correction:true},unknowns:[]}),JSON.stringify(old.context_snapshot)]);await db.query("update observations set status='corrected' where id=$1",[old.id]);const result={observation_id:oid,status:'confirmed',supersedes_id:old.id,hold_review_required:true,hold_cleared:false,physical_state_verified:false};await db.query('insert into private.idempotency(household_id,actor_id,key,body_hash,result) values($1,$2,$3,$4,$5)',[x.h.id,actor.userId,key,digest(body),JSON.stringify(result)]);return result;});}
+export async function correctSessionObservation(actor:Actor,id:string,raw:unknown,key:string){const i=observationCorrectionInput.parse(raw);keyCheck(key);if(!i.actor_pet_id)throw new DomainError('CLARIFICATION_REQUIRED');if(i.actor_pet_id===i.target_pet_id)throw new DomainError('INVALID_DIRECTION',400);return transaction(async db=>{const x=await lockedSession(db,actor,id),body={operation:'observation_correction',session_id:id,...i},prior=await sessionReplay(db,actor,x,key,body);if(prior)return sessionResponse(db,actor,id,prior.result);checkSessionState(x,i);const old=(await db.query('select * from observations where id=$1 and session_id=$2 for update',[i.observation_id,id])).rows[0];if(!old||old.reporter_id!==actor.userId)throw new DomainError('SCOPE_MISMATCH',403);if(old.status!=='confirmed'||old.digest!==i.original_digest)throw new DomainError('DRAFT_CHANGED');for(const p of [i.actor_pet_id,i.target_pet_id])if(p&&!x.pets.includes(p))throw new DomainError('SCOPE_MISMATCH',403);const oid=randomUUID(),hash=digest(i);await db.query("insert into observations(id,household_id,case_id,session_id,reporter_id,raw_report,actor_pet_id,target_pet_id,assertion,source_kind,status,observed_at,reported_at,digest,supersedes_id,correction_reason,normalized_observation,context_snapshot,confirmed_at) values($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,'confirmed',$11,coalesce($12,now()),$13,$14,$15,$16,$17,now())",[oid,x.h.id,x.s.case_id,id,actor.userId,i.raw_report,i.actor_pet_id,i.target_pet_id,i.assertion,i.source_kind,i.observed_at,i.reported_at,hash,old.id,i.correction_reason,JSON.stringify({schema_version:'1',values:{correction:true},unknowns:[]}),JSON.stringify(old.context_snapshot)]);await db.query("update observations set status='corrected' where id=$1",[old.id]);const result={observation_id:oid,status:'confirmed',supersedes_id:old.id,hold_review_required:true,hold_cleared:false,physical_state_verified:false};await db.query('insert into private.idempotency(household_id,actor_id,key,body_hash,result) values($1,$2,$3,$4,$5)',[x.h.id,actor.userId,key,digest(body),JSON.stringify(result)]);return sessionResponse(db,actor,id,result);});}
 
-export async function interruptTimedOutSessions(cutoff:Date){return transaction(async db=>{const rows=(await db.query("select id,household_id,safety_epoch from sessions where state='active' and last_checkpoint_at<$1 for update skip locked",[cutoff])).rows;for(const s of rows){await db.query("update sessions set state='interrupted',interruption_reason='heartbeat_timeout' where id=$1",[s.id]);await db.query("insert into audit_events(household_id,event_type,safety_epoch,entity_type,entity_id,metadata) values($1,'session_interrupted',$2,'session',$3,$4)",[s.household_id,s.safety_epoch,s.id,JSON.stringify({reason:'heartbeat_timeout',physical_state_verified:false})]);}return {interrupted:rows.map(r=>r.id)};});}
+export async function interruptTimedOutSessions(cutoff:Date){return transaction(async db=>{
+ const candidates=(await db.query("select id,household_id from sessions where state='active' and last_checkpoint_at<$1 order by household_id,id",[cutoff])).rows;
+ const interrupted:string[]=[];
+ for(const candidate of candidates){
+  // Match endpoint lock ordering, including the audit event's household FK.
+  // Recheck after waiting: a newer checkpoint or pause invalidates this job.
+  await db.query('select id from households where id=$1 for update',[candidate.household_id]);
+  const s=(await db.query("select id,household_id,safety_epoch from sessions where id=$1 and household_id=$2 and state='active' and last_checkpoint_at<$3 for update skip locked",[candidate.id,candidate.household_id,cutoff])).rows[0];
+  if(!s)continue;
+  await db.query("update sessions set state='interrupted',interruption_reason='heartbeat_timeout' where id=$1",[s.id]);
+  await db.query("insert into audit_events(household_id,event_type,safety_epoch,entity_type,entity_id,metadata) values($1,'session_interrupted',$2,'session',$3,$4)",[s.household_id,s.safety_epoch,s.id,JSON.stringify({reason:'heartbeat_timeout',physical_state_verified:false})]);
+  interrupted.push(s.id);
+ }
+ return {interrupted};
+});}
 
-export async function reconcileWithdrawnProtocols(){return transaction(async db=>{
- // A withdrawal applies to every reviewed plan, including one that has not
- // started a session. Each plan is processed once by staling it in this same
- // transaction; subsequent worker runs cannot repeat the epoch or handover.
- const rows=(await db.query(`select p.id plan_id,p.household_id,p.case_id,p.protocol_version_id,
-  s.id session_id from plan_revisions p join protocol_versions v on v.id=p.protocol_version_id
-  left join sessions s on s.plan_revision_id=p.id and s.state in ('active','interrupted')
-  where p.status='reviewed' and (v.revoked_at is not null or v.status in ('revoked','expired')
-   or (v.review_due_at is not null and v.review_due_at<=now()))
-  for update of p skip locked`)).rows;
+export async function reconcileWithdrawnProtocols(scope?:{protocol_version_ids:string[]}){
+ // Trusted worker-only scope: omission retains the ordinary maintenance scan.
+ // Never accept an empty/invalid object as an accidental global invocation.
+ const ids=scope?.protocol_version_ids;
+ if(scope!==undefined&&(scope===null||typeof scope!=='object'||Array.isArray(scope)||Object.keys(scope).length!==1||!Array.isArray(ids)||ids.length<1||ids.length>100||ids.some(id=>typeof id!=='string'||!/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(id))||new Set(ids.map(id=>id.toLowerCase())).size!==ids.length))throw new DomainError('INVALID_WITHDRAWAL_SCOPE',400);
+ return transaction(async db=>{
+ // Discover without locking child rows. Human/session writes lock the
+ // household first, so taking plan locks before waiting for it forms a cycle.
+ // Sorting households also makes concurrent worker scans use the same order.
+ const unavailable="(v.revoked_at is not null or v.status in ('revoked','expired') or (v.review_due_at is not null and v.review_due_at<=now()))";
+ const candidates=(await db.query(`select distinct p.household_id from plan_revisions p
+  join protocol_versions v on v.id=p.protocol_version_id where p.status='reviewed'
+  and ($1::uuid[] is null or p.protocol_version_id=any($1::uuid[])) and ${unavailable}
+  order by p.household_id`,[ids??null])).rows;
  const paused:string[]=[],invalidatedPlans:string[]=[];
- const householdEpochs=new Map<string,number>();
- for(const p of rows){
-  let epoch=householdEpochs.get(p.household_id);
-  if(epoch===undefined){
-   const h=(await db.query('select safety_epoch from households where id=$1 for update',[p.household_id])).rows[0];
-   const nextEpoch:number=h.safety_epoch+1;
-   epoch=nextEpoch;
-   await db.query('update households set safety_epoch=$2 where id=$1',[p.household_id,nextEpoch]);
-   householdEpochs.set(p.household_id,nextEpoch);
-   // Cancel all previous-epoch prompts before enqueuing current handovers.
-   await db.query("update outbox_events set state='canceled' where household_id=$1 and state='pending' and expected_safety_epoch<>$2",[p.household_id,epoch]);
-  }
+ for(const candidate of candidates){
+  const h=(await db.query('select safety_epoch from households where id=$1 for update',[candidate.household_id])).rows[0];
+  if(!h)continue;
+  // Re-scan after the lock wait: owner edits or another worker may have
+  // invalidated the candidate. Also recheck the current protocol status.
+  const rows=(await db.query(`select p.id plan_id,p.household_id,p.case_id,p.protocol_version_id,
+   s.id session_id from plan_revisions p join protocol_versions v on v.id=p.protocol_version_id
+   left join sessions s on s.plan_revision_id=p.id and s.state in ('active','interrupted')
+   where p.household_id=$1 and p.status='reviewed'
+   and ($2::uuid[] is null or p.protocol_version_id=any($2::uuid[])) and ${unavailable}
+   order by p.id for update of p skip locked`,[candidate.household_id,ids??null])).rows;
+  if(!rows.length)continue;
+  const epoch:number=h.safety_epoch+1;
+  await db.query('update households set safety_epoch=$2 where id=$1',[candidate.household_id,epoch]);
+  // Cancel previous-epoch prompts before enqueuing current handovers.
+  await db.query("update outbox_events set state='canceled' where household_id=$1 and state='pending' and expected_safety_epoch<>$2",[candidate.household_id,epoch]);
+  for(const p of rows){
   if(p.session_id){
    await db.query("update sessions set state='paused',interruption_reason='protocol_withdrawn' where id=$1",[p.session_id]);
    paused.push(p.session_id);
@@ -113,6 +233,7 @@ export async function reconcileWithdrawnProtocols(){return transaction(async db=
   await db.query("insert into outbox_events(household_id,event_type,payload,expected_safety_epoch,idempotency_key,state) values($1,'internal_handover',$2,$3,$4,'pending')",[p.household_id,JSON.stringify({schema_version:'1',handover_id:hid,recipient_scope:'household'}),epoch,`handover:${hid}`]);
   await db.query("insert into audit_events(household_id,event_type,safety_epoch,entity_type,entity_id,metadata) values($1,'protocol_withdrawn_paused',$2,'plan_revision',$3,$4)",[p.household_id,epoch,p.plan_id,JSON.stringify({protocol_version_id:p.protocol_version_id,session_id:p.session_id??null,physical_state_verified:false})]);
   invalidatedPlans.push(p.plan_id);
+  }
  }
  return {paused,invalidated_plans:invalidatedPlans};
 });}

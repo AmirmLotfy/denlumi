@@ -1,0 +1,226 @@
+{
+  "date": "2026-10-20",
+  "milestone": "P8 W01-W04 local software workflows",
+  "status": "PASS_local_software_only",
+  "checks": {
+    "domain": {
+      "command": "node .local/run-native.mjs npm test",
+      "exit_code": 0,
+      "passed": 176,
+      "failed": 0,
+      "skipped": 0,
+      "duration_ms": 131416.397875
+    },
+    "browser": {
+      "command": "DENLUMI_EVIDENCE_DIR=.local/p8-workflows-2026-10-20/browser-captures node .local/run-native.mjs node_modules/.bin/playwright test tests/e2e/phase[0789]*.spec.ts tests/e2e/shared.spec.ts tests/e2e/stop-restoration.spec.ts tests/e2e/p8-*.spec.ts",
+      "exit_code": 0,
+      "passed": 60,
+      "failed": 0,
+      "reported_duration": "4.2m"
+    },
+    "typecheck": {
+      "command": "npm run typecheck",
+      "exit_code": 0
+    },
+    "production_build": {
+      "command": "node .local/run-native.mjs npm run build",
+      "exit_code": 0,
+      "next_version": "16.3.5"
+    },
+    "http": [
+      {
+        "command": "node .local/run-native.mjs npm run test:household:http",
+        "exit_code": 0,
+        "result": "PASS"
+      },
+      {
+        "command": "node .local/run-native.mjs npm run test:phase23:http",
+        "exit_code": 0,
+        "result": "PASS"
+      },
+      {
+        "command": "node .local/run-native.mjs npm run test:phase45:http",
+        "exit_code": 0,
+        "result": "PASS"
+      }
+    ],
+    "db_lint": {
+      "command": "supabase db lint --local --level warning --fail-on warning",
+      "exit_code": 0,
+      "result": "No schema errors found"
+    },
+    "local_migrations": {
+      "applied": [
+        "supabase/migrations/20261020193618_p8_membership_acceptance.sql",
+        "supabase/migrations/20261020194324_p8_grant_revision.sql"
+      ],
+      "remote_resources_changed": false
+    },
+    "layout_probe": {
+      "viewport_css_px": 320,
+      "before_document_width": 339,
+      "after_document_width": 320,
+      "overflowing_elements_after": 0
+    }
+  },
+  "new_browser_cases": {
+    "routines": 6,
+    "sessions": 11,
+    "setup_and_access": 6
+  },
+  "iteration_limits": [
+    "The first session red selection was interrupted after one meaningful missing-control failure; not all session cases executed red.",
+    "Initial setup/routine red passed 0/8. Later additions were written before code but not all executed red.",
+    "The 173/174 interim domain run failed a historical pre-acceptance fixture assertion; it was updated to assert refusal then exact-revision acceptance.",
+    "Partial browser runs exposed a baseline-read test race, exact select-label locator issue, an invalid owner-scope test setup, and a real 320px header overflow. Final 60/60 is one complete post-fix run."
+  ],
+  "limits": [
+    "Real isolated local Auth/Postgres and HTTP plus database-free unit checks; fictional data only.",
+    "Injected read/write outages are explicitly simulated; no provider success was fabricated.",
+    "No human usability, screen-reader, supported-device or live voice acceptance.",
+    "All protocols remain demo_only; normal households have coordination without approved practical guidance.",
+    "Existing local accounts only; no public signup or external invitation provider.",
+    "Supabase remained local-only; model and speech flags forced off in native runtime.",
+    "No publication or submission; YouTube upload remains paused.",
+    "Bedrock authorization remains unknown following expired owner login; no AWS check in this milestone.",
+    "P9 dependency advisories and operational/content-review/release gates remain open."
+  ],
+  "source_manifest": [
+    {
+      "path": "packages/domain/coordination.ts",
+      "sha256": "56830b7bedfdec92de4e268753d19090facc1950a7cfa1844650841f9c9fc597"
+    },
+    {
+      "path": "packages/domain/household.ts",
+      "sha256": "bcc92c6333a7908855c1626024309c207926711998b9dbe733a29750fc4dc527"
+    },
+    {
+      "path": "packages/domain/planning.ts",
+      "sha256": "0745564b9cf016d3ca65a94acb521a068365559421e3f51140d44ffb6fccc132"
+    },
+    {
+      "path": "packages/domain/routines.ts",
+      "sha256": "2433346dd899bc224ed2dd21f3b46710befae50c5baa88b79a0b09f0900e0e6b"
+    },
+    {
+      "path": "packages/contracts/phase23.ts",
+      "sha256": "789c23b31d53f245b242da8818049c9f7e030c333b0404a8c2822175e494ae0a"
+    },
+    {
+      "path": "packages/contracts/phase45.ts",
+      "sha256": "0f8955429655953d94defc559f0d560e7de08ff5c521544542a2a1eaaefa8fbb"
+    },
+    {
+      "path": "apps/web/app/console.tsx",
+      "sha256": "6d198109fb191fbff1783411cb3c4fd913eb5ee59714e46c9318aadb71ec4eff"
+    },
+    {
+      "path": "apps/web/app/globals.css",
+      "sha256": "91d021898b975d967f0d37126a35b7d52ed05b21009d1f110709e44f8ed5b372"
+    },
+    {
+      "path": "apps/web/app/planning-journey.tsx",
+      "sha256": "80b56c84fb21b791d79669f43017d21189ee5f3df2e73a90f5c2fd43581b3361"
+    },
+    {
+      "path": "apps/web/app/routine-manager.tsx",
+      "sha256": "91ffd2e51dde9d75d125a548a6fad530b4dd7d199a08793fdffb172dbaa342e6"
+    },
+    {
+      "path": "apps/web/app/household-workspace.tsx",
+      "sha256": "d121af57fc3d16db1cdf6bb4aa452d692d1bf0a03b4a97c7097d202a875a7137"
+    },
+    {
+      "path": "apps/web/app/household/page.tsx",
+      "sha256": "0cacfd74bd9caa3ae5820b937fc2ec1e085573d3d8d728109366d3c0d86e1620"
+    },
+    {
+      "path": "apps/web/app/home-editor.tsx",
+      "sha256": "3dec75a5a539ce739bcdfe23dd429ecc554c89ad8ed40862b0eb6249f387a86a"
+    },
+    {
+      "path": "apps/web/app/home-record.tsx",
+      "sha256": "178cfd0749dcdf63327e49c8358163d31327daf78975b071664e38b8b9ff1124"
+    },
+    {
+      "path": "apps/web/app/membership-manager.tsx",
+      "sha256": "0949bc2c2614869837f6b261e1b72a6843ffff3917788c12db22217d24478be9"
+    },
+    {
+      "path": "apps/web/app/workflow-section.tsx",
+      "sha256": "8ff682b3e2fe720322d649a103a587b6eca7973b3aca1751ce0754cbab154e11"
+    },
+    {
+      "path": "apps/web/lib/workflow-http.ts",
+      "sha256": "144abc504f79ec7a429a7697a479d4753276424d20e551b20efe5ff8b9b259ff"
+    },
+    {
+      "path": "apps/web/lib/coordination-types.ts",
+      "sha256": "0fa446e23dfcad2b61f4b4914050361ea92a13288793fdad65a0e00e39efd4fb"
+    },
+    {
+      "path": "apps/web/lib/household-http.ts",
+      "sha256": "9e03d9b82d5c71e1127bfd62eb23e58a4f7887622fff32538e2aecbb47b802d9"
+    },
+    {
+      "path": "apps/web/app/api/households/route.ts",
+      "sha256": "c4b31fb8ea1d3c2db524de2268c669748f770a783e43b5b04340ea2a6e985f45"
+    },
+    {
+      "path": "apps/web/app/api/households/[id]/memberships/route.ts",
+      "sha256": "85a1109f3b06c839f9a70126ba043a95798ac58354564f8c5f20745ec7d71c2d"
+    },
+    {
+      "path": "apps/web/app/api/households/[id]/settings/route.ts",
+      "sha256": "8f23c709a059a85bdacd4eb60e0510cb019b9f7152c8972b89a4ce9f654941a8"
+    },
+    {
+      "path": "apps/web/app/api/households/[id]/routine-rules/route.ts",
+      "sha256": "ec9b50720439542ac07777aa469661f219e27a5d7386618e097d9bbe8a241acd"
+    },
+    {
+      "path": "supabase/migrations/20261020193618_p8_membership_acceptance.sql",
+      "sha256": "140bacd8fd9806c697c37f85421474f5c7ec7585fbc23782da63fbacea76b196"
+    },
+    {
+      "path": "supabase/migrations/20261020194324_p8_grant_revision.sql",
+      "sha256": "5b8b965ca5792543a873a64a48e268a1e400f3e55840658e6ffba0c2dc381882"
+    },
+    {
+      "path": "tests/p8-coordination.test.ts",
+      "sha256": "7ecb4a2b15f2b0414990bf9913887ea87a6aec1ab3483286122c0d7f7fe1a429"
+    },
+    {
+      "path": "tests/household.test.ts",
+      "sha256": "471603455eb99f3c0f19f9b48e4b9bd99f917d0db5fb9e83c28e30b5863058ee"
+    },
+    {
+      "path": "tests/e2e/p8-setup-workflows.spec.ts",
+      "sha256": "9a35c59283455ab5fb1533a0e81f2dde735abd89619e11c5eb50b3b470c5c76f"
+    },
+    {
+      "path": "tests/e2e/p8-session-workflows.spec.ts",
+      "sha256": "1503b86cf969daf851d57d3525108169c8b6edc93a86f6f447547078a50b1692"
+    },
+    {
+      "path": "tests/e2e/p8-routine-workflows.spec.ts",
+      "sha256": "3f25cbcb43d8e8e842229548404a3d64c92ad5176b9ba8cde3404b8ee1b98d55"
+    },
+    {
+      "path": "scripts/prove-household-http.ts",
+      "sha256": "69f9fa33b32f4c70161de278644c7c14b19881a06907967aea5fc8bc866adebb"
+    },
+    {
+      "path": "scripts/prove-phase23-http.ts",
+      "sha256": "caf5a8a99335e1b8fc097ac909306322fbaa17d09bd166d96bc8416941024bf3"
+    },
+    {
+      "path": "scripts/prove-phase45-http.ts",
+      "sha256": "1e6107affcaeddd4fbc2e50048b9cf77701979190c421e2002c1d8c71af5c2ce"
+    },
+    {
+      "path": "package.json",
+      "sha256": "81eb06bcecc531117d867952e529eb0ebbb1b3fd40f98d5bf798e0c7ec30cda2"
+    }
+  ]
+}

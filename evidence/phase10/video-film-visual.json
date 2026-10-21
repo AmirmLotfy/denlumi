@@ -1,0 +1,43 @@
+{
+  "checked_on": "2026-10-20",
+  "scope": "AI inspection of sampled frames from the actual final local film; not human or full-frame privacy acceptance.",
+  "film_sha256": "1a8b63b138c151002519302703345e77008034805c8a43dac7f071d5b2f589ca",
+  "contact_sheet_sample_seconds": [
+    1,
+    7,
+    14,
+    19,
+    22.5,
+    25,
+    30.8,
+    35.8,
+    40.5,
+    44.7,
+    53.5,
+    60,
+    67.5,
+    81,
+    84.8,
+    99
+  ],
+  "full_resolution_samples_seconds": [
+    40.5,
+    53.5,
+    67.5,
+    99
+  ],
+  "findings": [
+    "Original intro/outro caregiver paths and current-record motif visible.",
+    "Report pause and stale saved-view state retained from real footage.",
+    "MCP trace is enlarged; database-template and blocked Bedrock labels remain visible.",
+    "Offline explanatory illustration is labeled separately from the actual not-yet-synchronized application status.",
+    "Captions fit within two lines in the reserved strip; final animal-outcome limitation is present.",
+    "No credentials or deletion codes observed in these sampled frames; this is not an exhaustive frame-by-frame privacy audit."
+  ],
+  "status": "PASS",
+  "remaining": [
+    "Owner listening/voice review",
+    "YouTube upload remains paused",
+    "No public replacement link or Devpost submission"
+  ]
+}

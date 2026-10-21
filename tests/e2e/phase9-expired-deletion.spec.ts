@@ -1,8 +1,6 @@
-import { expect,test } from '@playwright/test';
+import { expect,test } from './database-test';
 import { testHousehold } from '../helpers';
 import { pool } from '../../packages/domain/db';
-
-test.afterAll(()=>pool.end());
 
 test('freshly authenticated owner sees deletion-only path after fictional demo expiry',async({page})=>{
  const home=await testHousehold('single_cat',true);

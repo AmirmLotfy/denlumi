@@ -1,4 +1,4 @@
-import { expect, test, type Locator, type Page } from '@playwright/test';
+import { expect, test, type Locator, type Page } from './database-test';
 
 // Browser-observable regressions for AT068–072. Human screen-reader use and
 // native browser zoom still require separate acceptance on supported devices.

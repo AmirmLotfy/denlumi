@@ -22,8 +22,13 @@ async function scopedCase(db:pg.PoolClient,actor:Actor,caseId:string,lock=false)
 
 function validateScenario(code:string,participants:any[]) {
  const species=sorted(participants.map(p=>p.species));
- const exact:Record<string,string[]>={SC01:['cat'],SC02:['dog'],SC03:['cat','cat'],SC04:['dog','dog'],SC05:['cat','dog'],SC06:['cat','dog'],SC07:['cat','cat','dog'],SC08:['dog','dog'],SC09:['cat','cat'],SC10:['cat','dog'],SC11:['cat','dog'],SC12:['cat','dog'],SC13:['cat','dog'],SC14:['dog'],SC15:['dog'],SC16:['cat'],SC17:['cat']};
- if(JSON.stringify(species)!==JSON.stringify(exact[code]))throw new DomainError('SCENARIO_PARTICIPANT_MISMATCH',409);
+ // Fixtures illustrate a route; they do not define every eligible household.
+ // Introduction sessions stay pair-specific. Broader situations only route to
+ // coordination/clarification/help and never inherit a pair's practical module.
+ const pairings:Record<string,string[]>={SC01:['cat'],SC02:['dog'],SC03:['cat','cat'],SC04:['dog','dog'],SC05:['cat','dog'],SC06:['cat','dog']};
+ const expected=pairings[code];
+ const minimum=code==='SC07'?3:code==='SC08'?2:1;
+ if(!/^SC(0[1-9]|1[0-7])$/.test(code)||species.some(s=>!['cat','dog'].includes(s))||species.length<minimum||species.length>6||expected&&JSON.stringify(species)!==JSON.stringify(expected))throw new DomainError('SCENARIO_PARTICIPANT_MISMATCH',409);
  const newcomer=participants.find(p=>p.role==='newcomer');
  if(code==='SC05'&&newcomer?.species!=='cat')throw new DomainError('NEWCOMER_DIRECTION_MISMATCH',409);
  if(code==='SC06'&&newcomer?.species!=='dog')throw new DomainError('NEWCOMER_DIRECTION_MISMATCH',409);
@@ -64,6 +69,14 @@ export async function replaceHomePlan(actor:Actor,householdId:string,raw:unknown
  return ownerWrite(actor,householdId,i,key,{operation:'home_plan_replaced',...i},async(db,h)=>{
   const version=h.home_version+1,petIds=[...new Set(i.zones.flatMap(z=>z.resources.flatMap(r=>r.pet_access.map(a=>a.pet_id))).concat(i.responsibilities.flatMap(r=>r.pet_id?[r.pet_id]:[])))];
   if(petIds.length&&(await db.query('select id from pets where household_id=$1 and id=any($2::uuid[])',[householdId,petIds])).rowCount!==petIds.length)throw new DomainError('SCOPE_MISMATCH',403);
+  for(const responsibility of i.responsibilities){
+   const m=(await db.query(`select m.* from memberships m join profiles p on p.id=m.profile_id
+    where m.household_id=$1 and m.profile_id=$2 and m.accepted_at is not null
+    and m.revoked_at is null and (m.expires_at is null or m.expires_at>now())
+    and p.status='active' and m.role<>'reader' for share of m,p`,[householdId,responsibility.profile_id])).rows[0];
+   if(!m||(m.pet_scope&&(responsibility.pet_id===null||!m.pet_scope.includes(responsibility.pet_id))))throw new DomainError('SCOPE_MISMATCH',403);
+   if(m.case_scope&&(responsibility.pet_id===null||!(await db.query('select 1 from case_pets where household_id=$1 and pet_id=$2 and case_id=any($3::uuid[])',[householdId,responsibility.pet_id,m.case_scope])).rowCount))throw new DomainError('SCOPE_MISMATCH',403);
+  }
   for(const z of i.zones){const zone=(await db.query('insert into home_zones(household_id,label,home_version,arrangement_note,reported_by,reported_at) values($1,$2,$3,$4,$5,now()) returning id',[householdId,z.label,version,z.arrangement_note,actor.userId])).rows[0];for(const r of z.resources){const resource=(await db.query('insert into resources(household_id,zone_id,kind,label,status) values($1,$2,$3,$4,$5) returning id',[householdId,zone.id,r.kind,r.label,r.status])).rows[0];for(const a of r.pet_access)await db.query('insert into pet_resource_access(household_id,pet_id,resource_id,access_plan,version) values($1,$2,$3,$4,$5)',[householdId,a.pet_id,resource.id,a.access_plan,version]);}}
   for(const r of i.responsibilities)await db.query('insert into home_responsibilities(household_id,home_version,profile_id,pet_id,label,status,note) values($1,$2,$3,$4,$5,$6,$7)',[householdId,version,r.profile_id,r.pet_id,r.label,r.status,r.note]);
   await db.query('update households set home_version=$2 where id=$1',[householdId,version]);
@@ -118,9 +131,46 @@ export async function reviewPlan(actor:Actor,planId:string,raw:unknown,key:strin
 
 export async function acknowledgeHandover(actor:Actor,handoverId:string,raw:unknown,key:string) {
  const i=handoverAckInput.parse(raw);keyCheck(key);
- return transaction(async db=>{await assertSession(db,actor);const ho=(await db.query('select * from handovers where id=$1 for update',[handoverId])).rows[0];if(!ho)throw new DomainError('SCOPE_MISMATCH',403);const m=(await db.query('select * from memberships where household_id=$1 and profile_id=$2 and revoked_at is null and (expires_at is null or expires_at>now())',[ho.household_id,actor.userId])).rows[0];if(!m)throw new DomainError('SCOPE_MISMATCH',403);if(!m.accepted_at)throw new DomainError('MEMBERSHIP_NOT_ACCEPTED');const prior=(await db.query('select * from private.idempotency where household_id=$1 and actor_id=$2 and key=$3',[ho.household_id,actor.userId,key])).rows[0];if(prior){if(prior.body_hash!==digest(i))throw new DomainError('IDEMPOTENCY_MISMATCH');return prior.result;}if(ho.status!=='published'||ho.digest!==i.acknowledged_digest)throw new DomainError('HANDOVER_CHANGED');const id=randomUUID();await db.query('insert into handover_acks(id,household_id,handover_id,profile_id,acknowledged_digest) values($1,$2,$3,$4,$5)',[id,ho.household_id,ho.id,actor.userId,ho.digest]);const result={acknowledgement_id:id,handover_id:ho.id,digest:ho.digest};await db.query('insert into private.idempotency(household_id,actor_id,key,body_hash,result) values($1,$2,$3,$4,$5)',[ho.household_id,actor.userId,key,digest(i),JSON.stringify(result)]);return result;});
+ return transaction(async db=>{
+  await assertSession(db,actor);
+  const candidate=(await db.query('select household_id from handovers where id=$1',[handoverId])).rows[0];
+  if(!candidate)throw new DomainError('SCOPE_MISMATCH',403);
+  // Safety writes and withdrawal workers lock the household before its
+  // handovers. The idempotency insert also acquires a household FK lock.
+  const household=(await db.query('select id,status,expires_at,safety_epoch from households where id=$1 for update',[candidate.household_id])).rows[0];
+  if(!household||household.status!=='active'||(household.expires_at&&new Date(household.expires_at)<=new Date()))throw new DomainError('SCOPE_MISMATCH',403);
+  await assertSession(db,actor);
+  const ho=(await db.query('select * from handovers where id=$1 and household_id=$2 for update',[handoverId,household.id])).rows[0];
+  if(!ho||!ho.case_id)throw new DomainError('SCOPE_MISMATCH',403);
+  const m=(await db.query('select * from memberships where household_id=$1 and profile_id=$2 and revoked_at is null and (expires_at is null or expires_at>now())',[ho.household_id,actor.userId])).rows[0];
+  if(!m)throw new DomainError('SCOPE_MISMATCH',403);if(!m.accepted_at)throw new DomainError('MEMBERSHIP_NOT_ACCEPTED');
+  if(m.case_scope&&!m.case_scope.includes(ho.case_id))throw new DomainError('SCOPE_MISMATCH',403);
+  if(m.pet_scope){
+   const participants=(await db.query('select pet_id from case_pets where household_id=$1 and case_id=$2',[household.id,ho.case_id])).rows;
+   if(participants.some(p=>!m.pet_scope.includes(p.pet_id)))throw new DomainError('SCOPE_MISMATCH',403);
+  }
+  const prior=(await db.query('select * from private.idempotency where household_id=$1 and actor_id=$2 and key=$3',[ho.household_id,actor.userId,key])).rows[0];
+  if(prior){if(prior.body_hash!==digest(i)||prior.result?.handover_id!==ho.id)throw new DomainError('IDEMPOTENCY_MISMATCH');return prior.result;}
+  if(ho.status!=='published'||ho.safety_epoch!==household.safety_epoch||ho.digest!==i.acknowledged_digest)throw new DomainError('HANDOVER_CHANGED');
+  const id=randomUUID();await db.query('insert into handover_acks(id,household_id,handover_id,profile_id,acknowledged_digest) values($1,$2,$3,$4,$5)',[id,ho.household_id,ho.id,actor.userId,ho.digest]);
+  const result={acknowledgement_id:id,handover_id:ho.id,digest:ho.digest};
+  await db.query('insert into private.idempotency(household_id,actor_id,key,body_hash,result) values($1,$2,$3,$4,$5)',[ho.household_id,actor.userId,key,digest(i),JSON.stringify(result)]);return result;
+ });
 }
 
 export async function acceptMembership(actor:Actor,membershipId:string,raw:unknown) {
- membershipAcceptInput.parse(raw);return transaction(async db=>{await assertSession(db,actor);const m=(await db.query('select * from memberships where id=$1 and profile_id=$2 and revoked_at is null and (expires_at is null or expires_at>now()) for update',[membershipId,actor.userId])).rows[0];if(!m)throw new DomainError('SCOPE_MISMATCH',403);await db.query('update memberships set accepted_at=coalesce(accepted_at,now()) where id=$1',[m.id]);await db.query("insert into audit_events(household_id,actor_id,event_type,safety_epoch) select $1,$2,'membership_accepted',safety_epoch from households where id=$1",[m.household_id,actor.userId]);return {membership_id:m.id,accepted:true};});
+ const input=membershipAcceptInput.parse(raw);return transaction(async db=>{
+  await assertSession(db,actor);
+  const initial=(await db.query('select household_id from memberships where id=$1 and profile_id=$2',[membershipId,actor.userId])).rows[0];
+  if(!initial)throw new DomainError('SCOPE_MISMATCH',403);
+  const h=(await db.query("select id from households where id=$1 and status='active' and (expires_at is null or expires_at>now()) for update",[initial.household_id])).rows[0];
+  const m=(await db.query('select * from memberships where id=$1 and profile_id=$2 and revoked_at is null and (expires_at is null or expires_at>now()) for update',[membershipId,actor.userId])).rows[0];
+  if(!h||!m)throw new DomainError('SCOPE_MISMATCH',403);
+  if(m.grant_version!==input.expected_grant_version)throw new DomainError('STALE_STATE');
+  if(!m.accepted_at){
+   await db.query('update memberships set accepted_at=now() where id=$1',[m.id]);
+   await db.query("insert into audit_events(household_id,actor_id,event_type,safety_epoch) select $1,$2,'membership_accepted',safety_epoch from households where id=$1",[m.household_id,actor.userId]);
+  }
+  return {membership_id:m.id,accepted:true};
+ });
 }

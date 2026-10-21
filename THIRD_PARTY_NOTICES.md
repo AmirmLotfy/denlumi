@@ -2,7 +2,7 @@
 
 Denlumi's original source, fictional fixtures, documentation and original application screenshots are provided under the root MIT license. This does not grant rights to third-party brands, linked documentation, dependencies, reference designs, or source publications.
 
-Dependencies retain their own licenses; exact direct versions are pinned in package.json and the full dependency graph is locked in package-lock.json. Install with `npm ci` to retrieve the packages and their license files. No third-party font binaries, stock animal photos, reference screenshots, music, or video are bundled in the public showcase.
+Dependencies retain their own licenses; exact direct versions are pinned in package.json and the full dependency graph is locked in package-lock.json. Install with `npm ci` to retrieve the packages and their license files. No third-party font binaries, stock animal photos, reference screenshots or music are bundled. The public showcase includes the historical original fictional-app screen recording, with local macOS Samantha speech narration; it is not the replacement submission film. The replacement film remains private and includes Higgsfield Seed Audio Grady narration. MIT covers our original source and compositions, not vendor voices, generated-output rights, platform terms or third-party marks. The owner must confirm distribution rights for each selected narration/asset before publication; this notice is not a legal clearance.
 
 The design adapts documented layout principles from Orderful and Todoist. Their screenshots and font files are not distributed. Amazon, Alexa, AWS and GitHub names identify platforms; no affiliation, endorsement, native Alexa certification or veterinary approval is claimed.
 

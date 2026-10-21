@@ -1,8 +1,9 @@
 import pg from 'pg';
+import {localDatabaseUrl} from './local-database';
 // This project has no authorized hosted Supabase environment.
-if(process.env.DATABASE_URL){const target=new URL(process.env.DATABASE_URL);if(!['localhost','127.0.0.1'].includes(target.hostname)||target.port!=='55432')throw new Error('LOCAL_DENLUMI_DATABASE_REQUIRED');}
+const databaseUrl=localDatabaseUrl(process.env.DATABASE_URL);
 const globalDb = globalThis as unknown as { denlumiPool?: pg.Pool };
-export const pool = globalDb.denlumiPool ?? new pg.Pool({ connectionString: process.env.DATABASE_URL, max: 5, statement_timeout: 8000, idle_in_transaction_session_timeout: 10000 });
+export const pool = globalDb.denlumiPool ?? new pg.Pool({ connectionString: databaseUrl.href, max: 5, statement_timeout: 8000, idle_in_transaction_session_timeout: 10000 });
 if (process.env.NODE_ENV !== 'production') globalDb.denlumiPool = pool;
 export type Actor = { userId: string; sessionId: string };
 export class DomainError extends Error {

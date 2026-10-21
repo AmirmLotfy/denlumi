@@ -30,6 +30,9 @@ try {
  g=await graph();assert.equal(g.pairs.length,1);assert.equal(g.contexts[0].status,'unreviewed');assert.equal(g.cases[0].support_level,'coordination_only');
  trace.push({operation:'pets_case_and_pair_context',status:200});
  const grant=await request(owner.token,path+'/memberships','POST',{...await expected(),profile_id:caregiver.actor.userId,role:'caregiver',pet_scope:null,case_scope:null,expires_at:null,adult_acknowledged:true});assert.equal(grant.status,200);
+ assert.equal((await request(caregiver.token,path+'/graph')).status,403);
+ const pending=(await request(caregiver.token,'/api/households')).body.pending_memberships.find((m:any)=>m.household_id===id);
+ assert.equal((await request(caregiver.token,`/api/memberships/${pending.id}/accept`,'POST',{adult_acknowledged:true,expected_grant_version:pending.grant_version})).status,200);
  assert.equal((await request(caregiver.token,path+'/graph')).status,200);
  const forbidden=await request(caregiver.token,path+'/pets','POST',{...await expected(),nickname:'No permission',species:'cat'});assert.equal(forbidden.status,403);trace.push({operation:'caregiver_privileged_write_denied',status:403});
  assert.equal((await request(stranger.token,path+'/graph')).status,403);trace.push({operation:'foreign_tenant_read_denied',status:403});

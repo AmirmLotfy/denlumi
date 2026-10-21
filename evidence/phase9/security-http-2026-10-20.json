@@ -1,0 +1,7 @@
+{
+  "checked_at": "2026-10-20T21:53:39.134Z",
+  "result": "PASS",
+  "checks": 9,
+  "scope": "Real localhost production HTTP: origin/host refusal, exact JSON media type, malformed JSON, UTF-8 byte cap, credential/schema refusal, private response caching and security headers. No valid provider call or account mutation.",
+  "limits": "Selected local boundaries; not an exhaustive penetration test, TLS/proxy/hosted review or human acceptance."
+}

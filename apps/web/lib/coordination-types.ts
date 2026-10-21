@@ -1,0 +1,5 @@
+export type Pet={id:string;nickname:string;species:'cat'|'dog';version:number;archived_at:string|null;age_band:string|null;arrival_date:string|null;approx_birth_date:string|null;aliases:string[];context_notes:{schema_version:1;reported_history:string|null;accessibility_notes:string|null}};
+export type Case={id:string;title:string;scenario_code:string;support_level:string;routed_at:string|null};
+export type Graph={household:{id:string;nickname:string;timezone:string;locale:'en';mode:string;fictional:boolean;state_version:number;safety_epoch:number};pets:Pet[];cases:Case[];participants:{case_id:string;pet_id:string;role:string}[];membership:{id:string;role:string;pet_scope:string[]|null;case_scope:string[]|null}};
+export type Member={id:string;profile_id:string;display_name:string|null;profile_status:string;role:string;pet_scope:string[]|null;case_scope:string[]|null;expires_at:string|null;accepted_at:string|null;revoked_at:string|null};
+export const householdExpected=(g:Graph)=>({expected_state_version:g.household.state_version,expected_safety_epoch:g.household.safety_epoch});

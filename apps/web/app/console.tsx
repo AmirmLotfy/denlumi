@@ -8,6 +8,8 @@ import HouseholdViews from './household-views';
 import PlanningJourney from './planning-journey';
 import ExpiredDemoDeletion from './expired-demo-deletion';
 import { IssuedDemoDeletionCode,RecoverExpiredDemoDeletion } from './demo-deletion-recovery';
+import RoutineManager from './routine-manager';
+import WorkflowSection from './workflow-section';
 
 const choices:{id:FixtureName;name:string;detail:string}[]=[
  {id:'cat_dog',name:'Dog joining a cat',detail:'Finn joins Nora'},
@@ -29,6 +31,7 @@ const time=(s:string|null)=>s?new Date(s).toLocaleString(undefined,{month:'short
 const petLabel=(p:Brief['pets'][number])=>`${p.nickname} (${p.species})${p.aliases?.length?` · also ${p.aliases.join(', ')}`:''}`;
 export default function Console({providerEvidence,speechEnabled}:{providerEvidence:Evidence;speechEnabled:boolean}){
  const [brief,setBrief]=useState<Brief|null>(null),[loading,setLoading]=useState(true),[busy,setBusy]=useState(false),[error,setError]=useState('');
+ const [actorId,setActorId]=useState<string|null>(null);
  const [fixture,setFixture]=useState<FixtureName>('cat_dog');
  const [retentionAccepted,setRetentionAccepted]=useState(false);
  const [signOutPending,setSignOutPending]=useState(false);
@@ -47,16 +50,23 @@ export default function Console({providerEvidence,speechEnabled}:{providerEviden
  const audio=useRef<HTMLAudioElement|null>(null),audioUrl=useRef<string|null>(null),abort=useRef<AbortController|null>(null),generation=useRef(0),latch=useRef(false),syncing=useRef(false);
  const householdGeneration=useRef(0);
  const briefRef=useRef<Brief|null>(null);briefRef.current=brief;
- const load=useCallback(async()=>{const view=householdGeneration.current;const r=await request<{brief:Brief|null}>('/api/households');if(view!==householdGeneration.current)return null;setBrief(r.brief);return r.brief;},[]);
- useEffect(()=>{let active=true;
+ const load=useCallback(async()=>{const view=householdGeneration.current;const r=await request<{brief:Brief|null;profile_id:string}>('/api/households');if(view!==householdGeneration.current)return null;setActorId(r.profile_id);setBrief(r.brief);return r.brief;},[]);
+ useEffect(()=>{let active=true;const view=householdGeneration.current;
+  const current=()=>active&&view===householdGeneration.current;
   (async()=>{try{
-   const r=await request<{brief:Brief|null}>('/api/households');if(!active)return;setBrief(r.brief);
+   const r=await request<{brief:Brief|null;profile_id:string}>('/api/households');if(!current())return;setActorId(r.profile_id);
+   // Restore the device's Stop before exposing household controls. Optional
+   // caregiver authentication/network work must never delay or clear this latch.
+   if(r.brief){
+    try{const value=localStorage.getItem(`denlumi-stop-${r.brief.household_id}`);if(value){latch.current=true;setLocalStopped(true);setSync(value==='synced'?'synced':'pending');}}
+    catch{latch.current=true;setLocalStopped(true);setSync('pending');}
+   }
+   setBrief(r.brief);
    try{const saved=sessionStorage.getItem('denlumi-records-household');if(saved)setRecordsHouseholdId(saved);}catch{}
    if(r.brief){const b=r.brief;setActorPet(b.pets[0]?.id??'');setTargetPet(b.pets[1]?.id??'');
-    const saved=await request<Brief>('/api/caregiver');if(active)setSavedCaregiver(bindState(saved));
-    const value=localStorage.getItem(`denlumi-stop-${b.household_id}`);if(value){latch.current=true;setLocalStopped(true);setSync(value==='pending'?'pending':'synced');}
+    void request<Brief>('/api/caregiver').then(saved=>{if(current()&&saved.household_id===b.household_id)setSavedCaregiver(bindState(saved));}).catch(()=>{if(current())setSavedCaregiver(null);});
    }
-  }catch(e){if((e as Error).message!=='UNAUTHORIZED'&&active)setError('The household could not be retrieved. Check the local services and try again.');}finally{if(active)setLoading(false);}})();
+  }catch(e){if((e as Error).message!=='UNAUTHORIZED'&&current())setError('The household could not be retrieved. Check the local services and try again.');}finally{if(current())setLoading(false);}})();
   return()=>{active=false;generation.current++;abort.current?.abort();microphone.current?.cancel();if(voiceTimer.current)clearTimeout(voiceTimer.current);audio.current?.pause();if(audioUrl.current)URL.revokeObjectURL(audioUrl.current);};
  },[]);
  const syncStop=useCallback(async()=>{
@@ -81,6 +91,7 @@ export default function Console({providerEvidence,speechEnabled}:{providerEviden
  },[sync,syncStop]);
  function clearTransientContent(){
   ++householdGeneration.current;++generation.current;
+  setActorId(null);
   stopLocally({audio:audio.current,speech:window.speechSynthesis,abort:abort.current??undefined,stopMicrophone:()=>{microphone.current?.cancel();microphone.current=null;},persist:()=>{},showStopped:()=>{}});
   if(voiceTimer.current)clearTimeout(voiceTimer.current);voiceTimer.current=null;
   if(audioUrl.current)URL.revokeObjectURL(audioUrl.current);audioUrl.current=null;audio.current=null;abort.current=null;
@@ -104,9 +115,17 @@ export default function Console({providerEvidence,speechEnabled}:{providerEviden
   const view=householdGeneration.current;
   try{await action('record',{...bindState(brief),raw_report:report,actor_pet_id:actorPet||null,target_pet_id:targetPet||null,assertion,source_kind:reportSource,observed_at:observedAt?new Date(observedAt).toISOString():null});if(view===householdGeneration.current){setReport('');setReportSource('typed');}}catch{}
  }
- async function checkCaregiver(){if(!savedCaregiver)return;setBusy(true);setCaregiverStatus('');try{
-  await request('/api/actions',post({operation:'preflight',input:savedCaregiver,caregiver:true}));setCaregiverStatus('Sam’s saved view is current. This was a fictional state check; no session started.');
- }catch(e){setCaregiverStatus((e as Error).message==='STALE_STATE'?'The plan changed. Sam’s saved view was refused. Read the current update before proceeding.':`Request refused: ${(e as Error).message.replaceAll('_',' ')}.`);}finally{setBusy(false);}}
+ async function checkCaregiver(){if(!savedCaregiver||!brief)return;const view=householdGeneration.current,id=brief.household_id;
+  const current=()=>view===householdGeneration.current&&briefRef.current?.household_id===id;
+  setBusy(true);setCaregiverStatus('');try{
+   await request('/api/actions',post({operation:'preflight',input:savedCaregiver,caregiver:true}));if(current())setCaregiverStatus('Sam’s saved view is current. This was a fictional state check; no session started.');
+  }catch(e){if(current())setCaregiverStatus((e as Error).message==='STALE_STATE'?'The plan changed. Sam’s saved view was refused. Read the current update before proceeding.':`Request refused: ${(e as Error).message.replaceAll('_',' ')}.`);}finally{if(current())setBusy(false);}
+ }
+ async function refreshCaregiver(){if(!brief)return;const view=householdGeneration.current,id=brief.household_id;
+  const current=()=>view===householdGeneration.current&&briefRef.current?.household_id===id;
+  try{const saved=await request<Brief>('/api/caregiver');if(!current()||saved.household_id!==id)return;setSavedCaregiver(bindState(saved));setCaregiverStatus('Sam retrieved the current update. This does not acknowledge any physical action.');}
+  catch{if(current())setCaregiverStatus('Sam’s current view could not be retrieved.');}
+ }
  async function ask(e?:React.FormEvent){e?.preventDefault();if(!brief)return;
   audio.current?.pause();setTalking(false);microphone.current?.cancel();microphone.current=null;setRecording(false);
   const turn=++generation.current;abort.current?.abort();abort.current=new AbortController();setBusy(true);setError('');setReply(null);
@@ -171,7 +190,7 @@ export default function Console({providerEvidence,speechEnabled}:{providerEviden
  const paused=!!brief?.holds.length;
  const reviewNeeded=!!brief&&!paused&&(brief.stale||brief.plan_status==='stale'||!brief.guidance_available);
  return <>
-  <header className="topbar"><a href="/" className="wordmark" aria-label="Denlumi home"><span className="mark" aria-hidden="true">d.</span>denlumi</a><span className="tagline">Every pet. One home. At their pace.</span><span className="demo-label">Fictional household demo</span></header>
+  <header className="topbar"><a href="/" className="wordmark" aria-label="Denlumi home"><span className="mark" aria-hidden="true">d.</span>denlumi</a><a href="/household">Household setup & management</a><span className="demo-label">Fictional household demo</span></header>
   <main id="main">
    {loading?<div className="loading" role="status">Retrieving your household…</div>:!brief?<section className="entry">
     <span className="eyebrow">A home is a shared responsibility.</span><h1>One current plan.<br/>Everyone in the picture.</h1>
@@ -185,7 +204,7 @@ export default function Console({providerEvidence,speechEnabled}:{providerEviden
     {recordsHouseholdId&&<ExpiredDemoDeletion householdId={recordsHouseholdId} onChanged={()=>{void load().catch(()=>setError('Deletion state could not be refreshed.'));}} onForget={()=>{try{sessionStorage.removeItem('denlumi-records-household');sessionStorage.removeItem(`denlumi-deletion-${recordsHouseholdId}`);}catch{}setRecordsHouseholdId(null);}}/>}
     <RecoverExpiredDemoDeletion onRecovered={()=>{try{sessionStorage.removeItem('denlumi-records-household');}catch{}setRecordsHouseholdId(null);setDeletionRecoveryCode(null);}}/>
    </section>:<>
-    <div className="page-heading"><div><div className="eyebrow">The sample home <span className="dot-separator">/</span> {activeView[0].toUpperCase()+activeView.slice(1)}</div><h1>{brief.title}</h1></div><div className="account"><span><strong>Maya</strong> · owner</span><button className="text-button" onClick={signOut}>Leave sample</button></div></div>
+    <div className="page-heading"><div><div className="eyebrow">The sample home <span className="dot-separator">/</span> {activeView[0].toUpperCase()+activeView.slice(1)}</div><h1>{brief.title}</h1></div><div className="account"><span><strong>{brief.role==='owner'?'Maya':'Current account'}</strong> · {brief.role}</span><button className="text-button" onClick={signOut}>Leave sample</button></div></div>
     {deletionRecoveryCode&&<IssuedDemoDeletionCode code={deletionRecoveryCode} onDismiss={()=>setDeletionRecoveryCode(null)}/>}
     <div className="pet-lanes">{brief.pets.map(p=><div className="pet" key={p.id}><span className="initial" aria-hidden="true">{p.nickname[0]}</span><div><strong>{p.nickname}</strong><span>{p.species} · {p.role}</span></div></div>)}<p>{brief.pets.length>2?'Separate records. No assumption of group readiness.':brief.pets.length===1?'A complete household of one. No second pet needed.':'Each pet has their own part of the story.'}</p></div>
     <div className="app-layout"><nav className="section-nav" aria-label="Household views">{(['today','pets','home','history'] as const).map(view=><button key={view} type="button" aria-current={activeView===view?'page':undefined} className={activeView===view?'view-active':''} onClick={()=>setActiveView(view)}>{view[0].toUpperCase()+view.slice(1)}</button>)}<p>Records are current only when retrieved. Reported care is not verified physical activity.</p></nav><div className="view-content">
@@ -197,24 +216,25 @@ export default function Console({providerEvidence,speechEnabled}:{providerEviden
       {reviewNeeded&&<p className="inline-notice">The household record changed or the demo protocol is unavailable. Earlier plan review cannot authorize a session. Review the current version before proceeding.</p>}
       <div className="plan-foot"><span className="badge">Demo-only protocol</span><span>Retrieved {time(brief.as_of)}</span></div>
      </section>
-     <section className="panel handover" aria-labelledby="handover-title"><div className="panel-top"><h2 id="handover-title">Same home. Same update.</h2><span className="small">2 fictional caregivers</span></div>
+     {brief.role==='owner'&&<section className="panel handover" aria-labelledby="handover-title"><div className="panel-top"><h2 id="handover-title">Same home. Same update.</h2><span className="small">2 fictional caregivers</span></div>
       <div className="caregiver-row"><span className="initial small-initial">M</span><div><strong>Maya · owner</strong><span>Viewing update {brief.safety_epoch}</span></div><span className="badge">Current view</span></div>
       <div className="caregiver-row"><span className="initial small-initial">S</span><div><strong>Sam · caregiver</strong><span>Saved view: update {savedCaregiver?.expected_safety_epoch??'—'}</span></div><span className={`badge ${savedCaregiver?.expected_safety_epoch!==brief.safety_epoch?'stale':''}`}>{savedCaregiver?.expected_safety_epoch!==brief.safety_epoch?'Update needed':'Current view'}</span></div>
-      <div className="button-row"><button className="secondary" disabled={busy||!savedCaregiver} onClick={checkCaregiver}>Check Sam’s saved view</button><button className="text-button" onClick={async()=>{try{const b=await request<Brief>('/api/caregiver');setSavedCaregiver(bindState(b));setCaregiverStatus('Sam retrieved the current update. This does not acknowledge any physical action.');}catch{setCaregiverStatus('Sam’s current view could not be retrieved.');}}}>Refresh Sam’s view</button></div>
+      <div className="button-row"><button className="secondary" disabled={busy||!savedCaregiver} onClick={checkCaregiver}>Check Sam’s saved view</button><button className="text-button" onClick={refreshCaregiver}>Refresh Sam’s view</button></div>
      {caregiverStatus&&<p className="inline-notice" role="status">{caregiverStatus}</p>}
-     </section>
-     <PlanningJourney brief={brief} onChanged={()=>{void load().catch(()=>setError('Household state could not be refreshed.'));}}/>
+     </section>}
+     <PlanningJourney brief={brief} actorId={actorId} guidanceStopped={localStopped} onChanged={()=>{void load().catch(()=>setError('Household state could not be refreshed.'));}}/>
      <HouseholdViews view="today" brief={brief}/>
+     <WorkflowSection title="Manage routine rules and reports"><RoutineManager householdId={brief.household_id}/></WorkflowSection>
      <section className="panel" aria-labelledby="report-title"><div className="panel-top"><h2 id="report-title">Add to the shared record</h2><span className="small">Fictional observations only</span></div>
       <p className="muted">Keep who did what, and what remains uncertain. Saving a draft pauses software guidance until the report is reviewed.</p>
-      <form onSubmit={record}><div className="form-grid"><label>Who was observed?<select value={actorPet} onChange={e=>{setActorPet(e.target.value);if(e.target.value===targetPet)setTargetPet('');}} required><option value="">Select a pet</option>{brief.pets.map(p=><option key={p.id} value={p.id}>{petLabel(p)}</option>)}</select></label>
+      {brief.role!=='reader'&&<form onSubmit={record}><div className="form-grid"><label>Who was observed?<select value={actorPet} onChange={e=>{setActorPet(e.target.value);if(e.target.value===targetPet)setTargetPet('');}} required><option value="">Select a pet</option>{brief.pets.map(p=><option key={p.id} value={p.id}>{petLabel(p)}</option>)}</select></label>
        <label>Directed toward<select value={targetPet} onChange={e=>setTargetPet(e.target.value)}><option value="">No other pet / unknown / not applicable</option>{brief.pets.filter(p=>p.id!==actorPet).map(p=><option key={p.id} value={p.id}>{petLabel(p)}</option>)}</select></label></div>
        <label>The exact fictional report<textarea value={report} onChange={e=>{setReport(e.target.value);setReportSource('typed');}} maxLength={1500} required rows={3} placeholder="For example: I am not sure what Finn did toward Nora."/></label>
        <div className="form-grid"><label>How is it reported?<select value={assertion} required onChange={e=>setAssertion(e.target.value)}><option value="">Select the report meaning</option><option value="uncertain">Uncertain / not sure</option><option value="affirmed">It happened, according to the report</option><option value="negated">It did not happen, according to the report</option></select></label><label>When was it observed? <span className="optional">Optional; blank means unknown</span><input type="datetime-local" value={observedAt} onChange={e=>setObservedAt(e.target.value)}/></label></div>
        <button className="primary" disabled={busy}>Save fictional observation</button>
-      </form>
+      </form>}
       {brief.observations.map(o=><article className="observation" key={o.id}><div className="panel-top"><strong>Caregiver report · {o.assertion}</strong><span className="badge">{o.status}</span></div><blockquote>{o.raw_report}</blockquote><p className="small">{brief.pets.find(p=>p.id===o.actor_pet_id)?.nickname??'Unclear actor'} → {brief.pets.find(p=>p.id===o.target_pet_id)?.nickname??'No target supplied'}</p><p className="small">Observed: {time(o.observed_at)}<br/>Reported: {time(o.reported_at)} · {o.source_kind}</p>
-       {o.status==='draft'&&<button className="secondary" disabled={busy} onClick={()=>void action('confirm',{...bindState(brief),observation_id:o.id,digest:o.digest}).catch(()=>{})}>Confirm this exact fictional report</button>}
+       {brief.role!=='reader'&&o.reporter_id===actorId&&o.status==='draft'&&<button className="secondary" disabled={busy} onClick={()=>void action('confirm',{...bindState(brief),observation_id:o.id,digest:o.digest}).catch(()=>{})}>Confirm this exact fictional report</button>}
       </article>)}
      </section>
     </div><aside className="side-column">
@@ -223,8 +243,8 @@ export default function Console({providerEvidence,speechEnabled}:{providerEviden
       {reply?.provider.status==='blocked'&&<p className="inline-notice">Bedrock is unavailable ({reply.provider.detail}). The response above comes from the current database record.</p>}
       {reply?.provider.status==='responded_without_tool'&&<p className="inline-notice">Bedrock responded without reading a tool. The response above comes from the current database record.</p>}
       {reply?.provider.status==='tool_loop_completed'&&<p className="small">Bedrock used bounded read tools. The response above was assembled from the current database record.</p>}
-      <form onSubmit={ask}><label>What would you like to do?<select value={intent} onChange={e=>setIntent(e.target.value)}><option value="current_plan">Read current plan</option><option value="due_tasks">Read routine reports</option><option value="observation">Clarify a fictional observation</option><option value="handover">Preview current handover</option><option value="explain">Check current rationale and sources</option></select></label><label>Your check-in<input value={question} onChange={e=>{setQuestion(e.target.value);setQuestionSource('typed');}} maxLength={1000} required/></label><button className="primary" disabled={busy||recording}>{busy?'Retrieving…':intent==='current_plan'?'Read current plan':'Continue'} <span aria-hidden="true">↗</span></button></form>
-      {reply?.intent==='observation'&&<button className="secondary" onClick={()=>{const d=reply.detail as {raw_report:string;source_kind:'typed'|'voice'};setReport(d.raw_report);setReportSource(d.source_kind);setActorPet('');setTargetPet('');setAssertion('');setObservedAt('');document.getElementById('report-title')?.scrollIntoView({block:'center'});}}>Review identities, meaning and timing in report form</button>}
+      <form onSubmit={ask}><label>What would you like to do?<select value={intent} onChange={e=>setIntent(e.target.value)}><option value="current_plan">Read current plan</option><option value="due_tasks">Read routine reports</option>{brief.role!=='reader'&&<option value="observation">Clarify a fictional observation</option>}<option value="handover">Preview current handover</option><option value="explain">Check current rationale and sources</option></select></label><label>Your check-in<input value={question} onChange={e=>{setQuestion(e.target.value);setQuestionSource('typed');}} maxLength={1000} required/></label><button className="primary" disabled={busy||recording}>{busy?'Retrieving…':intent==='current_plan'?'Read current plan':'Continue'} <span aria-hidden="true">↗</span></button></form>
+      {brief.role!=='reader'&&reply?.intent==='observation'&&<button className="secondary" onClick={()=>{const d=reply.detail as {raw_report:string;source_kind:'typed'|'voice'};setReport(d.raw_report);setReportSource(d.source_kind);setActorPet('');setTargetPet('');setAssertion('');setObservedAt('');document.getElementById('report-title')?.scrollIntoView({block:'center'});}}>Review identities, meaning and timing in report form</button>}
       {reply?.detail!=null&&reply.intent!=='observation'&&<details><summary>Current record details</summary><pre style={{whiteSpace:'pre-wrap',overflowWrap:'anywhere'}}>{JSON.stringify(reply.detail,null,2)}</pre><p className="small">Reports reflect what caregivers recorded. They do not verify physical actions.</p></details>}
       <button className="text-button new-conversation" onClick={()=>{++generation.current;abort.current?.abort();microphone.current?.cancel();microphone.current=null;setRecording(false);audio.current?.pause();setTalking(false);setBusy(false);setReply(null);setQuestionSource('typed');setIntent('current_plan');setQuestion('Why is the current plan paused?');}}>New conversation</button>
       {caption&&<p className="small" aria-label="Audio captions">{caption}</p>}

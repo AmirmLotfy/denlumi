@@ -2,13 +2,15 @@
 
 2026-10-18. The owner authorized deployment and submission preparation. This authorizes publishing the sanitized source and static showcase. AGENTS.md rule 15 still explicitly prohibits hosted Supabase; the general deployment request does not identify or authorize a dedicated hosted Supabase project. No backend resource, migration, remote database or provider activation is being created under that instruction.
 
+**Owner decision, October 18:** Keep Supabase local; finish after storage/runtime recovery. The hosted alternative below is not selected or authorized. Follow-up preflight: 626 MiB free, no Denlumi listeners/default runtime; unrelated stopped runtime untouched.
+
 ## Public presentation deployment
 
 Target: Vercel team `mellardoos-projects`, new project `denlumi-showcase`, only `apps/showcase`. Buildless static HTML/CSS/SVG and one original fictional application screenshot. No environment variables, functions, cron, provider requests, database, domain purchase, account collection or practical content publishing. Verify HTTP 200, asset responses, responsive layout, links and security headers. This is a presentation site; label the interactive application local-only.
 
 Source target: new public GitHub repository `AmirmLotfy/denlumi`, MIT license. Publish from the separate allowlisted `.local/public-release` checkout after checking local secrets, credential patterns, links and required source. Never publish `.env.local`, caches, agent instructions, authentication storage or private household data. Keep the original working tree intact and uncommitted.
 
-## Working hosted fictional application — blocked pending an explicit boundary change
+## Working hosted fictional application — unselected and unauthorized
 
 Proposed scope for approval: one dedicated Supabase project for Denlumi's fictional demo, paired with a separate Vercel application project in the same verified account. Keep the existing Next.js/PostgreSQL/Auth stack. Do not use another product's project or data. No paid tier, billing activation, domain purchase, external email, provider inference or real animal guidance is included.
 

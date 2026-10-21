@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-09-22T21:43:12.271Z",
+  "checked_at": "2026-10-20T22:17:18.313Z",
   "result": "PASS",
   "scope": "Actual authenticated localhost HTTP, MCP and isolated Supabase with fictional demo accounts. No Bedrock request, live guidance, external send, hosted resource or human usability observation.",
   "protocol_status": "demo_only",

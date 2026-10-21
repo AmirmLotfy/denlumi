@@ -1,5 +1,7 @@
 # Phase 9 gap audit — 2026-09-23
 
+**October 20 update:** the table below is a historical September source audit. P8 workflows and automated P9 hardening now have later local implementation and execution evidence in [P9_HARDENING_HANDOFF.md](P9_HARDENING_HANDOFF.md). Human, provider and operational acceptance remains open; this earlier table is not the current software defect list.
+
 Scope: read-only audit of the current checkout against [roadmap Phase 9](ROADMAP.md) and [AT068–072](../Denlumi_Build_Pack_v1/qa/acceptance-tests.md). **Phase 9 is not accepted.** This audit ran no application, database, browser, provider, or restore tests and changed no source. Existing results below are earlier local evidence, not newly reproduced results. Supabase remains local-only under `AGENTS.md` rule 15. The roadmap makes Phase 9 an integrated P1–8 gate; no Phase 8 handoff or `evidence/phase8`/`evidence/phase9` artifact was found in this checkout.
 
 | Requirement | Current file evidence | Missing proof / status | Feasible next action |

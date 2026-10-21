@@ -1,10 +1,9 @@
-import { test,expect } from '@playwright/test';
+import { test,expect } from './database-test';
 import { randomUUID } from 'node:crypto';
 import { testHousehold } from '../helpers';
 import { householdGraph } from '../../packages/domain/household';
 import { previewPrivateRecord,authorizePrivateRecord,revokePrivateShare } from '../../packages/domain/records';
 import { pool } from '../../packages/domain/db';
-test.afterAll(()=>pool.end());
 test('verified recipient signs in, reads exact private snapshot and loses access after owner revokes',async({page})=>{
  const t=await testHousehold();
  const versions=async()=>{const {household:h}=await householdGraph(t.owner.actor,t.householdId);return {expected_state_version:h.state_version,expected_safety_epoch:h.safety_epoch};};

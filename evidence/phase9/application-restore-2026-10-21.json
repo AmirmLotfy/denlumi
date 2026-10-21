@@ -1,0 +1,26 @@
+{
+  "checked_at": "2026-10-20T21:32:14.027Z",
+  "result": "PASS_APPLICATION_SCHEMAS_ONLY",
+  "scope": "Current localhost application public/private/auth schema snapshot restored to a new task-owned database in the same native PostgreSQL cluster. Only task-created fictional canaries were examined for content.",
+  "server_version": "17.11",
+  "client_versions": {
+    "pg_dump": "pg_dump (PostgreSQL) 17.11",
+    "pg_restore": "pg_restore (PostgreSQL) 17.11"
+  },
+  "snapshot_consistent": true,
+  "ownership": "Objects remapped to the existing restore operator; original Supabase Auth/service ownership is not reproduced",
+  "excluded_default_privilege_entries": 9,
+  "privileges": "Existing object ACLs restored; future-object default privilege bootstrap is excluded and requires a separate platform recovery runbook",
+  "matched_tables": 75,
+  "rls_enabled_tables": 64,
+  "matched_policies": 32,
+  "canary_checks": 8,
+  "archive_bytes": 8240625,
+  "duration_ms": 8793,
+  "cleanup": {
+    "scratch_database_removed": true,
+    "private_archive_removed": true,
+    "source_database_untouched_except_new_fictional_canaries": true
+  },
+  "limits": "Snapshot may include existing local fixture/live-mode rows; all bytes stayed in mode0700/0600 ignored local storage and were removed. No source restore/delete, customer data disclosure, Auth HTTP service replay, full Supabase service/cluster-role recovery, hosted backup expiry, point-in-time recovery, historical old-database recovery or production RTO is established."
+}

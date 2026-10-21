@@ -1,0 +1,136 @@
+{
+  "date": "2026-10-20",
+  "milestone": "P8/P9 A01-A08 correctness",
+  "status": "local_correctness_milestone_passed",
+  "environment": "isolated localhost native Supabase Auth/Postgres, application production build on loopback",
+  "database_migration": {
+    "file": "supabase/migrations/20261020184746_routine_history_identity.sql",
+    "applied": "local_only",
+    "reconstructed_history": false
+  },
+  "checks": {
+    "domain": {
+      "command": "node .local/run-native.mjs npm test",
+      "exit_code": 0,
+      "passed": 166,
+      "failed": 0,
+      "duration_ms": 115815.998042
+    },
+    "typecheck": {
+      "command": "npm run typecheck",
+      "exit_code": 0
+    },
+    "build": {
+      "command": "node .local/run-native.mjs npm run build",
+      "exit_code": 0,
+      "next_version": "16.3.5"
+    },
+    "browser": {
+      "command": "DENLUMI_EVIDENCE_DIR=.local/correctness-2026-10-20/browser-captures node .local/run-native.mjs node_modules/.bin/playwright test tests/e2e/phase[0789]*.spec.ts tests/e2e/shared.spec.ts tests/e2e/stop-restoration.spec.ts",
+      "exit_code": 0,
+      "passed": 37,
+      "failed": 0,
+      "reported_duration": "2.8m",
+      "speech_or_model_requests": false
+    }
+  },
+  "regressions_before_fix": {
+    "routines": {
+      "pass": 0,
+      "fail": 10
+    },
+    "sessions_initial": {
+      "pass": 5,
+      "fail": 14
+    },
+    "scenario_compositions": {
+      "pass": 4,
+      "fail": 13
+    },
+    "persisted_stop": {
+      "pass": 0,
+      "fail": 6
+    },
+    "late_caregiver_corrected_test": {
+      "pass": 0,
+      "fail": 2
+    },
+    "replay_guidance": {
+      "pass": 0,
+      "fail": 8
+    },
+    "endpoint_lock_order": {
+      "pass": 0,
+      "fail": 1,
+      "postgres_code": "55P03"
+    },
+    "timeout_worker_lock_order": {
+      "pass": 0,
+      "fail": 1,
+      "postgres_code": "55P03"
+    }
+  },
+  "limits": [
+    "Fictional local software evidence only; no hosted/customer/provider/human acceptance.",
+    "Bedrock and speech forced off; no provider resources changed.",
+    "Rule pet identity cannot be reassigned; older lost context is not reconstructed.",
+    "Dependency advisories and W01-W04 workflows remain open.",
+    "Current Bedrock authorization unknown after expired owner login.",
+    "No publication; YouTube upload remains paused; final submission unfinished.",
+    "Production readiness and R1/R2 are not established."
+  ],
+  "source_manifest": [
+    {
+      "path": "apps/web/app/console.tsx",
+      "sha256": "447105945f5970a01f78b76e87d09f443f6f1b37e81a546a90ee2481723b4079"
+    },
+    {
+      "path": "apps/web/app/household-views.tsx",
+      "sha256": "b4e011a74d82a47cbaa4f3697be3d9923fb948b4032a2f4206a03745f66dfa2a"
+    },
+    {
+      "path": "packages/domain/planning.ts",
+      "sha256": "8efbed926e2231f710400a183b99f4e5da7d6b8d486fd3318ba990ff89e8978b"
+    },
+    {
+      "path": "packages/domain/routines.ts",
+      "sha256": "2a973ec9e042dfcc123a8e7020ec19cd0a92c1ee96f552b1f61c84ef728ced3e"
+    },
+    {
+      "path": "packages/domain/records.ts",
+      "sha256": "817fc93ffc5e68c311c9d63390213c8feaff736775d49ad9a13aea21acc88414"
+    },
+    {
+      "path": "packages/domain/sessions.ts",
+      "sha256": "42fe1066f760fd945e75e2eec6140a4d90d89fa94bb46eca284cd15bcdf7ae54"
+    },
+    {
+      "path": "packages/domain/state.ts",
+      "sha256": "0e87851ba34055ec07686d2e88e340afae5c194d3a04c64299eaa0d2442ebb96"
+    },
+    {
+      "path": "supabase/migrations/20261020184746_routine_history_identity.sql",
+      "sha256": "85074c1e851da22711dd9bdb7f24355145860344a1d06a57a34f3e7b2931f6e4"
+    },
+    {
+      "path": "tests/routines-regression.test.ts",
+      "sha256": "40c54ded44b998acc0c1b574853a5bd8e044a3b2bd3e72c349b0fe9af3e29fe7"
+    },
+    {
+      "path": "tests/session-regression.test.ts",
+      "sha256": "b17ca56baa063722afe99945ffb79c8177ad3daf0ec7e472c255d4c702fc6964"
+    },
+    {
+      "path": "tests/scenario-regression.test.ts",
+      "sha256": "c84af3f8783edbda8760e5a1c999a189648861ef2c3fb4ae440c823eba497c4e"
+    },
+    {
+      "path": "tests/e2e/stop-restoration.spec.ts",
+      "sha256": "1f2cb4cf60e77e31e3c5e302ede984bfbaa6636c6d2c49e5a3829281812c5ad4"
+    },
+    {
+      "path": "package.json",
+      "sha256": "1f2079c620450c50820257e08f99dee0ecc2b84b8244882034f5bf1b74e6679d"
+    }
+  ]
+}

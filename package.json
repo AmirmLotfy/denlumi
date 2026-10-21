@@ -4,9 +4,9 @@
   "private": true,
   "type": "module",
   "engines": {
-    "node": ">=22.13.1"
+    "node": ">=22.23.4 <23"
   },
-  "packageManager": "npm@10.9.2",
+  "packageManager": "npm@10.9.9",
   "workspaces": [
     "apps/web"
   ],
@@ -15,34 +15,39 @@
     "build": "npm run build --workspace apps/web",
     "start": "npm run start --workspace apps/web",
     "typecheck": "tsc --noEmit",
-    "test:unit": "tsx --test --test-concurrency=1 tests/local-stop.test.ts tests/conversation.test.ts",
+    "test:unit": "node --import ./tests/unit-environment.mjs --import tsx --test --test-concurrency=1 tests/local-stop.test.ts tests/conversation.test.ts",
     "release:prepare": "node scripts/prepare-public-release.mjs",
-    "test": "tsx --env-file=.env.local --test --test-concurrency=1 tests/state.test.ts tests/provider.test.ts tests/local-stop.test.ts tests/household.test.ts tests/planning.test.ts tests/phase45.test.ts tests/conversation.test.ts tests/phase7.test.ts tests/speech-boundary.test.ts tests/signout.test.ts",
+    "test": "tsx --env-file=.env.local --test --test-concurrency=1 tests/state.test.ts tests/provider.test.ts tests/local-stop.test.ts tests/household.test.ts tests/planning.test.ts tests/phase45.test.ts tests/conversation.test.ts tests/phase7.test.ts tests/speech-boundary.test.ts tests/signout.test.ts tests/routines-regression.test.ts tests/session-regression.test.ts tests/scenario-regression.test.ts tests/p8-coordination.test.ts tests/http-security.test.ts tests/mcp-security.test.ts tests/p9-read-budgets.test.ts tests/local-database.test.ts tests/p9-withdrawal-operations.test.ts tests/p9-outbox-order.test.ts tests/p9-handover-lock.test.ts",
     "test:phase6:http": "tsx --env-file=.env.local scripts/prove-phase6-http.ts",
     "test:phase7": "tsx --env-file=.env.local --test --test-concurrency=1 tests/phase7.test.ts",
     "test:phase45": "tsx --env-file=.env.local --test --test-concurrency=1 tests/phase45.test.ts",
     "test:phase45:http": "tsx --env-file=.env.local scripts/prove-phase45-http.ts",
     "workers:phase45": "tsx --env-file=.env.local scripts/run-phase45-workers.ts",
     "test:http": "tsx --env-file=.env.local scripts/prove-http.ts",
-    "test:browser": "playwright test tests/e2e/phase0.spec.ts tests/e2e/phase7.spec.ts tests/e2e/shared.spec.ts",
-    "test:browser:voice": "playwright test tests/e2e/phase6.spec.ts",
+    "test:browser": "playwright test tests/e2e/phase[0789]*.spec.ts tests/e2e/shared.spec.ts tests/e2e/stop-restoration.spec.ts tests/e2e/p8-*.spec.ts",
+    "test:browser:voice": "node scripts/run-mocked-voice-check.mjs",
     "test:phase7:http": "tsx --env-file=.env.local scripts/prove-phase7-http.ts",
     "providers:probe": "tsx --env-file=.env.local scripts/probe-providers.ts",
     "db:setup": "tsx --env-file=.env.local scripts/setup-db.ts",
-    "test:household:http": "tsx --env-file=.env.local scripts/prove-household-http.ts"
-    ,"test:phase23:http": "tsx --env-file=.env.local scripts/prove-phase23-http.ts",
-    "test:mcp:http": "tsx --env-file=.env.local scripts/prove-mcp-http.ts"
+    "test:household:http": "tsx --env-file=.env.local scripts/prove-household-http.ts",
+    "test:phase23:http": "tsx --env-file=.env.local scripts/prove-phase23-http.ts",
+    "test:mcp:http": "tsx --env-file=.env.local scripts/prove-mcp-http.ts",
+    "audit:dependencies": "npm audit --package-lock-only",
+    "check:artifacts": "node scripts/prepare-public-release.mjs --check",
+    "test:p9:http": "tsx --env-file=.env.local scripts/prove-p9-security-http.ts",
+    "test:p9:withdrawal": "tsx --env-file=.env.local scripts/prove-phase9-withdrawal.ts",
+    "test:p9:restore": "tsx --env-file=.env.local scripts/prove-phase9-application-restore.ts"
   },
   "dependencies": {
     "@aws-sdk/client-bedrock-runtime": "3.1133.0",
     "@aws-sdk/client-polly": "3.1133.0",
     "@aws-sdk/client-transcribe-streaming": "3.1133.0",
-    "@modelcontextprotocol/sdk": "1.30.0",
+    "@modelcontextprotocol/sdk": "1.32.1",
     "@supabase/supabase-js": "2.116.0",
-    "next": "16.3.5",
+    "next": "16.4.2",
     "pg": "8.23.0",
-    "react": "19.3.0",
-    "react-dom": "19.3.0",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
     "zod": "4.6.5"
   },
   "devDependencies": {
@@ -53,5 +58,10 @@
     "@types/react-dom": "19.2.3",
     "tsx": "4.23.13",
     "typescript": "6.0.3"
+  },
+  "overrides": {
+    "sharp": "0.35.5",
+    "hono": "4.13.11",
+    "source-map-js": "1.2.2"
   }
 }

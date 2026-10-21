@@ -7,10 +7,14 @@ if p.exists(): raise SystemExit('.env.local already exists; preserve it and edit
 # Respect the caller's Docker context/DOCKER_HOST; do not assume a person's home directory.
 r = subprocess.run(['supabase','status','-o','json'], env=dict(os.environ), capture_output=True, text=True, check=True)
 s = json.loads(r.stdout)
+# CLI 2.121's experimental local stack nests the same connection keys in env.
+s = s.get('env', s)
+if any(not isinstance(s.get(key),str) or not s[key] or any(c in s[key] for c in '\r\n\x00') for key in ('API_URL','DB_URL','ANON_KEY','SERVICE_ROLE_KEY')):
+ raise SystemExit('Local connection fields must be nonempty single-line strings; values withheld.')
 api=urlparse(s['API_URL']); database=urlparse(s['DB_URL'])
-if api.scheme!='http' or api.hostname not in ('127.0.0.1','localhost') or api.port!=55431:
+if api.scheme!='http' or api.hostname not in ('127.0.0.1','localhost') or api.port!=55431 or api.username is not None or api.password is not None or api.path not in ('','/') or api.query or api.fragment:
  raise SystemExit('Only isolated localhost Supabase on port 55431 is permitted.')
-if database.hostname not in ('127.0.0.1','localhost') or database.port!=55432:
+if database.scheme not in ('postgres','postgresql') or database.hostname not in ('127.0.0.1','localhost') or database.port!=55432 or database.query or database.fragment or not database.username or len(database.path)<2:
  raise SystemExit('Only isolated localhost PostgreSQL on port 55432 is permitted.')
 values = {
  'APP_ORIGIN':'http://127.0.0.1:3400', 'SUPABASE_URL':s['API_URL'],

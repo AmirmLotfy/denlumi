@@ -1,7 +1,5 @@
-import { test,expect } from '@playwright/test';
+import { test,expect } from './database-test';
 import { pool } from '../../packages/domain/db';
-
-test.afterAll(async()=>{await pool.end();});
 
 test('a saved code deletes only its expired fictional sample after browser session loss',async({page,context})=>{
  await page.goto('/');

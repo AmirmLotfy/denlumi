@@ -1,5 +1,6 @@
 import { householdGraph } from '../../../../../../../packages/domain/household';
-import { guard,identity,json,error } from '../../../../../lib/http';
+import { json,error } from '../../../../../lib/http';
+import { householdReadActor } from '../../../../../lib/household-http';
 export async function GET(req:Request,context:{params:Promise<{id:string}>}) {
- try {guard(req);const {actor}=await identity(req);return json(await householdGraph(actor,(await context.params).id));}catch(e){return error(e);}
+ try {const actor=await householdReadActor(req);return json(await householdGraph(actor,(await context.params).id));}catch(e){return error(e);}
 }

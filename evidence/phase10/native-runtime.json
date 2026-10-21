@@ -1,0 +1,96 @@
+{
+  "checked_at": "2026-10-19",
+  "runtime": "experimental local Supabase native on macOS arm64",
+  "cli": "2.121.0 (private pinned official npm CLI; SHA-512 verified)",
+  "postgres_server": "17.11",
+  "artifact_versions": {
+    "postgres": "17.11.0.004-r1",
+    "auth": "v2.197.0-r0",
+    "postgrest": "v16.4-r0"
+  },
+  "endpoints": {
+    "api": "http://127.0.0.1:55431",
+    "database_host": "127.0.0.1",
+    "database_port": 55432
+  },
+  "startup_exit_code": 0,
+  "migration_count": 12,
+  "demo_protocols": 7,
+  "qualified_approvals_seeded": 0,
+  "provider_features": {
+    "bedrock": false,
+    "speech": false
+  },
+  "credential_handling": "Original .env.local preserved; current keys injected in memory; logs private",
+  "checks": {
+    "auth_health_http": 200,
+    "setup": "PASS",
+    "full_domain_database_auth_suite": {
+      "first_attempt": {
+        "tests": 110,
+        "pass": 109,
+        "fail": 1,
+        "reason": "Test default parameter replaced explicitly missing session with a valid session"
+      },
+      "focused_missing_session_after_test_fix": {
+        "tests": 1,
+        "pass": 1,
+        "fail": 0
+      },
+      "final_attempt": {
+        "tests": 110,
+        "pass": 110,
+        "fail": 0,
+        "duration_ms": 97301.822375
+      }
+    },
+    "setup_boundary_tests": {
+      "tests": 6,
+      "pass": 6,
+      "fail": 0
+    },
+    "browser_suite": {
+      "first_attempt": {
+        "tests": 29,
+        "pass": 28,
+        "fail": 1,
+        "reason": "File-level afterAll ended a shared pool before the next browser spec"
+      },
+      "fix": "Worker-scoped pool teardown in browser tests; application behavior unchanged",
+      "final_attempt": {
+        "tests": 29,
+        "pass": 29,
+        "fail": 0,
+        "duration": "2.9 minutes",
+        "retries": 0,
+        "scope": "Combined typed production-browser selection; fresh native local Supabase; no speech/provider calls"
+      },
+      "after_pool_fix": {
+        "tests": 29,
+        "pass": 27,
+        "fail": 2,
+        "reason": "Fast test execution reached unchanged 12/min demo-entry rate limit; actual HTTP 429"
+      },
+      "pacing_fix": "Before-test pacing based on observed real sample requests, at least 6 seconds apart; no request interception, response mocking, app limit change or automatic test retries",
+      "intermediate_pacing_attempt": "Interrupted after offline-sync test harness waited for Retry after auto-sync had already succeeded; trace had real committed HTTP 200 and snapshot showed saved status",
+      "reconnection_test_fix": "Bound optional Retry click to 1 second, then require actual saved confirmation within 10 seconds; no product change"
+    },
+    "mcp_http": {
+      "result": "PASS",
+      "protocol": "2025-11-25",
+      "methods": [
+        "initialize",
+        "notifications/initialized",
+        "tools/list",
+        "tools/call"
+      ],
+      "provider": "not_requested"
+    },
+    "typecheck": "PASS after harness changes"
+  },
+  "limits": [
+    "Fresh isolated fictional data; no recovery or deletion of prior records",
+    "No Docker replay or accumulated-old-fixture performance acceptance",
+    "No hosted Supabase, new AWS requests, human usability/voice or qualified-review acceptance"
+  ]
+}

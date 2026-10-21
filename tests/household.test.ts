@@ -6,6 +6,7 @@ import { testHousehold, testIdentity } from './helpers';
 import { getBrief, prepareSession } from '../packages/domain/state';
 import { bindState } from '../packages/contracts/phase0';
 import { authClient } from '../packages/domain/auth';
+import { acceptMembership } from '../packages/domain/planning';
 after(() => pool.end());
 const denied = (p: Promise<unknown>, code: string) => assert.rejects(p, (e: any) => e.code === code);
 
@@ -34,7 +35,10 @@ test('disabled identity and suspended household deny both RLS reads and privileg
 });
 test('RLS household prefilter rechecks session, identity, membership and household state without replacing pet/case scope',async()=>{
  const t=await testHousehold(),other=await testHousehold('single_cat');
- const visible=async(sessionId:unknown=t.caregiver.actor.sessionId)=>transaction(async db=>{
+ // An explicitly missing claim must not trigger a JavaScript default parameter
+ // that silently replaces it with the valid session this test is rejecting.
+ const visible=async(...session:unknown[])=>transaction(async db=>{
+  const sessionId=session.length?session[0]:t.caregiver.actor.sessionId;
   await db.query('set local role authenticated');
   await db.query("select set_config('request.jwt.claim.sub',$1,true),set_config('request.jwt.claims',$2,true)",[t.caregiver.actor.userId,JSON.stringify({sub:t.caregiver.actor.userId,session_id:sessionId})]);
   return (await db.query('select id from pets')).rows.map(r=>r.id).sort();
@@ -167,6 +171,9 @@ test('explicit membership grants are scoped, audited, expiring and immediately r
  const input={...await expected(t.owner.actor,t.householdId),profile_id:u.actor.userId,role:'sitter',pet_scope:[g.pets[0].id],case_scope:[t.caseId],expires_at:new Date(Date.now()+60000).toISOString(),adult_acknowledged:true};
  await denied(grantMembership(t.caregiver.actor,t.householdId,input,randomUUID()),'FORBIDDEN');
  await grantMembership(t.owner.actor,t.householdId,input,randomUUID());
+ await denied(householdGraph(u.actor,t.householdId),'SCOPE_MISMATCH');
+ const pending=(await pool.query('select id,grant_version from memberships where household_id=$1 and profile_id=$2',[t.householdId,u.actor.userId])).rows[0];
+ await acceptMembership(u.actor,pending.id,{adult_acknowledged:true,expected_grant_version:pending.grant_version});
  assert.equal((await householdGraph(u.actor,t.householdId)).pets.length,1);
  const m=(await pool.query('select * from memberships where profile_id=$1',[u.actor.userId])).rows[0];assert.equal(m.invited_by,t.owner.actor.userId);
  await revokeMembership(t.owner.actor,t.householdId,m.id,await expected(t.owner.actor,t.householdId),randomUUID());

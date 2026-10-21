@@ -21,9 +21,26 @@ export async function identity(req:Request,onlyBearer=false,cookieName='denlumi_
 export const sessionCookie=(name:string,value:string)=>`${name}=${value}; HttpOnly; Path=/; SameSite=Strict; Max-Age=3600${origin().startsWith('https:')?'; Secure':''}`;
 export const json=(value:unknown,status=200)=>Response.json(value,{status,headers:{'Cache-Control':'no-store'}});
 export async function body(req:Request) {
- if(!req.headers.get('content-type')?.startsWith('application/json'))throw new DomainError('JSON_REQUIRED',415);
- const text=await req.text();if(text.length>16000)throw new DomainError('PAYLOAD_TOO_LARGE',413);
- try{return JSON.parse(text);}catch{throw new DomainError('INVALID_JSON',400);}
+ if(req.headers.get('content-type')?.split(';',1)[0].trim().toLowerCase()!=='application/json')throw new DomainError('JSON_REQUIRED',415);
+ const maximumBytes=16000,declared=req.headers.get('content-length');
+ if(declared!==null&&(!/^\d+$/.test(declared)||Number(declared)>maximumBytes)){
+  await req.body?.cancel().catch(()=>{});
+  throw new DomainError(/^\d+$/.test(declared)?'PAYLOAD_TOO_LARGE':'INVALID_CONTENT_LENGTH',/^\d+$/.test(declared)?413:400);
+ }
+ const chunks:Uint8Array[]=[],reader=req.body?.getReader();let length=0;
+ if(reader)try{
+  for(;;){
+   const chunk=await reader.read();if(chunk.done)break;
+   length+=chunk.value.byteLength;
+   // Check bytes before retaining or decoding a chunk, including chunked requests.
+   if(length>maximumBytes){await reader.cancel().catch(()=>{});throw new DomainError('PAYLOAD_TOO_LARGE',413);}
+   chunks.push(chunk.value);
+  }
+ }finally{reader.releaseLock();}
+ if(declared!==null&&Number(declared)!==length)throw new DomainError('INVALID_CONTENT_LENGTH',400);
+ const bytes=new Uint8Array(length);let offset=0;
+ for(const chunk of chunks){bytes.set(chunk,offset);offset+=chunk.byteLength;}
+ try{return JSON.parse(new TextDecoder('utf-8',{fatal:true}).decode(bytes));}catch{throw new DomainError('INVALID_JSON',400);}
 }
 export function error(e:unknown) {
  if(e instanceof DomainError)return json({error:e.code},e.status);

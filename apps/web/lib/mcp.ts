@@ -50,8 +50,23 @@ export async function dispatch(actor:Actor,name:string,args:unknown,key:string) 
 }
 type McpSession={server:Server;transport:WebStandardStreamableHTTPServerTransport;actor:Actor;key:string;busy:boolean;lastUsed:number};
 const sessions=new Map<string,McpSession>();
+// Include transports still initializing in the admission count. Session IDs alone
+// would miss concurrent initialization and invalid requests before registration.
+const entries=new Set<McpSession>();
+const IDLE_MS=15*60_000,MAX_SESSIONS=100,MAX_ACTOR_SESSIONS=8;
+async function dispose(entry:McpSession) {
+ entries.delete(entry);
+ for(const [id,value] of sessions)if(value===entry)sessions.delete(id);
+ await entry.server.close();
+}
+async function pruneIdle() {
+ const now=Date.now();
+ await Promise.all([...entries].filter(entry=>!entry.busy&&now-entry.lastUsed>=IDLE_MS).map(dispose));
+}
 function sameActor(a:Actor,b:Actor){return a.userId===b.userId&&a.sessionId===b.sessionId;}
 async function createMcpSession(actor:Actor) {
+  if([...entries].filter(entry=>entry.actor.userId===actor.userId).length>=MAX_ACTOR_SESSIONS)throw new DomainError('MCP_SESSION_LIMIT',429);
+  if(entries.size>=MAX_SESSIONS)throw new DomainError('MCP_SESSION_LIMIT',503);
   const server=new Server({name:'denlumi-phase0',version:'0.0.1'},{capabilities:{tools:{}}});
   let entry:McpSession;
   server.setRequestHandler(ListToolsRequestSchema,async()=>({tools:toolDefinitions}));
@@ -62,24 +77,49 @@ async function createMcpSession(actor:Actor) {
    }catch(e){return {isError:true,content:[{type:'text',text:JSON.stringify({error:e instanceof DomainError?e.code:e instanceof z.ZodError?'INVALID_INPUT':'SERVICE_UNAVAILABLE'})}]};}
   });
  const transport=new WebStandardStreamableHTTPServerTransport({sessionIdGenerator:()=>crypto.randomUUID(),enableJsonResponse:true,
-  onsessioninitialized:id=>{sessions.set(id,entry);},onsessionclosed:id=>{sessions.delete(id);}});
- entry={server,transport,actor,key:'',busy:false,lastUsed:Date.now()};
-  await server.connect(transport);
+  onsessioninitialized:id=>{sessions.set(id,entry);},onsessionclosed:id=>{sessions.delete(id);entries.delete(entry);}});
+ entry={server,transport,actor,key:'',busy:true,lastUsed:Date.now()};
+ entries.add(entry);
+ try{await server.connect(transport);}catch(e){await dispose(entry);throw e;}
+ entry.busy=false;
  return entry;
 }
 export async function handleMcp(req:Request,actor:Actor,parsed?:unknown) {
+ await pruneIdle();
  const id=req.headers.get('mcp-session-id');
  let entry=id?sessions.get(id):undefined;
  if(id&&!entry)throw new DomainError('MCP_SESSION_NOT_FOUND',404);
  if(entry&&!sameActor(entry.actor,actor))throw new DomainError('SCOPE_MISMATCH',403);
+ if(req.signal.aborted){if(entry&&!entry.busy)await dispose(entry);throw new DomainError('MCP_REQUEST_ABORTED',503);}
+ // The pinned 2025-11-25 wire contract accepts one JSON-RPC message per POST.
+ // SDK batch cancellation can suppress a response forever in JSON mode.
+ if(Array.isArray(parsed))throw new DomainError('MCP_BATCH_NOT_SUPPORTED',400);
  if(!entry)entry=await createMcpSession(actor);
  if(entry.busy)throw new DomainError('MCP_SESSION_BUSY',409);
  entry.busy=true;entry.lastUsed=Date.now();entry.key=req.headers.get('idempotency-key')??'';
- try{return await entry.transport.handleRequest(req,parsed===undefined?undefined:{parsedBody:parsed});}
- finally{
-  entry.busy=false;entry.key='';
-  if(sessions.size>100)for(const [sid,value] of sessions)if(Date.now()-value.lastUsed>15*60_000){sessions.delete(sid);void value.server.close();}
+ let timer:ReturnType<typeof setTimeout>|undefined,abort:()=>void=()=>{},terminated=false;
+ const bounded=new Promise<never>((_,reject)=>{
+  abort=()=>{terminated=true;reject(new DomainError('MCP_REQUEST_ABORTED',503));};
+  req.signal.addEventListener('abort',abort,{once:true});
+  timer=setTimeout(()=>{terminated=true;reject(new DomainError('MCP_REQUEST_TIMEOUT',504));},10_000);
+ });
+ try{
+  const response=await Promise.race([entry.transport.handleRequest(req,parsed===undefined?undefined:{parsedBody:parsed}),bounded]);
+  response.headers.set('Cache-Control','no-store');return response;
+ }finally{
+  clearTimeout(timer);req.signal.removeEventListener('abort',abort);
+  entry.busy=false;entry.key='';entry.lastUsed=Date.now();
+  if(terminated||!entry.transport.sessionId||!sessions.has(entry.transport.sessionId))await dispose(entry);
  }
+}
+const clientTransports=new WeakMap<Client,StreamableHTTPClientTransport>();
+export async function closeMcp(client:Client|undefined) {
+ if(!client)return;
+ const transport=clientTransports.get(client);clientTransports.delete(client);
+ // A disconnected/aborted request may prevent DELETE. Bounded idle expiry is
+ // the fallback; cleanup failure must not replace the completed action result.
+ try{await transport?.terminateSession();}catch{}
+ finally{try{await client.close();}catch{}}
 }
 export async function connectMcp(token:string,trace:Record<string,unknown>[]=[],signal?:AbortSignal) {
  const client=new Client({name:'denlumi-browser-orchestrator',version:'0.0.1'});
@@ -89,6 +129,8 @@ export async function connectMcp(token:string,trace:Record<string,unknown>[]=[],
   if(requestBody)trace.push({method:requestBody.method,...(requestBody.method==='tools/call'?{tool_name:requestBody.params?.name}:{}),http_status:response.status,protocol:new Headers(init?.headers).get('mcp-protocol-version')??MCP_VERSION});
   return response;
  };
- await client.connect(new StreamableHTTPClientTransport(new URL('/api/mcp',origin()),{requestInit:{headers:{Authorization:`Bearer ${token}`,Origin:origin()}},fetch:fetchTrace}));
+ const transport=new StreamableHTTPClientTransport(new URL('/api/mcp',origin()),{requestInit:{headers:{Authorization:`Bearer ${token}`,Origin:origin()}},fetch:fetchTrace});
+ clientTransports.set(client,transport);
+ try{await client.connect(transport);}catch(e){await closeMcp(client);throw e;}
  return client;
 }

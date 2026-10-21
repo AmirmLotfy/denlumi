@@ -1,7 +1,7 @@
 {
-  "checked_at": "2026-09-22T20:42:38.858Z",
-  "status": "PASS",
-  "reason": "AWS identity request succeeded",
+  "checked_at": "2026-10-20T21:12:45.221Z",
+  "status": "BLOCKED",
+  "reason": "EXPIRED_AWS_SESSION",
   "scope": "AWS CLI identity check only. Account identifiers and credentials omitted.",
   "bedrock_request_sent": false,
   "speech_request_sent": false

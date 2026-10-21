@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-10-01T12:08:56.210Z",
+  "checked_at": "2026-10-20T21:53:34.329Z",
   "scope": "Actual authenticated local HTTP MCP and Supabase, no AWS request in this script.",
   "result": "PASS",
   "checks": [

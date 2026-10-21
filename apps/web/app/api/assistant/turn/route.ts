@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import type { Message,Tool } from '@aws-sdk/client-bedrock-runtime';
 import { guard,identity,body,error,json,rateLimit } from '../../../../lib/http';
-import { connectMcp } from '../../../../lib/mcp';
+import { connectMcp,closeMcp } from '../../../../lib/mcp';
 import { converse } from '../../../../../../packages/domain/providers';
 import { getBrief } from '../../../../../../packages/domain/state';
 import { type Brief,uuid } from '../../../../../../packages/contracts/phase0';
@@ -49,5 +49,5 @@ export async function POST(req:Request) {
    if(result.isError)throw new DomainError('MCP_READ_FAILED',503);detail=result.structuredContent;
   }
   return json({answer:i.intent==='observation'?'Review the exact report, select who was observed and any target, then confirm its meaning and timing in the report form. Nothing has been saved.':currentAnswer(brief),answer_source:'database_template',intent:i.intent,detail,brief,provider,trace,conversation_id:crypto.randomUUID(),chat_history_used:false});
- }catch(e){return error(e);}finally{await client?.close();}
+ }catch(e){return error(e);}finally{await closeMcp(client);}
 }

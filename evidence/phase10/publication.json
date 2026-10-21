@@ -42,13 +42,13 @@
   },
   "submission": {
     "status": "NOT_SUBMITTED",
-    "video": "SCRIPT_ONLY",
+    "video": "EXPORTED_2M03S; project-site review MP4 ready; public YouTube/Vimeo upload pending",
     "devpost_account": "UNVERIFIED_CONNECTOR_INTERNAL_ERRORS"
   },
   "limitations": [
-    "No fresh database/Auth/application-browser full regression",
-    "No recorded/uploaded public demo video",
     "No hosted Supabase or new provider calls",
-    "No human usability, qualified reviewer or production-readiness acceptance"
+    "No human usability, qualified reviewer or production-readiness acceptance",
+    "Fresh native 110/110 and typed browser 29/29 passed; not Docker replay or old-data recovery",
+    "Required public YouTube/Vimeo upload and owner declarations/final entry remain open"
   ]
 }

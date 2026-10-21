@@ -13,7 +13,7 @@ export async function getBrief(actor: Actor, householdId: string, caseId?:string
   if(!h) throw new DomainError('SCOPE_MISMATCH',403);
   const c=(await db.query('select * from cases where household_id=$1 and ($2::uuid is null or id=$2) order by id limit 1',[householdId,caseId??null])).rows[0];
   if(!c) throw new DomainError('SCOPE_MISMATCH',403);
-  const p=(await db.query('select p.*,v.slug,v.status protocol_status,v.pairing,v.source_ids,v.locale,v.revoked_at from plan_revisions p join protocol_versions v on v.id=p.protocol_version_id where p.household_id=$1 and p.case_id=$2 order by revision_number desc limit 1',[householdId,c.id])).rows[0];
+  const p=(await db.query('select p.*,v.slug,v.status protocol_status,v.pairing,v.source_ids,v.locale protocol_locale,v.revoked_at,v.review_due_at,v.digest current_protocol_digest from plan_revisions p join protocol_versions v on v.id=p.protocol_version_id where p.household_id=$1 and p.case_id=$2 order by revision_number desc limit 1',[householdId,c.id])).rows[0];
   if(!p) throw new DomainError('PROTOCOL_UNAVAILABLE');
   const m=(await db.query('select role from memberships where household_id=$1 and profile_id=$2',[householdId,actor.userId])).rows[0];
   const pets=(await db.query('select p.*,cp.role from pets p join case_pets cp on cp.pet_id=p.id and cp.household_id=p.household_id where cp.household_id=$1 and cp.case_id=$2 order by p.nickname',[householdId,c.id])).rows;
@@ -21,11 +21,16 @@ export async function getBrief(actor: Actor, householdId: string, caseId?:string
   const observations=(await db.query('select * from observations where household_id=$1 and case_id=$2 order by reported_at desc limit 15',[householdId,c.id])).rows;
   const holds=(await db.query("select policy_level,reason,reason_code from safety_holds where household_id=$1 and case_id=$2 and state='active' order by created_epoch desc",[householdId,c.id])).rows;
   const stale=p.safety_epoch!==h.safety_epoch||p.home_version!==h.home_version;
+  const mapped=(await db.query('select 1 from protocol_scenarios where protocol_version_id=$1 and scenario_id=$2',[p.protocol_version_id,c.scenario_code])).rowCount;
+  const reviewed=p.status==='reviewed'&&(await db.query('select 1 from plan_reviews where plan_revision_id=$1 and reviewed_digest=$2 and safety_epoch=$3 and invalidated_at is null and (expires_at is null or expires_at>now())',[p.id,p.digest,h.safety_epoch])).rowCount;
+  // This is fictional display eligibility. Actual starts still perform their
+  // own fresh authorization, handover acknowledgment and conflict checks.
+  const guidanceAvailable=h.mode==='demo'&&h.fictional&&p.protocol_status==='demo_only'&&!p.revoked_at&&p.protocol_locale===h.locale&&(!p.review_due_at||new Date(p.review_due_at)>new Date())&&Boolean(mapped)&&p.protocol_digest===p.current_protocol_digest&&!stale&&!holds.length&&c.status==='active'&&c.support_level==='guided_preparation'&&!pets.some(pet=>pet.archived_at)&&(p.status==='demo_ready'||Boolean(reviewed));
   return {household_id:h.id,case_id:c.id,nickname:h.nickname,title:c.title,role:m.role,mode:h.mode,fictional:h.fictional,
    as_of:new Date().toISOString(),safety_epoch:h.safety_epoch,home_version:h.home_version,support_level:c.support_level,
    plan_revision_id:p.id,plan_status:p.status,current_step:p.current_step,protocol_version_id:p.protocol_version_id,
    protocol_slug:p.slug,protocol_status:p.protocol_status,pairing:p.pairing,source_ids:p.source_ids,
-   guidance_available:h.mode==='demo'&&h.fictional&&p.protocol_status==='demo_only'&&!p.revoked_at&&p.locale===h.locale&&!stale&&!holds.length,
+   guidance_available:guidanceAvailable,
    stale,physical_state_verified:false,pets,handovers,observations,holds};
  });
 }
@@ -54,7 +59,7 @@ function checkVersion(s:Awaited<ReturnType<typeof current>>,i:StateInput) {
 }
 async function checkProtocol(db:pg.PoolClient,s:Awaited<ReturnType<typeof current>>) {
  const mapped=(await db.query('select 1 from protocol_scenarios where protocol_version_id=$1 and scenario_id=$2',[s.v.id,s.c.scenario_code])).rowCount;
- if(s.h.mode!=='demo'||!s.h.fictional||s.v.status!=='demo_only'||s.v.revoked_at||s.v.locale!==s.h.locale||!mapped||(s.p.protocol_digest&&s.p.protocol_digest!==s.v.digest))throw new DomainError('PROTOCOL_UNAVAILABLE');
+ if(s.h.mode!=='demo'||!s.h.fictional||s.v.status!=='demo_only'||s.v.revoked_at||(s.v.review_due_at&&new Date(s.v.review_due_at)<=new Date())||s.v.locale!==s.h.locale||!mapped||(s.p.protocol_digest&&s.p.protocol_digest!==s.v.digest))throw new DomainError('PROTOCOL_UNAVAILABLE');
 }
 async function mutate(actor:Actor,i:StateInput,key:string,body:unknown,action:(db:pg.PoolClient,s:Awaited<ReturnType<typeof current>>)=>Promise<unknown>,requiresContent=true) {
  if(!/^[a-zA-Z0-9-]{16,100}$/.test(key))throw new DomainError('IDEMPOTENCY_KEY_REQUIRED',400);

@@ -15,4 +15,4 @@ export const homeInput=expectedHousehold.extend({
 export const planDraftInput=expectedHousehold.extend({locale:z.literal('en')}).strict();
 export const planReviewInput=expectedHousehold.extend({reviewed_digest:digest}).strict();
 export const handoverAckInput=z.object({acknowledged_digest:digest}).strict();
-export const membershipAcceptInput=z.object({adult_acknowledged:z.literal(true)}).strict();
+export const membershipAcceptInput=z.object({adult_acknowledged:z.literal(true),expected_grant_version:z.number().int().positive()}).strict();

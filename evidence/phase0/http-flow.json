@@ -1,6 +1,6 @@
 {
-  "checked_at": "2026-09-16T09:56:14.396Z",
-  "started_at": "2026-09-16T09:56:09.123Z",
+  "checked_at": "2026-10-20T21:53:26.330Z",
+  "started_at": "2026-10-20T21:53:25.225Z",
   "scope": "Local fictional Phase 0 HTTP proof; tokens and user IDs omitted.",
   "authentication": {
     "provider": "local Supabase Auth",
@@ -8,7 +8,7 @@
     "caregiver_cookie_received": true
   },
   "initial": {
-    "household_id": "ec804a94-7955-4091-90ae-4571d2c70b1f",
+    "household_id": "bc9ad056-f178-4634-a2bd-715eb8619077",
     "pairing": "cat_dog",
     "protocol_status": "demo_only",
     "safety_epoch": 1
@@ -31,11 +31,13 @@
     },
     {
       "method": "tools/call",
+      "tool_name": "get_household_brief",
       "http_status": 200,
       "protocol": "2025-11-25"
     },
     {
       "method": "tools/call",
+      "tool_name": "get_household_brief",
       "http_status": 200,
       "protocol": "2025-11-25"
     }
@@ -43,7 +45,7 @@
   "first_answer_source": "database_template",
   "bedrock_attempt": {
     "status": "blocked",
-    "detail": "BEDROCK_ValidationException"
+    "detail": "BEDROCK_NOT_ENABLED"
   },
   "observation": {
     "status": "guidance_paused",
@@ -79,11 +81,13 @@
       },
       {
         "method": "tools/call",
+        "tool_name": "get_household_brief",
         "http_status": 200,
         "protocol": "2025-11-25"
       },
       {
         "method": "tools/call",
+        "tool_name": "get_household_brief",
         "http_status": 200,
         "protocol": "2025-11-25"
       }

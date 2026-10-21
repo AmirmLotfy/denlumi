@@ -1,0 +1,485 @@
+{
+  "checked_at": "2026-10-20T22:21:16.215Z",
+  "result": "PASS scoped local operations/security; P9 acceptance and P10 delivery remain open",
+  "environment": {
+    "branch": "main",
+    "head": "unborn",
+    "database": "Preserved existing localhost native Supabase, PostgreSQL17.11",
+    "node": "22.23.3 task-local",
+    "npm": "10.9.9",
+    "core_bedrock_and_speech_flags": false,
+    "aws_model_or_speech_calls_performed": false,
+    "supabase_hosted_prohibited": true
+  },
+  "changes": [
+    "Household-first withdrawal, outbox and acknowledgment lock ordering; mutable work rescanned after waits",
+    "Strict exact-ID trusted worker scopes without widening default/HTTP/model authority",
+    "Explicit loopback database URL with query/fragment overrides and ambient fallback refused",
+    "Acknowledgment rechecks active/unexpired household and exact case/pet scope before retry receipt; fresh writes require current handover epoch",
+    "Private isolated current application-schema restore and cleanup; ownership/default-privilege limitations explicit"
+  ],
+  "checks": {
+    "documents": {
+      "result": "PASS",
+      "documents": 14,
+      "local_markdown_targets": 158,
+      "missing": 0
+    },
+    "final_browser_harness_typecheck": {
+      "command": "npm run typecheck",
+      "exit_code": 0,
+      "scope": "After bounded real provisioning wait and private Phase0 capture default"
+    },
+    "domain": {
+      "passed": 227,
+      "failed": 0,
+      "skipped": 0,
+      "duration_ms": 171791.933667
+    },
+    "pure_unit": {
+      "passed": 11,
+      "database_access": "forbidden by unit loader"
+    },
+    "typed_browser": {
+      "passed": 60,
+      "failed": 0
+    },
+    "mocked_voice": {
+      "passed": 5,
+      "failed": 0,
+      "scope": "Browser-mocked speech/synthetic microphone only; fictional credentials and loopback AWS endpoints; not real provider/human voice acceptance"
+    },
+    "basics": [
+      {
+        "name": "typecheck",
+        "exit_code": 0,
+        "duration_ms": 5267
+      },
+      {
+        "name": "build",
+        "exit_code": 0,
+        "duration_ms": 8583
+      },
+      {
+        "name": "configure-local",
+        "exit_code": 0,
+        "duration_ms": 3427
+      },
+      {
+        "name": "db-lint",
+        "exit_code": 0,
+        "duration_ms": 1110
+      },
+      {
+        "name": "audit-after",
+        "exit_code": 0,
+        "duration_ms": 4930
+      },
+      {
+        "name": "dependency-tree",
+        "exit_code": 0,
+        "duration_ms": 689
+      },
+      {
+        "name": "artifacts",
+        "exit_code": 0,
+        "duration_ms": 341
+      }
+    ],
+    "http": [
+      {
+        "name": "test:http",
+        "exit_code": 0,
+        "duration_ms": 2598
+      },
+      {
+        "name": "test:household:http",
+        "exit_code": 0,
+        "duration_ms": 1944
+      },
+      {
+        "name": "test:phase23:http",
+        "exit_code": 0,
+        "duration_ms": 1185
+      },
+      {
+        "name": "test:phase45:http",
+        "exit_code": 0,
+        "duration_ms": 2048
+      },
+      {
+        "name": "test:mcp:http",
+        "exit_code": 0,
+        "duration_ms": 1219
+      },
+      {
+        "name": "test:phase6:http",
+        "exit_code": 0,
+        "duration_ms": 1585
+      },
+      {
+        "name": "test:phase7:http",
+        "exit_code": 0,
+        "duration_ms": 3152
+      },
+      {
+        "name": "test:p9:http",
+        "exit_code": 0,
+        "duration_ms": 1664
+      }
+    ],
+    "production": [
+      {
+        "name": "http",
+        "exit_code": 0,
+        "duration_ms": 15464
+      },
+      {
+        "name": "browser",
+        "exit_code": 0,
+        "duration_ms": 724493
+      },
+      {
+        "name": "pairings",
+        "exit_code": 0,
+        "duration_ms": 5933
+      }
+    ],
+    "pairings": "seven fictional HTTP/MCP shapes passed",
+    "audit": {
+      "info": 0,
+      "low": 0,
+      "moderate": 0,
+      "high": 0,
+      "critical": 0,
+      "total": 0
+    },
+    "artifact_scan": {
+      "status": "PASS",
+      "mode": "read-only",
+      "source_files": 355,
+      "browser_assets": 15,
+      "limits": "Selected credential patterns and known local secret values only; no exhaustive leak audit, public refresh or publication."
+    }
+  },
+  "operations": {
+    "withdrawal": {
+      "checked_at": "2026-10-20T21:16:53.374Z",
+      "result": "PASS",
+      "environment": "Bounded fictional localhost Auth/Postgres drill; task-owned exact-species demo_only protocol clones",
+      "affected_households": 9,
+      "protocol_versions": 3,
+      "pairings": [
+        "cat_cat",
+        "dog_dog",
+        "cat_dog"
+      ],
+      "paused_sessions": 6,
+      "no_session_plans": 3,
+      "unrelated_controls": 2,
+      "invalidated_plans": 9,
+      "canceled_progression_events": 9,
+      "replay_additional_mutations": 0,
+      "worker_elapsed_ms": 219.21,
+      "fixture_household_ids": [
+        "b5740490-a5d6-448e-9afe-107b40947747",
+        "711c2a8c-8298-4618-8a50-921451d9e8d1",
+        "86734219-d7a2-4d4a-a96d-553d155c870e",
+        "27c559f7-6c1d-4b4c-92a6-e5dcc83dfa9d",
+        "ba796d56-2864-43e1-910d-f4caa5401c0e",
+        "59dc0573-176f-425e-acc6-087e99268ef9",
+        "26a17b9a-1ff2-4a05-929f-206cc30f289f",
+        "3f3ed4e3-3b77-4e23-8910-5fb6389e3345",
+        "77d83f46-9684-4d06-8282-27467c64ae40"
+      ],
+      "fixture_protocol_version_ids": [
+        "b716612c-c494-4381-add7-3e908e2dac37",
+        "c78da8b4-d51a-484f-a937-3dc65f04c13e",
+        "0d864352-6c3b-46c2-9aca-b7b24a4ec90a"
+      ],
+      "checks": [
+        "Revocation disables fresh reads and preflight before worker reconciliation",
+        "Nine affected reviewed plans across cat-cat, dog-dog and cat-dog become stale",
+        "Six active/interrupted sessions pause; three never-started plans invalidate",
+        "Nine old-epoch queued progression events and dependent tasks cancel",
+        "Historical plan/session protocol bindings and digests remain intact",
+        "One unaffected active control and one revoked out-of-scope control remain unchanged",
+        "Stale preflight/start denied after reconciliation",
+        "Scoped replay adds no epochs, holds, handovers or audit events",
+        "Shared bundled protocol versions remain unrevoked"
+      ],
+      "limits": "Fictional bounded local software evidence only. No real animals, qualified content review, customer data, hosted services, provider calls, notification delivery, production scale, full-platform operational acceptance or purge. Companion regression tests separately inject an application failure and exercise lock ordering."
+    },
+    "restore": {
+      "checked_at": "2026-10-20T21:32:14.027Z",
+      "result": "PASS_APPLICATION_SCHEMAS_ONLY",
+      "scope": "Current localhost application public/private/auth schema snapshot restored to a new task-owned database in the same native PostgreSQL cluster. Only task-created fictional canaries were examined for content.",
+      "server_version": "17.11",
+      "client_versions": {
+        "pg_dump": "pg_dump (PostgreSQL) 17.11",
+        "pg_restore": "pg_restore (PostgreSQL) 17.11"
+      },
+      "snapshot_consistent": true,
+      "ownership": "Objects remapped to the existing restore operator; original Supabase Auth/service ownership is not reproduced",
+      "excluded_default_privilege_entries": 9,
+      "privileges": "Existing object ACLs restored; future-object default privilege bootstrap is excluded and requires a separate platform recovery runbook",
+      "matched_tables": 75,
+      "rls_enabled_tables": 64,
+      "matched_policies": 32,
+      "canary_checks": 8,
+      "archive_bytes": 8240625,
+      "duration_ms": 8793,
+      "cleanup": {
+        "scratch_database_removed": true,
+        "private_archive_removed": true,
+        "source_database_untouched_except_new_fictional_canaries": true
+      },
+      "limits": "Snapshot may include existing local fixture/live-mode rows; all bytes stayed in mode0700/0600 ignored local storage and were removed. No source restore/delete, customer data disclosure, Auth HTTP service replay, full Supabase service/cluster-role recovery, hosted backup expiry, point-in-time recovery, historical old-database recovery or production RTO is established."
+    }
+  },
+  "failed_attempts": [
+    "Original service ownership restore refused SET ROLE supabase_admin; not a pass",
+    "Owner-remapped restore refused supabase_auth_admin default privilege changes; not a pass",
+    "Initial acknowledgment authorization test-count helper used incompatible text/uuid comparison; corrected before meaningful RED; original log retained",
+    "New withdrawal/outbox/acknowledgment regressions reproduced lock failures and authorization gaps before fixes",
+    "Initial new-test TypeScript annotations failed; corrected before final typecheck",
+    "First production browser run 59/60: sample creation returned HTTP200 in5080ms beyond a five-second heading wait; await bounded actual provisioning200 before UI assertions. Original trace retained privately; no product timing/permission assertion weakened",
+    "Fresh phase0 captures initially used historical image paths; retained new captures privately, restored the known historical snapshot files, and changed capture default to ignored .local"
+  ],
+  "limits": [
+    "Local automated/fictional evidence only; no production readiness or customer/animal outcome",
+    "Restore remaps original owners and excludes nine DEFAULT ACL entries; no full Supabase service/role recovery, Auth HTTP replay, backup expiry, historical old-data recovery or production RTO",
+    "Bounded nine-household withdrawal is not production scale or real-operator acceptance",
+    "Human H01-H08 NOT_RUN; exact-version qualified content review absent; all fixtures demo_only",
+    "Retention worksheet unapproved; no purge/scheduler or retroactive unconsented cleanup",
+    "Current Bedrock authorization unknown: AWS identity refresh expired; no inference/speech request sent",
+    "Announced October21 Node patch unavailable in checked official index; recheck before release",
+    "Clean-machine Docker replay and older accumulated-fixture investigation remain open"
+  ],
+  "node_release_availability": {
+    "checked_at": "2026-10-20T21:55:53.568758+00:00",
+    "source": "https://nodejs.org/dist/index.json",
+    "latest_22": "v22.23.3",
+    "release_date": "2026-09-23",
+    "newer_than_tested_22_23_3": false
+  },
+  "preparation": {
+    "p10_packet": "docs/submission/NEXT_STEPS.md",
+    "upload_paused": true,
+    "deadline_cairo": "2026-10-23T22:00:00+03:00",
+    "publication_or_submission_performed": false,
+    "owner_film_watch_listen_pending": true,
+    "public_source_parity_pending": true
+  },
+  "checkpoint": {
+    "historical_phase0_images_match_retained_snapshot": true,
+    "fresh_phase0_capture_directory_private": true,
+    "checked_at": "2026-10-20T22:19:27.962Z",
+    "scratch_databases_remaining": 0,
+    "private_restore_directories_remaining": 0,
+    "app_port_free": true,
+    "native_host_preserved": true,
+    "native_host_pid": 33598,
+    "task_owned_production_and_mocked_voice_servers_stopped": true,
+    "source_database_restored_or_deleted": false,
+    "protected_artifacts_checked_at": "2026-10-20T22:20:02.433079+00:00",
+    "public_checkout_files_unchanged": 281,
+    "public_manifest_unchanged": true,
+    "replacement_film_unchanged": true,
+    "film_bytes": 7262243,
+    "manual_handoff_authoritative": true,
+    "no_successor_or_transfer_created": true
+  },
+  "files": [
+    {
+      "path": ".node-version",
+      "bytes": 8,
+      "sha256": "6d07ac247e81cd42c2c20abf8dfe504413d6b2422e4aba9b2c975a776f155921"
+    },
+    {
+      "path": ".nvmrc",
+      "bytes": 8,
+      "sha256": "6d07ac247e81cd42c2c20abf8dfe504413d6b2422e4aba9b2c975a776f155921"
+    },
+    {
+      "path": "package.json",
+      "bytes": 3585,
+      "sha256": "db66fa5008e2f9a24dcb52ab793732475a9713c85c9328dbf497b13b82c3bbb6"
+    },
+    {
+      "path": "package-lock.json",
+      "bytes": 121541,
+      "sha256": "63d67555b4c86095f6d21fdcd8d7baae2d42ddda43943a1b780c0951bed0ce50"
+    },
+    {
+      "path": "playwright.config.ts",
+      "bytes": 524,
+      "sha256": "ced72f78900f63136b566740b9ab53f2afa876a4858b0a80911183848914cc74"
+    },
+    {
+      "path": "packages/domain/local-database.ts",
+      "bytes": 561,
+      "sha256": "f631017129cd996a764ffc87d765c1c53f27de7641b8704dabe08c0dd5d2d2f5"
+    },
+    {
+      "path": "packages/domain/db.ts",
+      "bytes": 1835,
+      "sha256": "bee05fe8dcdbcb8d636febf833458a271d3bde52edc6b73757adfb573686c949"
+    },
+    {
+      "path": "packages/domain/sessions.ts",
+      "bytes": 30870,
+      "sha256": "c213517f389faa3e76b9e7350ba00f006fa810d8aef8fce794c700dc29510917"
+    },
+    {
+      "path": "packages/domain/routines.ts",
+      "bytes": 21849,
+      "sha256": "35e403b56eb023653eb1d03b435a7438bf0eec246e0e05e2028fb71a98e96d5b"
+    },
+    {
+      "path": "packages/domain/planning.ts",
+      "bytes": 19034,
+      "sha256": "5a48df4bd8e30964ce54424eee0af2e259f1847a0fdff8e382ef142843d08175"
+    },
+    {
+      "path": "tests/e2e/phase0.spec.ts",
+      "bytes": 4742,
+      "sha256": "54f01d6ef15a76980f863f9981fc61a3ef8a7d295639075e42e122e4c543d8c8"
+    },
+    {
+      "path": "tests/local-database.test.ts",
+      "bytes": 1526,
+      "sha256": "7a1f4f29f90914310acd135946824d22baa87e2b00f0969ca95acce777fabb5f"
+    },
+    {
+      "path": "tests/unit-environment.mjs",
+      "bytes": 412,
+      "sha256": "39b5c9db16e0df04a296c40aed31b69ef72802a83755cf368c1daf9c89bebc0d"
+    },
+    {
+      "path": "tests/withdrawal-fixture.ts",
+      "bytes": 11377,
+      "sha256": "ae696e43c04e5a31a042238d41515189b81583573c9ec9d155853bdf11f1bb2a"
+    },
+    {
+      "path": "tests/p9-withdrawal-operations.test.ts",
+      "bytes": 5647,
+      "sha256": "1288dbbf4b56a83f234f631fc28aa460a04aaf31f40d1a07f5a29df8790df65c"
+    },
+    {
+      "path": "tests/p9-outbox-order.test.ts",
+      "bytes": 7314,
+      "sha256": "f29958047901395e6d615b6434d15d9c5ff48c6488a862cd5c6b6003d2fecc17"
+    },
+    {
+      "path": "tests/p9-handover-lock.test.ts",
+      "bytes": 13464,
+      "sha256": "db059b330ad16cfacc8c21720cab373896a9fba8a6473cf3aa4f37e364ff3014"
+    },
+    {
+      "path": "scripts/prove-phase9-withdrawal.ts",
+      "bytes": 1618,
+      "sha256": "c42c1f0522e50c2c21ee3e8898f32b4bbd4b38f90cb8b0f6aea0bc72ed741e4b"
+    },
+    {
+      "path": "scripts/prove-phase9-application-restore.ts",
+      "bytes": 13158,
+      "sha256": "5e3f657855144c5d42046522eaaea1f7d0e3dcfc1d274245a4be73dba1c33175"
+    },
+    {
+      "path": "docs/JUDGE_SETUP.md",
+      "bytes": 4681,
+      "sha256": "75ec6d0e1280b21e625828b4f70cf51e766491a9e3cd11487b6006a074a9eb31"
+    },
+    {
+      "path": "evidence/phase0/README.md",
+      "bytes": 2309,
+      "sha256": "ca7ae14a996224f874026f992e459db084fef60c16d4b238a7292095b2822431"
+    },
+    {
+      "path": "docs/P9_OPERATIONS_HANDOFF.md",
+      "bytes": 11803,
+      "sha256": "f1993a18c1cf42f93f2fd30fa51f467aac6e1d4a07305dfac3acbf9f32a429ad"
+    },
+    {
+      "path": "docs/P9_HUMAN_ACCEPTANCE.md",
+      "bytes": 6377,
+      "sha256": "bc7802dba0dcc10cd8c94a85142fede9acc93e6800ccddb1adb063966d8fad27"
+    },
+    {
+      "path": "docs/PHASE_9_METADATA_RETENTION_PROPOSAL.md",
+      "bytes": 6987,
+      "sha256": "e19bba0e5ef0fe12b26e3a25023cda0e7879ea9957f37f752e96b894ce24c0b1"
+    },
+    {
+      "path": "docs/PHASE_10_HANDOFF.md",
+      "bytes": 23466,
+      "sha256": "475b48793a7d2fe4fca55e64a54d5bc5bbbf5c0c3947070cd9dd8963cfb8f9f9"
+    },
+    {
+      "path": "docs/PHASE_8_9_HANDOFF.md",
+      "bytes": 33985,
+      "sha256": "8a046ab05025fa18125185d6e4f7f8b3639388908e9915f6508f8f83b333ba39"
+    },
+    {
+      "path": "docs/ROADMAP.md",
+      "bytes": 19406,
+      "sha256": "f0e2169834e95ffdc84d5bc5ac5df00d6ba156bbeddf65ca82280f00a822739d"
+    },
+    {
+      "path": "docs/submission/NEXT_STEPS.md",
+      "bytes": 10684,
+      "sha256": "c9c4624e41ad812ed0f3f3ef83f3aa65940ff2cb0fc5d6f937775da9580e8b67"
+    },
+    {
+      "path": "docs/submission/READINESS.md",
+      "bytes": 10895,
+      "sha256": "a77654abbe821ad7dd8e75b31f4877fb04cb56003e447c522613b40551dd6971"
+    },
+    {
+      "path": "docs/submission/PRODUCT_FEEDBACK.md",
+      "bytes": 16229,
+      "sha256": "6502bdc69c932656f8dfd1b417e7b0f55065cb88ea8c046bb69257b1b1e546ec"
+    },
+    {
+      "path": "devpost-submission.md",
+      "bytes": 11645,
+      "sha256": "1901ee9024612414ac87a8febfb6bedc9c09417dc334a06dd62ca46e8c472c41"
+    },
+    {
+      "path": "TASKS.md",
+      "bytes": 3408,
+      "sha256": "da1d72d1dc6b7ba4181791e8371000d06f3ca6ad9dbfd64697b7a8bfc013206a"
+    },
+    {
+      "path": "DECISIONS.md",
+      "bytes": 29715,
+      "sha256": "a1805e92fc35e3fb7b1139bea543e57ba91769b244e2396f8cd256e5496d83cf"
+    },
+    {
+      "path": "evidence/phase9/withdrawal-operations.json",
+      "bytes": 2143,
+      "sha256": "c144f887d885251e0d15bf47bea28e3214a1e8434b4f07de84e658699adcdc48"
+    },
+    {
+      "path": "evidence/phase9/application-restore-2026-10-21.json",
+      "bytes": 1520,
+      "sha256": "ca998badf9e57ae6593dcafe2771cfe3f29dc2f5e489f88c66b1b7f053d3ec8a"
+    },
+    {
+      "path": "evidence/phase9/security-http-2026-10-20.json",
+      "bytes": 445,
+      "sha256": "52d3e8a9393ad89f2d52146027c2e6b2884aabb58c58c5e331e96dba218bb4fe"
+    },
+    {
+      "path": "evidence/phase8/pairings.json",
+      "bytes": 5554,
+      "sha256": "9ce43311ae409d77461d9d2b7862903a8dce008113f984e40198e4c3e6148236"
+    },
+    {
+      "path": "evidence/phase6/provider-auth.json",
+      "bytes": 258,
+      "sha256": "f5b64bfe0dbef6a1f5786b3efac4da2a31c3dadcc0f29452208b4dbc1f0e0f16"
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 # Denlumi — submission copy draft
 
-Prepared 2026-10-18. Local drafting only; not submitted. Missing links and access decisions are tracked in [the readiness checklist](docs/submission/READINESS.md). Do not paste this preparation note into the public description.
+Prepared October 18; reconciled October 21, 2026 Africa/Cairo against local P9 evidence and current official submission requirements. Final entry copy preparation; not submitted. See [readiness](docs/submission/READINESS.md) and the ordered [next-step packet](docs/submission/NEXT_STEPS.md). The selected source includes the October 21 Node security patch and recorded serial checks; verify the actual publication receipt before attributing the selected code to a public commit. Do not paste this preparation note into the public description.
 
 ## Project name
 
@@ -28,9 +28,9 @@ Local Stop works without a network or model. It stops this device's software and
 
 ## How we built it
 
-The web application uses Next.js, React and TypeScript. Local Supabase Auth and PostgreSQL provide authenticated identities, household scope and persistent state. Consequential operations recheck authority and current versions, including a monotonic safety epoch that invalidates dependent work after a relevant change. Database constraints, row-level security and server checks support one another.
+The current local application uses Next.js 16.4.2, React 19.3.1, TypeScript and Node.js 22.23.4. Local Supabase Auth and PostgreSQL provide authenticated identities, household scope and persistent state. Consequential operations recheck authority and current versions, including a monotonic safety epoch that invalidates dependent work after a relevant change. Database constraints, row-level security and server checks support one another.
 
-The simulation makes real authenticated Streamable HTTP MCP requests using protocol version `2025-11-25`. A new conversation retrieves database state rather than relying on chat history. Its bounded assistant has a six-tool-call total per turn and at most two model rounds. The demonstrated fallback answers are explicitly sourced from database templates.
+The simulation makes real authenticated Streamable HTTP MCP requests using protocol version `2025-11-25` and SDK 1.32.1. A new conversation retrieves database state rather than relying on chat history. Its bounded assistant has a six-tool-call total per turn and at most two model rounds. The demonstrated fallback answers are explicitly sourced from database templates. P9 added streaming request-size limits, read/write budgets and bounded transport admission, expiry and abort/deadline cleanup; these are local process controls, not distributed deployment protections.
 
 AWS SDK integrations are present for Bedrock Converse, Amazon Polly and Amazon Transcribe Streaming. Earlier real Polly/Transcribe requests succeeded with fictional generated audio; a separate synthetic-microphone browser drill exercised actual speech endpoints and offline Stop. These are provider/software observations, not human voice acceptance. Real Bedrock inference attempts returned `ValidationException: Operation not allowed`; no successful Bedrock-generated answer or model-driven MCP loop is claimed. The most recent recorded AWS recheck expired, so current access is unverified.
 
@@ -38,13 +38,15 @@ AWS SDK integrations are present for Bedrock Converse, Amazon Polly and Amazon T
 
 The difficult work was preserving authority when state changes. Local checks exposed stale review controls after failed reads, a previous answer left visible beside a new error, a saved report whose refresh failure looked like a refused write, and report text cleared during delayed sample entry. We corrected those paths and recorded the evidence and its limits.
 
-Bedrock onboarding also stopped at a real authorization blocker. Model discovery and an active inference profile did not establish permission to invoke it. We kept the blocked status visible and retained database-backed functionality. Accumulated local fixtures later caused database/Auth timeouts during broad regression attempts; a current complete-checkout pass remains outstanding.
+Bedrock onboarding also stopped at a real authorization blocker. Model discovery and an active inference profile did not establish permission to invoke it. We kept the blocked status visible and retained database-backed functionality. Accumulated older local fixtures previously caused database/Auth timeouts. A fresh native environment now passes the current suite, while the accumulated-old-fixture performance issue remains unverified.
 
 ## Accomplishments
 
 The documented local slice connects exact plan review, separate authenticated caregiver acknowledgment, preflight, report, pause, stale-work refusal, fresh MCP retrieval and private preview across the supported fictional shapes. It includes permission, duplicate-work, failure and offline-Stop checks, and automated desktop reflow and native browser zoom evidence.
 
-The latest recorded October 1 maintenance checks passed a selected 58-test domain set, two Auth tests, six browser tests, typecheck/build and both phase-specific HTTP proofs. An earlier full suite passed 105/105 before later maintenance edits; that result is historical. On October 18, production build and typecheck passed, along with 11 deterministic conversation/Stop tests, five local-setup boundary tests, and static-site browser checks at 320, 768 and 1440 pixels. These do not establish a current database/Auth/application-browser full regression pass.
+The current local P9 operations/security checks passed **227/227 domain/Auth/database tests, 60/60 production typed-browser tests and five isolated synthetic/mocked voice tests**, plus typecheck, production build, seven existing HTTP proofs, nine security HTTP checks and seven fictional pairing shapes. The voice mocks used no real provider endpoint or credential. The typed checks exercise keyboard, constrained reflow, zoom-related software behavior, reduced motion, forced colors, outage/deletion recovery and fictional pairing journeys. These are local automated results on the current source, not human accessibility/usability, clean-machine Docker replay or older-record recovery. Earlier 105/110-domain and 29-browser results retain their historical limits.
+
+The local 104-second film contains real October 19 browser footage with original SVG explanation and Higgsfield Seed Audio's built-in Grady narration, edited and checked October 20. It predates final P9 dependency/security hardening; no updated recording of that build is claimed. Automated caption/decoding/playback checks and AI sampled-frame review do not establish human listening or voice acceptance.
 
 ## What we learned
 
@@ -52,7 +54,7 @@ An assistant's confident sentence cannot substitute for a current, authorized re
 
 ## What's next
 
-Next engineering work is the accumulated-fixture database/Auth timeout investigation and request-correlated diagnostics. Before real-world use, Denlumi needs observed human usability and accessibility checks, supported-device and human voice acceptance, operational privacy/retention verification, and qualified review of each exact practical protocol version. All bundled protocols remain `demo_only`; none is professionally approved animal-handling guidance. Phases 8/9 remain in progress.
+Remaining work includes accumulated-old-fixture performance/old-record recovery, clean-machine Docker replay and human supported-device usability/accessibility and voice acceptance. Provider latency/cost/retention verification, approved table-specific metadata retention, continuous consented cleanup, full backup expiry/restore and production-scale/real-operator withdrawal acceptance remain open. The latest AWS identity check expired, leaving current Bedrock authorization unknown. All bundled protocols remain `demo_only`; each exact practical version needs real qualified review before customer use. Local P9 automated hardening and bounded operations are complete within their recorded scopes; P9 human/operational acceptance and P10 media/final submission remain open.
 
 ## Track and technology fields
 
@@ -60,12 +62,18 @@ Next engineering work is the accumulated-fixture database/Auth timeout investiga
 - Optional AWS Builder: owner decision pending; describe the genuine speech integrations and blocked Bedrock attempt exactly as above. Do not claim eligibility or an award outcome.
 - Open Source: not selected in this draft; no additional contribution URL or publication has been verified.
 - Built with: Next.js, React, TypeScript, Node.js, Supabase Auth, PostgreSQL, Model Context Protocol, AWS SDK for JavaScript v3, Amazon Polly, Amazon Transcribe Streaming; Amazon Bedrock integration **blocked at inference**.
-- Public code repository: https://github.com/AmirmLotfy/denlumi (MIT, published October 18).
+- Public code repository: https://github.com/AmirmLotfy/denlumi (MIT). The selected source includes the latest local checks; exact publication is recorded only after a verified push. Prior public base was October 18 `ae32fcb8cdd8f45996615bdf9c9addd357eb0805`.
 - Public presentation: https://denlumi-showcase.vercel.app (static evidence site; interactive application remains local-only).
-- Video: **not recorded/uploaded; no public video URL yet**. Never substitute the presentation site or localhost for the required working-application video.
+- Video: the **1:44 Grady/SVG replacement** is exported and locally checked; [review/upload packet and captions](docs/submission/UPLOAD.md). The owner resumed submission work; YouTube upload awaits the platform’s action-time agreement confirmation, so the public **YouTube/Vimeo URL is still missing**. The site's older 2:03 Samantha MP4 is historical and must not be used as the replacement or official video field.
 
 ## Internal claim references — remove this section when copying to Devpost
 
-Behavior and current limits: [Phase 8/9 handoff](docs/PHASE_8_9_HANDOFF.md), [Phase 6/7 closure](docs/PHASE_6_7_CLOSURE.md), [content gate](docs/CONTENT_REVIEW_PROCESS.md).
+Behavior and current limits: [P9 operations handoff](docs/P9_OPERATIONS_HANDOFF.md), [Phase 8/9 handoff](docs/PHASE_8_9_HANDOFF.md), [Phase 6/7 closure](docs/PHASE_6_7_CLOSURE.md), [content gate](docs/CONTENT_REVIEW_PROCESS.md). Current official rules/FAQ and deadline were refreshed October 21 Cairo; October 23, 12:00 PDT is 22:00 Cairo. [Readiness](docs/submission/READINESS.md) records rule wording differences and freeze/access requirements. No legal declaration or competition entry was made.
 
-Recorded execution: [October 1 closure evidence](evidence/phase6/closure-2026-10-01.json), [seven fictional HTTP/MCP shapes](evidence/phase8/pairings.json), [browser coverage](evidence/phase8/browser.json), [blocked Bedrock app response](evidence/phase6/bedrock-app.json), [speech provider probes](evidence/phase6/providers.json), [synthetic-input live speech](evidence/phase6/voice-browser.json), [isolated database failure recovery](evidence/phase9/db-recovery.json), [offline Stop measurement](evidence/phase9/stop-latency.json), [actual local friction](docs/PHASE_8_FRICTION_LOG.md). These evidence files are working references; sanitize each before any publication.
+Recorded execution: [current P9 operations](evidence/phase9/operations-2026-10-21.json), [October 1 closure evidence](evidence/phase6/closure-2026-10-01.json), [seven fictional HTTP/MCP shapes](evidence/phase8/pairings.json), [browser coverage](evidence/phase8/browser.json), [blocked Bedrock app response](evidence/phase6/bedrock-app.json), [speech provider probes](evidence/phase6/providers.json), [synthetic-input live speech](evidence/phase6/voice-browser.json), [isolated database failure recovery](evidence/phase9/db-recovery.json), [offline Stop measurement](evidence/phase9/stop-latency.json), [actual local friction](docs/PHASE_8_FRICTION_LOG.md), [replacement film media](evidence/phase10/video-natural.json). These evidence files are working references; sanitize each before publication. Human film acceptance, upload resumption, exact source publication and final owner/form declarations remain pending.
+
+October 21 local operations added a bounded nine-household withdrawal proof and an isolated current application-schema restore: 75 tables, 32 policies and eight access/session canaries matched. Original service ownership and nine future-object default-privilege entries were not reproduced; full-platform recovery remains open. See [operations handoff](docs/P9_OPERATIONS_HANDOFF.md). The [human task packet](docs/P9_HUMAN_ACCEPTANCE.md) starts NOT_RUN, and the [retention worksheet](docs/PHASE_9_METADATA_RETENTION_PROPOSAL.md) is unapproved. These preparations grant no practical-content, policy, human or production acceptance.
+
+Local source reconciliation is prepared separately: [P10 source report](docs/P10_SOURCE_RECONCILIATION.md). The candidate has not been pushed. This draft is not evidence of a submitted entry or accepted video URL. The owner must confirm build-window provenance (new project versus existing-project changes), eligibility, team representation, asset rights and personal reuse answers before using the actual form.
+
+Latest runtime continuation: official Node 22.23.4 was checksum-verified and installed task-locally; typecheck/build, 227 domain/Auth/database, 60 typed-browser,5 mocked-voice, 11 unit,9 setup,6 export and zero-known audit checks passed. [Redacted runtime evidence](evidence/phase10/node-security-2026-10-21.json). No dependency inventory change, real provider request, hosted resource or human acceptance is claimed.

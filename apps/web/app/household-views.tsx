@@ -16,11 +16,11 @@ type Access={resource_id:string;pet_id:string;access_plan:string};
 type Responsibility={home_version:number;profile_id:string;pet_id:string|null;label:string;status:string;note:string|null};
 type Handover={id:string;case_id:string;safety_epoch:number;created_at:string;status:string;body:{summary?:string}};
 type Planning={household:{home_version:number};zones:Zone[];resources:Resource[];pet_resource_access:Access[];responsibilities:Responsibility[];handovers:Handover[];as_of:string};
-type Task={id:string;nickname:string;kind:string;due_at:string;state:string;reports:{id:string;report:string;corrected_report:string|null;created_at:string;reporter_id:string}[];ingestion_verified:false};
+type Task={id:string;nickname:string;kind:string|null;due_at:string;state:string;reports:{id:string;report:string;corrected_report:string|null;created_at:string;reporter_id:string}[];ingestion_verified:false};
 type Due={tasks:Task[];as_of:string;notice:string};
 type Inbox={items:{id:string;status:string;created_at:string;event_type:string;last_error_code:string|null}[]};
 const stamp=(value:string|null|undefined)=>value?new Date(value).toLocaleString(undefined,{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'}):'Time not supplied';
-const word=(value:string)=>value.replaceAll('_',' ');
+const word=(value:string|null|undefined)=>value?value.replaceAll('_',' '):'Unknown';
 async function read<T>(url:string):Promise<T>{const response=await fetch(url,{credentials:'same-origin',cache:'no-store'});const value=await response.json();if(!response.ok)throw Error(value.error??'REQUEST_FAILED');return value as T;}
 
 function RoutineReportForm({task,onReported}:{task:Task;onReported:(message:string)=>void}){

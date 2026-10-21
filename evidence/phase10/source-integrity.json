@@ -1,0 +1,20 @@
+{
+  "checked_at": "2026-10-19",
+  "scope": "Sanitized public source snapshot integrity only; no application acceptance",
+  "before": {
+    "broken_local_markdown_links": 3,
+    "build_pack_manifest_missing_files": [
+      "AGENTS.md"
+    ]
+  },
+  "after": {
+    "local_markdown_links": "PASS - all local targets exist",
+    "build_pack_manifest": "PASS - all 33 files match byte count and SHA-256",
+    "private_operator_files": "remain excluded"
+  },
+  "changes": [
+    "Include the referenced DECISIONS.md in the allowlist",
+    "Render historical references to excluded operator instructions as plain text",
+    "Recompute the published build-pack manifest for actual sanitized files without changing the original build pack"
+  ]
+}

@@ -66,6 +66,7 @@ export async function invalidate(db:pg.PoolClient,h:any,actor:Actor,reason='Hous
 export async function addPet(actor:Actor,id:string,raw:unknown,key:string) {
  const i=addPetInput.parse(raw);
  return ownerWrite(actor,id,i,key,{operation:'pet_added',...i},async(db,h)=>{
+  if((await db.query('select count(*)::int n from pets where household_id=$1 and archived_at is null',[id])).rows[0].n>=6)throw new DomainError('PET_LIMIT');
   const pet=(await db.query('insert into pets(household_id,nickname,species,age_band,approx_birth_date,arrival_date,context_notes,aliases) values($1,$2,$3,$4,$5,$6,$7,$8) returning *',[id,i.nickname,i.species,i.age_band,i.approx_birth_date,i.arrival_date,JSON.stringify(i.context_notes),i.aliases])).rows[0];
   await invalidate(db,h,actor);return pet;
  });
@@ -105,7 +106,9 @@ export async function grantMembership(actor:Actor,id:string,raw:unknown,key:stri
   for(const [table,ids] of [['pets',i.pet_scope],['cases',i.case_scope]] as const){
    if(ids&&(new Set(ids).size!==ids.length||(await db.query(`select id from ${table} where household_id=$1 and id=any($2::uuid[])`,[id,ids])).rowCount!==ids.length))throw new DomainError('SCOPE_MISMATCH',403);
   }
-  const m=(await db.query('insert into memberships(household_id,profile_id,role,pet_scope,case_scope,expires_at,invited_by) values($1,$2,$3,$4,$5,$6,$7) on conflict(household_id,profile_id) do update set role=excluded.role,pet_scope=excluded.pet_scope,case_scope=excluded.case_scope,expires_at=excluded.expires_at,revoked_at=null,invited_by=excluded.invited_by returning id,role,pet_scope,case_scope,expires_at',[id,i.profile_id,i.role,i.pet_scope,i.case_scope,i.expires_at,actor.userId])).rows[0];
+  const current=(await db.query('select 1 from memberships where household_id=$1 and profile_id=$2 and revoked_at is null and (expires_at is null or expires_at>now())',[id,i.profile_id])).rowCount;
+  if(!current&&(await db.query('select count(*)::int n from memberships where household_id=$1 and revoked_at is null and (expires_at is null or expires_at>now())',[id])).rows[0].n>=4)throw new DomainError('CAREGIVER_LIMIT');
+  const m=(await db.query('insert into memberships(household_id,profile_id,role,pet_scope,case_scope,expires_at,invited_by) values($1,$2,$3,$4,$5,$6,$7) on conflict(household_id,profile_id) do update set role=excluded.role,pet_scope=excluded.pet_scope,case_scope=excluded.case_scope,expires_at=excluded.expires_at,revoked_at=null,accepted_at=null,grant_version=memberships.grant_version+1,invited_by=excluded.invited_by returning id,role,pet_scope,case_scope,expires_at',[id,i.profile_id,i.role,i.pet_scope,i.case_scope,i.expires_at,actor.userId])).rows[0];
   return m;
  });
 }

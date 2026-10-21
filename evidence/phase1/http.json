@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-09-22T11:31:57.922Z",
+  "checked_at": "2026-10-20T21:53:28.288Z",
   "result": "PASS",
   "scope": "Real local HTTP and Supabase Auth; only fictional records. No provider call, email, professional approval or practical guidance.",
   "trace": [

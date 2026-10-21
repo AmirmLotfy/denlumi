@@ -9,5 +9,5 @@ export async function POST(req:Request) {
   return await handleMcp(req,actor,await body(req));
  }catch(e){return error(e);}
 }
-export async function GET(req:Request) {try{guard(req);await identity(req,true);return new Response(null,{status:405,headers:{Allow:'POST, DELETE'}});}catch(e){return error(e);}}
-export async function DELETE(req:Request) {try{guard(req);const {actor}=await identity(req,true);return await handleMcp(req,actor);}catch(e){return error(e);}}
+export async function GET(req:Request) {try{guard(req);const {actor}=await identity(req,true);rateLimit(`mcp-control:${actor.userId}`,120);return new Response(null,{status:405,headers:{Allow:'POST, DELETE','Cache-Control':'no-store'}});}catch(e){return error(e);}}
+export async function DELETE(req:Request) {try{guard(req);const {actor}=await identity(req,true);rateLimit(`mcp-control:${actor.userId}`,120);return await handleMcp(req,actor);}catch(e){return error(e);}}

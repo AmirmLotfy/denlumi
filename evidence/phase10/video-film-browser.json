@@ -1,0 +1,39 @@
+{
+  "checked_on": "2026-10-20",
+  "status": "PASS",
+  "scope": "Private localhost media player; no app/provider calls or human audible acceptance.",
+  "playwright_version": "1.62.1",
+  "browser": "155.0.8059.85",
+  "layouts": [
+    {
+      "width": 320,
+      "overflow": false,
+      "autoplay": false,
+      "duration": 104
+    },
+    {
+      "width": 768,
+      "overflow": false,
+      "autoplay": false,
+      "duration": 104
+    },
+    {
+      "width": 1440,
+      "overflow": false,
+      "autoplay": false,
+      "duration": 104
+    }
+  ],
+  "caption_cues": 34,
+  "playback": {
+    "ended": true,
+    "currentTime": 104,
+    "error": null,
+    "muted": true,
+    "playbackRate": 4,
+    "quality": 3119
+  },
+  "page_errors": [],
+  "external_requests": [],
+  "limits": "Muted automated playback at 4x verifies playback completion, not real-time or human listening acceptance."
+}

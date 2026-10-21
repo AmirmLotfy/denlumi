@@ -1,0 +1,71 @@
+{
+  "checked_on": "2026-10-20",
+  "status": "PASS",
+  "scope": "Local replacement film media validation; YouTube upload remains paused.",
+  "film": {
+    "filename": "denlumi-submission-film.mp4",
+    "bytes": 7262243,
+    "sha256": "1a8b63b138c151002519302703345e77008034805c8a43dac7f071d5b2f589ca",
+    "duration_seconds": 104.0,
+    "dimensions": [
+      1920,
+      1080
+    ],
+    "frames": 3119,
+    "video_duration_seconds": 103.966667,
+    "fps": "30/1",
+    "codecs": {
+      "video": "h264",
+      "audio": "aac",
+      "captions": "mov_text"
+    },
+    "sample_rate_hz": 48000
+  },
+  "full_decode": {
+    "exit_code": 0,
+    "error_policy": "ffmpeg -xerror"
+  },
+  "measured_audio": {
+    "integrated_lufs": -15.87,
+    "true_peak_dbtp": -1.49,
+    "loudness_range_lu": 4.6
+  },
+  "captions": {
+    "status": "PASS",
+    "cues": 34,
+    "words": 239,
+    "transcript_exact_token_coverage": 0.9707112970711297,
+    "maximum_lines": 2,
+    "maximum_characters_per_line": 42,
+    "last_caption_end_seconds": 100.14,
+    "limits": "Reviewed script wording aligned to existing automated ASR; no human audible acceptance."
+  },
+  "capture": {
+    "status": "PASS",
+    "actions": 30,
+    "duration_seconds": 100.706,
+    "http_status_counts": {
+      "200": 158,
+      "201": 4,
+      "409": 1
+    },
+    "speech_endpoint_requests": 0,
+    "maximum_action_clock_slip_seconds": 0.007999999999999119
+  },
+  "narration": {
+    "provider": "Higgsfield",
+    "model": "Seed Audio",
+    "preset": "Grady",
+    "requested_direction": "General American English",
+    "new_generation_this_continuation": false
+  },
+  "resolved_intermediate_failures": [
+    "Closing-shot fade rejected d=.32; changed duration syntax to d=0.32 and rerendered the affected chapter.",
+    "Initial media validation found 3113 frames and a variable average rate after concatenation. Intermediate CFR adjustments yielded about 81 seconds of video and were rejected. Frame inspection identified a yuv444p closing shot among yuv420p clips; changing frame properties reset filter state. Forced yuv420p scene output, disabled filter reinitialization on the fixed-size picture input, reset PTS by frame index and enforced CFR. Caption input uses fixed-size raw RGBA. Encoder completion checks constant rate, frame-count/duration consistency and the 104-second target within one video frame before replacing the final file. The observed final picture is 3119 frames (103.966667 seconds); AAC/container duration is checked separately. Narration ends at 100.14 seconds, before the closing hold."
+  ],
+  "limits": [
+    "Automated media and fictional local capture checks are not human listening or usability acceptance.",
+    "No native Alexa integration, successful Bedrock inference, qualified practical review or animal outcome claimed.",
+    "No upload, deployment, provider generation or event submission in this continuation."
+  ]
+}

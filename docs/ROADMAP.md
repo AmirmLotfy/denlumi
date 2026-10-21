@@ -1,6 +1,6 @@
 # Denlumi project roadmap
 
-Planning baseline: 2026-09-16; status updated 2026-10-01. **Phases 0–7 are implemented locally. Phases 6 and 7 are closed for local implementation with Bedrock and human voice acceptance explicitly deferred**, as recorded in [PHASE_6_7_CLOSURE.md](PHASE_6_7_CLOSURE.md). Phases 8 and 9 are now authorized and in progress; see [PHASE_8_9_HANDOFF.md](PHASE_8_9_HANDOFF.md) for measured results and open gates. Phase 10 publication/submission preparation was authorized October 18; see [the delivery handoff](PHASE_10_HANDOFF.md). R1/R2 remain a dependency plan. This document records intended acceptance gates; it does not report deployed services or professional approval. There is no dedicated hosted Supabase project; linking, remote migration and deployment are prohibited until the user explicitly changes that boundary.
+Planning baseline: 2026-09-16; status updated 2026-10-21. A01–A08 correctness and P8 W01–W04 software workflows are locally verified. Current P9 local operations/security checks passed 227/227 suite, 60/60 typed-browser, 5/5 mocked voice, HTTP/schema/build and bounded withdrawal/application-restore checks. See [P9 operations](P9_OPERATIONS_HANDOFF.md) and [earlier hardening](P9_HARDENING_HANDOFF.md). Human, exact-version content, policy, provider and full-platform/clean-machine acceptance remain open; this is not full R0/customer release. P10 delivery remains incomplete with [ordered next steps](submission/NEXT_STEPS.md), and upload stays paused. R1/R2 remain conditional. Supabase remains local-only.
 
 ## Source and phase convention
 
@@ -29,6 +29,16 @@ Release labels are separate from implementation phases:
 - Keep secrets, private household content, unlicensed screenshots and font files out of public artifacts. No fabricated provider results, reviewer identities, endorsements or customer outcomes.
 
 ## Canonical implementation phases
+
+### Current execution order after the October 20 audit
+
+These are completion slices inside the existing phases, not new phase numbers:
+
+1. **P8/P9 correctness — locally verified:** A01–A08 passed tests-first regression and final integrated checks (166 domain, 37 typed-browser): persisted Stop; immutable routine history/scope; scenario eligibility; exact retry replay; household expiry; inbox/worker eligibility; current protocol checks; consistent displayed availability. Track actual results in [R0_CORRECTNESS_HANDOFF.md](R0_CORRECTNESS_HANDOFF.md).
+2. **P8 workflow completion — locally verified:** W01 normal household/pet/situation setup and empty states; W02 session finish/resume/correction; W03 routine rules/claims/attributed reports/corrections; W04 scoped caregiver and home resource/responsibility management. Keep practical guidance unavailable without reviewed content. See [the P8 workflow handoff](P8_WORKFLOWS_HANDOFF.md) for actual checks and limits.
+3. **P9 hardening and acceptance:** current [local operations/security](P9_OPERATIONS_HANDOFF.md) and earlier dependency fixes are verified; recheck the announced Node security patch before release. Use the prepared human task packet and table-specific retention worksheet for real decisions/observations. Bounded withdrawal and limited application restore do not close production-scale/platform recovery, backup expiry or clean-machine gates. Providers remain deferred after expired AWS identity.
+4. **P6 provider / P10 delivery gates:** renew owner AWS login and recheck Bedrock before claiming inference; reconcile the tested source snapshot and judge instructions; obtain owner film review and explicit upload resumption, verify the real public video, then complete owner form declarations/submission. Existing authorization does not lift the upload pause or permit hosted Supabase.
+5. **R1/R2 only after their gates and separate scope:** genuine reviewed practical-content product/pilot; eligible commerce; additional reviewed scenarios/locales and optional native integrations. No R0 test count closes these gates.
 
 All phase transitions require a recorded handoff with changed files, actual commands/results, evidence limits, decisions, blockers and the smallest next task. A failed required provider probe is `BLOCKED` or `FAIL`, never a synthetic success. Local tests, real HTTP transport, live providers, hosted behavior and professional review are separate evidence categories.
 
@@ -86,4 +96,4 @@ Unresolved gates must have an owner and concrete next action in the phase handof
 
 The pack's schedule and October 23, 2026 noon-Pacific deadline are planning inputs from the supplied specification, not a fresh rule verification. Recheck official rules and timezone conversion before any publication/submission decision; the plan's intended demo freeze is at least five days before that confirmed deadline.
 
-**Current scope: complete the authorized Phase 10 delivery while preserving the open Phase 8/9 acceptance gates; read [PHASE_8_9_HANDOFF.md](PHASE_8_9_HANDOFF.md). Hosted Supabase work is prohibited. External sending and physical device integration remain unavailable. Bedrock Nova Micro still has a real `NOT_AUTHORIZED` outcome, while earlier local-app Polly/Transcribe requests passed; see [PHASE_6_7_CLOSURE.md](PHASE_6_7_CLOSURE.md) for their evidence limits.**
+**Current status: P8 software and P9 scoped local checks are verified; human/policy/provider/platform gates and P10 delivery remain open. See [P9 operations](P9_OPERATIONS_HANDOFF.md) and [P10 packet](submission/NEXT_STEPS.md). Supabase stays local-only and upload remains paused. Bedrock authorization is unknown after the October 21 Cairo expired AWS identity refresh; historical provider results retain their original limits.**

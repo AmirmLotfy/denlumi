@@ -1,72 +1,51 @@
 {
-  "checked_at": "2026-09-23T02:22:00.931Z",
+  "checked_at": "2026-10-20T20:54:45.440Z",
   "environment": "Aggregate read-only queries against unlinked local Supabase; no private text, identifiers or credentials emitted",
   "effective_provider_daily_call_limit": 12,
   "households": [
     {
       "mode": "demo",
       "status": "active",
-      "total": 1937,
-      "expired": 26
+      "total": 1898,
+      "expired": 402
     },
     {
       "mode": "demo",
       "status": "suspended",
-      "total": 19,
-      "expired": 0
+      "total": 42,
+      "expired": 2
     },
     {
       "mode": "live",
       "status": "active",
-      "total": 368,
+      "total": 411,
       "expired": 0
     }
   ],
   "demo_retention": {
-    "consented": 30,
-    "expired_older_unconsented": 26,
+    "consented": 177,
+    "expired_older_unconsented": 320,
     "due_consented": 0
   },
   "provider_calls": [
     {
-      "provider": "bedrock",
-      "outcome": "blocked",
-      "total": 1,
-      "with_usage": 0,
-      "older_than_30_days": 0
-    },
-    {
-      "provider": "polly",
-      "outcome": "completed",
-      "total": 2,
-      "with_usage": 0,
-      "older_than_30_days": 0
-    },
-    {
       "provider": "polly-test",
       "outcome": "reserved",
-      "total": 8,
-      "with_usage": 8,
+      "total": 11,
+      "with_usage": 11,
       "older_than_30_days": 0
     },
     {
       "provider": "test-no-network",
       "outcome": "reserved",
-      "total": 32,
-      "with_usage": 0,
-      "older_than_30_days": 0
-    },
-    {
-      "provider": "transcribe",
-      "outcome": "completed",
-      "total": 2,
+      "total": 22,
       "with_usage": 0,
       "older_than_30_days": 0
     }
   ],
   "exports": {
-    "total": 127,
-    "expired_with_content": 102
+    "total": 77,
+    "expired_with_content": 53
   },
   "verified_by_tests": "Full local suite PASS 102/102 after budget serialization, demo expiry, deletion-only preparation for a still-authenticated expired-demo owner, consented exact-ID and bounded explicit-ID batch cleanup, positive explicitly scoped batch CLI selection, exact-ID operator CLI failure/retry, and privacy-safe speech unit accounting. Production-build expired-demo deletion browser journey PASS 1/1 with a freshly authenticated verified owner. Six guided fictional shapes passed full browser journeys 7/7 including SC07 coordination-only. After the explicit browser checkbox, the earlier affected production browser selection PASS 25/26 with one case-sensitive test assertion failure; the corrected affected desktop journey PASS 1/1. Authenticated localhost HTTP missing consent 400, accepted sample 200 and fixture cleanup completed.",
   "findings": [

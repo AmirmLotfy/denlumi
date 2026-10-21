@@ -4,8 +4,8 @@ Planning record: 2026-09-16. Scope: reconcile the complete project while authori
 
 ## Inputs and authority
 
-1. Current explicit user instructions and root [AGENTS.md](../AGENTS.md), including the current phase/stop boundary.
-2. Build pack [AGENTS.md](../Denlumi_Build_Pack_v1/AGENTS.md), [START_HERE_CODEX.md](../Denlumi_Build_Pack_v1/START_HERE_CODEX.md), detailed docs 01–12, contracts, fixtures and QA definitions.
+1. Current explicit user instructions and root AGENTS.md (operator instructions omitted from this public snapshot), including the current phase/stop boundary.
+2. Build pack AGENTS.md (operator instructions omitted from this public snapshot), [START_HERE_CODEX.md](../Denlumi_Build_Pack_v1/START_HERE_CODEX.md), detailed docs 01–12, contracts, fixtures and QA definitions.
 3. [MASTER_BLUEPRINT.md](../Denlumi_Build_Pack_v1/MASTER_BLUEPRINT.md), which collects the product and technical specification.
 4. Supplied full-blueprint text: `<local-home>/.codex/attachments/00f0b05f-a4e7-473d-b139-d24e600b5645/pasted-text.txt` (sections 01–12 and Codex start instructions).
 5. Supplied narrative overview: `<local-home>/.codex/attachments/ba59f744-6043-414b-ad45-d7bca7274367/pasted-text.txt` (product overview, compressed seven-stage build sequence and starter prompt).

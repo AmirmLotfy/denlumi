@@ -1,0 +1,135 @@
+{
+  "checked_on": "2026-10-20",
+  "scope": "Full-plan source and evidence audit, local current regression, read-only AWS/public delivery checks. No product fix or publication.",
+  "cwd": "<local-workspace>",
+  "branch": "main",
+  "head": null,
+  "checks": {
+    "dependency_install": {
+      "command": "npm ci --no-audit --no-fund",
+      "exit_code": 0,
+      "added_packages": 185
+    },
+    "full_domain_database_auth_suite": {
+      "command": "node .local/run-native.mjs npm test",
+      "tests": 110,
+      "pass": 110,
+      "fail": 0,
+      "duration_ms": 78400.81375
+    },
+    "typecheck": {
+      "command": "npm run typecheck",
+      "exit_code": 0
+    },
+    "dependency_audit": {
+      "command": "npm audit --package-lock-only --json",
+      "exit_code": 1,
+      "vulnerabilities": {
+        "info": 0,
+        "low": 0,
+        "moderate": 1,
+        "high": 3,
+        "critical": 1,
+        "total": 5
+      }
+    },
+    "build": {
+      "command": "npm run build",
+      "exit_code": 0,
+      "next_version": "16.3.5"
+    },
+    "application_browser_suite": {
+      "status": "NOT_RERUN",
+      "historical_date": "2026-10-19",
+      "historical_pass": 29,
+      "limit": "Current source findings were not browser-reproduced."
+    },
+    "setup_boundary_tests": {
+      "command": "python3 tests/configure-local.test.py",
+      "tests": 6,
+      "pass": 6,
+      "fail": 0
+    }
+  },
+  "bedrock": {
+    "checked_at": "2026-10-20T17:07:50.887071+00:00",
+    "scope": "Read-only AWS identity and model-availability check; no account changes or inference",
+    "profile": "default",
+    "region": "us-east-1",
+    "configured_model": "us.amazon.nova-micro-v1:0",
+    "base_model": "amazon.nova-micro-v1:0",
+    "inference_request_sent": false,
+    "identity": {
+      "status": "BLOCKED",
+      "exit_code": 255,
+      "error": "aws: [ERROR]: Your session has expired. Please reauthenticate using 'aws login'."
+    },
+    "availability": {
+      "status": "NOT_RUN",
+      "reason": "No valid AWS identity; do not mislabel authentication failure as current model denial."
+    }
+  },
+  "configuration": {
+    "env_local_bedrock_enabled": true,
+    "native_wrapper_bedrock_enabled": false,
+    "app_listener_3400_at_initial_preflight": false
+  },
+  "public_delivery": {
+    "github_head": "ae32fcb8cdd8f45996615bdf9c9addd357eb0805",
+    "github_commit_date": "2026-10-18T19:57:57Z",
+    "showcase_head_http": 200,
+    "published_video_head_http": 200,
+    "published_video_bytes": 5640915,
+    "replacement_video_bytes": 7262243,
+    "youtube_upload_paused": true
+  },
+  "source_review_findings_not_runtime_reproductions": true,
+  "limits": [
+    "110 passing tests do not cover the newly identified source paths.",
+    "No inference request sent because the AWS authentication preflight failed.",
+    "No customer, human accessibility, voice or practical animal-content acceptance.",
+    "No hosted Supabase, resource/account changes or event submission."
+  ],
+  "source_findings": [
+    {
+      "id": "A01",
+      "evidence": "source_review_not_new_runtime_reproduction"
+    },
+    {
+      "id": "A02",
+      "evidence": "source_review_not_new_runtime_reproduction"
+    },
+    {
+      "id": "A03",
+      "evidence": "source_review_not_new_runtime_reproduction"
+    },
+    {
+      "id": "A04",
+      "evidence": "source_review_not_new_runtime_reproduction"
+    },
+    {
+      "id": "A05",
+      "evidence": "source_review_not_new_runtime_reproduction"
+    },
+    {
+      "id": "A06",
+      "evidence": "source_review_not_new_runtime_reproduction"
+    },
+    {
+      "id": "A07",
+      "evidence": "source_review_not_new_runtime_reproduction"
+    },
+    {
+      "id": "A08",
+      "evidence": "source_review_not_new_runtime_reproduction"
+    }
+  ],
+  "unfinished_r0_workflows": [
+    "W01 ordinary onboarding and empty states",
+    "W02 complete session lifecycle",
+    "W03 routine owner/claim/correction UX",
+    "W04 pet/caregiver/home management"
+  ],
+  "recommendation": "Not full-plan complete, not R0 accepted, not production-ready; submission unfinished.",
+  "audit_report": "docs/READINESS_AUDIT_2026-10-20.md"
+}

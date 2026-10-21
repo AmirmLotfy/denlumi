@@ -1,0 +1,908 @@
+{
+  "checked_at": "2026-10-20T22:36:55.874318+00:00",
+  "result": "PASS",
+  "scope": "Fresh installed exported source folder on the same Mac against the existing isolated native Supabase stack. Fictional records only. Not a clean-machine, Docker, full-platform, human or provider acceptance.",
+  "public_base": "ae32fcb8cdd8f45996615bdf9c9addd357eb0805",
+  "checks": {
+    "npm_ci": {
+      "packages_added": 185,
+      "audited": 187,
+      "result": "PASS"
+    },
+    "runtime": "Node 22.23.3 / npm 10.9.9",
+    "typecheck": "PASS",
+    "production_build": "PASS Next 16.4.2",
+    "pure_unit": {
+      "passed": 11,
+      "failed": 0
+    },
+    "domain_auth_database": {
+      "passed": 227,
+      "failed": 0,
+      "skipped": 0,
+      "duration_ms": 99355.834042
+    },
+    "production_browser": {
+      "passed": 2,
+      "failed": 0,
+      "duration_seconds": 20.3,
+      "scope": "Desktop actual MCP/pause/stale/fresh retrieval/offline Stop; 320px household shapes and typed controls. Prior full 60-test P9 run remains separately dated."
+    },
+    "http_security": {
+      "passed": 9,
+      "failed": 0
+    },
+    "real_authenticated_http_mcp": "PASS initialization, discovery and scoped database retrieval; use_model=false",
+    "local_setup_tests": {
+      "passed": 9,
+      "failed": 0,
+      "private_environment_mode": "0o600"
+    },
+    "export_boundary_tests": {
+      "passed": 6,
+      "failed": 0
+    },
+    "artifact_scan": {
+      "result": "PASS",
+      "browser_assets": 15,
+      "limits": "Known local environment values and selected credential patterns only; no exhaustive audit"
+    },
+    "lockfile_audit": {
+      "known_vulnerabilities": 0
+    }
+  },
+  "runtime_release_refresh": {
+    "source": "https://nodejs.org/dist/index.json",
+    "latest_node22": "v22.23.3",
+    "release_date": "2026-09-23",
+    "announced_oct21_patch_available": false
+  },
+  "intermediate_findings": [
+    "Eight rejected setup subcases reproduced before the URL/newline fix; final nine methods passed.",
+    "One initial export fixture test failed because macOS resolves /var to /private/var; fixture now uses realpath. Final six passed.",
+    "Native CLI stack identity depends on workspace path. Initial new-folder status had no managed stack; a private status-only adapter queries the original existing stack. No new stack or copied original environment was used.",
+    "Some coordinator copy/setup commands initially used the wrong working directory and failed; rerun with explicit root succeeded. Final source-byte parity is asserted above."
+  ],
+  "film": {
+    "sha256": "1a8b63b138c151002519302703345e77008034805c8a43dac7f071d5b2f589ca",
+    "bytes": 7262243,
+    "upload": "PAUSED",
+    "human_full_watch_listen": "PENDING"
+  },
+  "external_actions": {
+    "public_push": false,
+    "deploy": false,
+    "upload": false,
+    "submission": false,
+    "provider_request": false,
+    "hosted_supabase": false
+  },
+  "limits": [
+    "Existing public source remains historical until separately authorized publication.",
+    "Human H01-H08, practical content review, rights/eligibility/build-window declarations and full film listening remain open.",
+    "Current Bedrock authorization unknown after expired AWS identity; no new AWS request.",
+    "Clean-machine Docker, old-record and full-platform restore, retention policy/provider and real-operator acceptance remain open."
+  ],
+  "export_replay_file_parity": [
+    {
+      "path": ".env.example",
+      "sha256": "c8171e9ee78055f880e647feda93dc867c3e002adf8104421bd4d1898dc62342"
+    },
+    {
+      "path": ".node-version",
+      "sha256": "6d07ac247e81cd42c2c20abf8dfe504413d6b2422e4aba9b2c975a776f155921"
+    },
+    {
+      "path": ".nvmrc",
+      "sha256": "6d07ac247e81cd42c2c20abf8dfe504413d6b2422e4aba9b2c975a776f155921"
+    },
+    {
+      "path": "apps/showcase/demo-paused.png",
+      "sha256": "34c17bcb27ebc140ee3f73450326d1b0b99ea5f807e836d69d8baaec6ed81276"
+    },
+    {
+      "path": "apps/showcase/demo-poster.png",
+      "sha256": "8737d49ca7831a763d4be67d850c4fa5516ef405168ce398beb275eaaeae882d"
+    },
+    {
+      "path": "apps/showcase/demo-transcript.txt",
+      "sha256": "08231fa4ba19113d8ab481551443f6dd08ea8ec946e7b1d54d84432225fa0028"
+    },
+    {
+      "path": "apps/showcase/denlumi-demo.mp4",
+      "sha256": "a5502a051c06ff41edb2fc89e8c8b96e484aa20605b75c4420800925341a57e4"
+    },
+    {
+      "path": "apps/showcase/denlumi-demo.vtt",
+      "sha256": "0372c239ee2e9e7cababf4a25b1bb4e4f177caa3e56072243c20d2b8a79e437c"
+    },
+    {
+      "path": "apps/showcase/index.html",
+      "sha256": "e272a0f17dd5e25ea7159afa811e5a222199ecdb964bfb489a405e90c09bec6e"
+    },
+    {
+      "path": "apps/showcase/mark.svg",
+      "sha256": "6e76caedb3beace332a31f9d854e7fa9851dbf9254249354c371830351480828"
+    },
+    {
+      "path": "apps/showcase/style.css",
+      "sha256": "c59d04846eabba78e517393cd1136b966a56e0b2caebcd83be86b1ecdb6e041c"
+    },
+    {
+      "path": "apps/showcase/vercel.json",
+      "sha256": "1ab54fe776b76471c889f77931956ace12b3849be54364b32654fd99063d9544"
+    },
+    {
+      "path": "apps/web/app/api/actions/route.ts",
+      "sha256": "660d86c3b93e9f6d1c6e21b75ca2112f840b12167f58fd60d1c29da0fa682260"
+    },
+    {
+      "path": "apps/web/app/api/assistant/turn/route.ts",
+      "sha256": "9862b932e76f16e845276cab9d2475d7d9f02b7e7b2084847b8048b44f8d2e77"
+    },
+    {
+      "path": "apps/web/app/api/auth/signin/route.ts",
+      "sha256": "7dc25b9281eeb1af216d833b56407bf7ef4a0b024dcaab21af5db089f3ecf57b"
+    },
+    {
+      "path": "apps/web/app/api/auth/signout/route.ts",
+      "sha256": "f60a0fcfd7594a2a77ae11e307b2be400f027bf3dbf72cd89a0b1dc8895860e4"
+    },
+    {
+      "path": "apps/web/app/api/caregiver/acknowledge/route.ts",
+      "sha256": "8645ce78bb0660caa2e617982c2e872ada012022a78876b648eb78fe61946e05"
+    },
+    {
+      "path": "apps/web/app/api/caregiver/planning/route.ts",
+      "sha256": "2c037c4696aff797047ab2923d0709ed0939b170f03d68d34ff5b49e99111070"
+    },
+    {
+      "path": "apps/web/app/api/caregiver/route.ts",
+      "sha256": "f0366cffb18348710df6c221941cde3d9c213d71701744f6537e223a406d7311"
+    },
+    {
+      "path": "apps/web/app/api/cases/[id]/context/route.ts",
+      "sha256": "682906bb773794fac7611b50a16e2a19da4db6152cd20659a18a51d53a26c4d2"
+    },
+    {
+      "path": "apps/web/app/api/cases/[id]/intake/route.ts",
+      "sha256": "465e9f1334d0b6228a67cf0f73ba9572ae998b3af4ff3ee2ac38e476c9725952"
+    },
+    {
+      "path": "apps/web/app/api/cases/[id]/participants/route.ts",
+      "sha256": "167b27f893e062873d0ce148dd83e73ded3ed86954102fdc3b132d119a834708"
+    },
+    {
+      "path": "apps/web/app/api/cases/[id]/plans/route.ts",
+      "sha256": "20a2ce7af32007c7d53fe027078ae6bf76e46ae488237c06e5447e3f58bcd500"
+    },
+    {
+      "path": "apps/web/app/api/demo/recover-delete/route.ts",
+      "sha256": "3ef0423683ed2aca94dbe9aa741c675d0808f08afc04c37fff049ef3325ee04a"
+    },
+    {
+      "path": "apps/web/app/api/demo/route.ts",
+      "sha256": "df037839a3f727b839b117261c9aff33f04570a807c4964ce7ada67a0adfd2ae"
+    },
+    {
+      "path": "apps/web/app/api/handovers/[id]/acknowledge/route.ts",
+      "sha256": "3b0f0ee6a91dcf43b364cb1661d568f7e48a0981081085a686f3ad6a94e8c3cc"
+    },
+    {
+      "path": "apps/web/app/api/households/[id]/cases/route.ts",
+      "sha256": "74f6e03da5f96a096ab6869b0a9c739ea62ef4854db2504b657712de3566963d"
+    },
+    {
+      "path": "apps/web/app/api/households/[id]/graph/route.ts",
+      "sha256": "97f2f972ba5d961cccb9285c51dadeb5eda2640451d9d9cb90a847f567d39a68"
+    },
+    {
+      "path": "apps/web/app/api/households/[id]/home/route.ts",
+      "sha256": "313e357711ef919adb01f7cec6a3a9024f3f3669aecd4a9a055451a732f6c155"
+    },
+    {
+      "path": "apps/web/app/api/households/[id]/inbox/route.ts",
+      "sha256": "c30b4c6e0d8b2babb3a0844b7d8c5db658754f60199cc0ff4094c764de144a7b"
+    },
+    {
+      "path": "apps/web/app/api/households/[id]/memberships/[membershipId]/route.ts",
+      "sha256": "840a6459a156179859f8899dea407e58d017b341d4bdb991940157978a05959d"
+    },
+    {
+      "path": "apps/web/app/api/households/[id]/memberships/route.ts",
+      "sha256": "d823f0faa3bf5bcae570820563e355e7f921a3f14783a3fd781c101a2ba95d41"
+    },
+    {
+      "path": "apps/web/app/api/households/[id]/owner/route.ts",
+      "sha256": "baf828df1f14280740024addfb552a33002fea38d3664c78bbe9dd3995fa79ec"
+    },
+    {
+      "path": "apps/web/app/api/households/[id]/pets/route.ts",
+      "sha256": "bf1036e2a13b39418e764fed197635563fba2d9e5656e8d816b303588facc5cf"
+    },
+    {
+      "path": "apps/web/app/api/households/[id]/planning/route.ts",
+      "sha256": "adf110a1c54553c3c8a00992922929f1e018ca8dc87be47ec9d832805b97240c"
+    },
+    {
+      "path": "apps/web/app/api/households/[id]/route.ts",
+      "sha256": "1a73d9b0577e29359111f8dad02750d6d3cdce6b0013500086c987ddef91a8f5"
+    },
+    {
+      "path": "apps/web/app/api/households/[id]/routine-occurrences/route.ts",
+      "sha256": "197309de325aa099a9a3c4902d593bbc9bfe1fbbe660d05559f0de116537245e"
+    },
+    {
+      "path": "apps/web/app/api/households/[id]/routine-rules/[ruleId]/route.ts",
+      "sha256": "e9ea8bbf24766db9f84ddf3818cd90fe0838524f10c0022f71c0dd6b7c2c55cb"
+    },
+    {
+      "path": "apps/web/app/api/households/[id]/routine-rules/route.ts",
+      "sha256": "5b8161f270deb86617b5e1b000a3be1f0c34805a04192d0a9ebdeeb8ecb97909"
+    },
+    {
+      "path": "apps/web/app/api/households/[id]/settings/route.ts",
+      "sha256": "8f23c709a059a85bdacd4eb60e0510cb019b9f7152c8972b89a4ce9f654941a8"
+    },
+    {
+      "path": "apps/web/app/api/households/route.ts",
+      "sha256": "4de1d034e810a5a46913ac357f7e636ad613c618d8134ec6dc8843632c973ccb"
+    },
+    {
+      "path": "apps/web/app/api/mcp/route.ts",
+      "sha256": "1557bc8284a62a68f064ccd0450b82a5d3587ed507820a111c8d78ded951457f"
+    },
+    {
+      "path": "apps/web/app/api/memberships/[id]/accept/route.ts",
+      "sha256": "bb2330fea6a0eb6e2c4d3df4792630de678cb0d2c669fda7eb74b41642ce3b84"
+    },
+    {
+      "path": "apps/web/app/api/pets/[id]/route.ts",
+      "sha256": "cc08fbafad489a0861eab0628bf55666ed9749f664c177dd9858c811163fdcc2"
+    },
+    {
+      "path": "apps/web/app/api/plans/[id]/review/route.ts",
+      "sha256": "ddbb04a48746a64ed827d57193886e00a0e027cb872f382fa21982884ad9c988"
+    },
+    {
+      "path": "apps/web/app/api/records/route.ts",
+      "sha256": "d7f1b671aaaee450216fb734366bf00f66020f88618236e6bde8937e03456cf9"
+    },
+    {
+      "path": "apps/web/app/api/sessions/[id]/checkpoint/route.ts",
+      "sha256": "d707b46e857ee08b63a5afd89826fdb68808f79134f0db32c4097859c7bbac6c"
+    },
+    {
+      "path": "apps/web/app/api/sessions/[id]/finish/route.ts",
+      "sha256": "483ff3eb7635611b8f3a370a86265e296ab27af1310205d49c6944b6d38c92a4"
+    },
+    {
+      "path": "apps/web/app/api/sessions/[id]/observations/confirm/route.ts",
+      "sha256": "68905360a3ec396564633030e7e6c3b37006050b9d387dedda260243665a1e90"
+    },
+    {
+      "path": "apps/web/app/api/sessions/[id]/observations/correct/route.ts",
+      "sha256": "182359a1e798ed28b144ec778c62311ddc80d303e4c076e04a96afa3cc67f9c2"
+    },
+    {
+      "path": "apps/web/app/api/sessions/[id]/observations/route.ts",
+      "sha256": "bb574f0477a15f9b9d370dc06edc452e8a71336b0037cdd7098ab7e096171c57"
+    },
+    {
+      "path": "apps/web/app/api/sessions/[id]/pause/route.ts",
+      "sha256": "61ac5540de5f4eca68aa365a5d3a15728f62602a98ed38582cb8fdf200a73339"
+    },
+    {
+      "path": "apps/web/app/api/sessions/[id]/resume/route.ts",
+      "sha256": "70bf89fedd3f854b4933441cc29fda3a4c1a380a79a7161be1e7fcc88590ca04"
+    },
+    {
+      "path": "apps/web/app/api/sessions/[id]/route.ts",
+      "sha256": "61cab09c808021f3d3dc7e13f5e2193c8f6b73f028d0299de9511035762dc42c"
+    },
+    {
+      "path": "apps/web/app/api/sessions/preflight/route.ts",
+      "sha256": "7d4557d42ae167788b52cdbd151dcceb0210cdb2dffb85a60fbcad1c70b78db5"
+    },
+    {
+      "path": "apps/web/app/api/sessions/route.ts",
+      "sha256": "fe536b7d542dd7e57355ae2f358d5bc335d02095a5e0bfb109147e961f6aeb26"
+    },
+    {
+      "path": "apps/web/app/api/speech/route.ts",
+      "sha256": "60c836c5c7513425ef272c09a976c4c2675cf93508a1fabb33739cab6bfab899"
+    },
+    {
+      "path": "apps/web/app/api/tasks/[id]/claim/route.ts",
+      "sha256": "713dc8deb948c45599dcfaf723cae013d3d2dc2ba70fd4318de3ae04fafe9cb6"
+    },
+    {
+      "path": "apps/web/app/api/tasks/[id]/reports/route.ts",
+      "sha256": "07cd6d9669bb5ff7c3467cdf94c2fc837ffc4364fd264f7a1b1c573965bc7fa1"
+    },
+    {
+      "path": "apps/web/app/api/transcription/route.ts",
+      "sha256": "d81ea2513094a20d042e51f09b87ea509d3e8d52df42e75983628e9b63a2abeb"
+    },
+    {
+      "path": "apps/web/app/console.tsx",
+      "sha256": "6d198109fb191fbff1783411cb3c4fd913eb5ee59714e46c9318aadb71ec4eff"
+    },
+    {
+      "path": "apps/web/app/demo-deletion-recovery.tsx",
+      "sha256": "1a5649bb639b2b02f9137846b4bf5b2aa4a0a7f71cdf3d78ecc8e994d3386af6"
+    },
+    {
+      "path": "apps/web/app/expired-demo-deletion.tsx",
+      "sha256": "8e92008bcd4baaf3ef9e90868ccde151ab22151a6ee718c3aa126f71637d3b30"
+    },
+    {
+      "path": "apps/web/app/globals.css",
+      "sha256": "91d021898b975d967f0d37126a35b7d52ed05b21009d1f110709e44f8ed5b372"
+    },
+    {
+      "path": "apps/web/app/home-editor.tsx",
+      "sha256": "3dec75a5a539ce739bcdfe23dd429ecc554c89ad8ed40862b0eb6249f387a86a"
+    },
+    {
+      "path": "apps/web/app/home-record.tsx",
+      "sha256": "178cfd0749dcdf63327e49c8358163d31327daf78975b071664e38b8b9ff1124"
+    },
+    {
+      "path": "apps/web/app/household-views.tsx",
+      "sha256": "b4e011a74d82a47cbaa4f3697be3d9923fb948b4032a2f4206a03745f66dfa2a"
+    },
+    {
+      "path": "apps/web/app/household-workspace.tsx",
+      "sha256": "d121af57fc3d16db1cdf6bb4aa452d692d1bf0a03b4a97c7097d202a875a7137"
+    },
+    {
+      "path": "apps/web/app/household/page.tsx",
+      "sha256": "0cacfd74bd9caa3ae5820b937fc2ec1e085573d3d8d728109366d3c0d86e1620"
+    },
+    {
+      "path": "apps/web/app/layout.tsx",
+      "sha256": "ffb8e411d62f2fbb0b13a3c4657659dda8eacba94ecc45880ecb54e24dad6523"
+    },
+    {
+      "path": "apps/web/app/login/page.tsx",
+      "sha256": "247ef903858e42a063b754e66ba2147825d3c0e215fbbb5c5ab5b02dd1792074"
+    },
+    {
+      "path": "apps/web/app/membership-manager.tsx",
+      "sha256": "0949bc2c2614869837f6b261e1b72a6843ffff3917788c12db22217d24478be9"
+    },
+    {
+      "path": "apps/web/app/page.tsx",
+      "sha256": "3ccbdabd2a0afc8ae76119c53a09134db2e8f0c1a6176128d49d85e088740a50"
+    },
+    {
+      "path": "apps/web/app/planning-journey.tsx",
+      "sha256": "80b56c84fb21b791d79669f43017d21189ee5f3df2e73a90f5c2fd43581b3361"
+    },
+    {
+      "path": "apps/web/app/records-panel.tsx",
+      "sha256": "e8d0bafd37b6b3e19dc66424e078957980f8babef5a420fbecf077e6b25a76d8"
+    },
+    {
+      "path": "apps/web/app/routine-manager.tsx",
+      "sha256": "91ffd2e51dde9d75d125a548a6fad530b4dd7d199a08793fdffb172dbaa342e6"
+    },
+    {
+      "path": "apps/web/app/shared/page.tsx",
+      "sha256": "70efb491bcc38b4ffe7980c52eb87bf647ea5fdbd6c8b72b6bb934f6d14bf8b6"
+    },
+    {
+      "path": "apps/web/app/workflow-section.tsx",
+      "sha256": "8ff682b3e2fe720322d649a103a587b6eca7973b3aca1751ce0754cbab154e11"
+    },
+    {
+      "path": "apps/web/lib/coordination-types.ts",
+      "sha256": "0fa446e23dfcad2b61f4b4914050361ea92a13288793fdad65a0e00e39efd4fb"
+    },
+    {
+      "path": "apps/web/lib/household-http.ts",
+      "sha256": "a6c30bc637106766b6d29e3244f33a191c3dc41ef92cf3c78e5659eb566802e9"
+    },
+    {
+      "path": "apps/web/lib/http.ts",
+      "sha256": "aef65ab5a2c1301cf2b28ff8630173c3759754e106fb0223f2d54bf14884123e"
+    },
+    {
+      "path": "apps/web/lib/mcp.ts",
+      "sha256": "a9dcbb1c420fdd6b0d94397effe89938fd936a470906cf1d20daac7dfa201894"
+    },
+    {
+      "path": "apps/web/lib/microphone.ts",
+      "sha256": "10d7826454c790ec26bf5b7f8e1dfe27a345f6ed4089ad1d6b5c93685ab76290"
+    },
+    {
+      "path": "apps/web/lib/workflow-http.ts",
+      "sha256": "144abc504f79ec7a429a7697a479d4753276424d20e551b20efe5ff8b9b259ff"
+    },
+    {
+      "path": "apps/web/next-env.d.ts",
+      "sha256": "1862ac4bbbc5192d4bf562161df66ea547ed3e67173100656ab606ae9797db2b"
+    },
+    {
+      "path": "apps/web/next.config.ts",
+      "sha256": "71ed467a9b8f87addb8cddbd91d2c38ef6aaf859e2cdda3818d21fb069acb328"
+    },
+    {
+      "path": "apps/web/package.json",
+      "sha256": "fbfbf8c29025796af6dc72d9fc2ceefa86c79606cc453542b2cca0f35e7dd4b9"
+    },
+    {
+      "path": "apps/web/public/pcm-capture.js",
+      "sha256": "275c92001f555351ab08cd2f47b1aa8306a88f016889676e6f252258b0e51b57"
+    },
+    {
+      "path": "apps/web/tsconfig.json",
+      "sha256": "9e82dd45ce48e28f5d845fc985dfdb3ff424aef4e252818e47d9b7715ebad753"
+    },
+    {
+      "path": "package-lock.json",
+      "sha256": "63d67555b4c86095f6d21fdcd8d7baae2d42ddda43943a1b780c0951bed0ce50"
+    },
+    {
+      "path": "package.json",
+      "sha256": "db66fa5008e2f9a24dcb52ab793732475a9713c85c9328dbf497b13b82c3bbb6"
+    },
+    {
+      "path": "packages/content/fixtures.ts",
+      "sha256": "cc4c131938a64cbb6c5b9af8e7c8d7b383117cad27c5b6ddbe80ace50781ff5c"
+    },
+    {
+      "path": "packages/contracts/household.ts",
+      "sha256": "700391d1585abf5eb2a7defd2566589e6eb8a41492969808fcf744bdac9ea717"
+    },
+    {
+      "path": "packages/contracts/phase0.ts",
+      "sha256": "bc1e66399913141601e85d49af8abfa48977ddaa3ee2d814a47cf5825b7e1d73"
+    },
+    {
+      "path": "packages/contracts/phase23.ts",
+      "sha256": "789c23b31d53f245b242da8818049c9f7e030c333b0404a8c2822175e494ae0a"
+    },
+    {
+      "path": "packages/contracts/phase45.ts",
+      "sha256": "0f8955429655953d94defc559f0d560e7de08ff5c521544542a2a1eaaefa8fbb"
+    },
+    {
+      "path": "packages/contracts/phase7.ts",
+      "sha256": "8ce6dcbaa0115dd323c79ab3f88b1ff6347301d343d1b061f93318de37d484de"
+    },
+    {
+      "path": "packages/domain/audio.ts",
+      "sha256": "84281246dafd240f8f2e769c3aeaab0fcd177f9afe4fabec106277b1d4c40f62"
+    },
+    {
+      "path": "packages/domain/auth.ts",
+      "sha256": "158dab9a52f692c0129eda32efd5554856dd41c3b6f8e5009f1de503a3d4eaed"
+    },
+    {
+      "path": "packages/domain/conversation.ts",
+      "sha256": "a4fe9d537b4d730a607bc2d575c64ddbecfc6cee0695c0e853be78a3b0f0a629"
+    },
+    {
+      "path": "packages/domain/coordination.ts",
+      "sha256": "56830b7bedfdec92de4e268753d19090facc1950a7cfa1844650841f9c9fc597"
+    },
+    {
+      "path": "packages/domain/db.ts",
+      "sha256": "bee05fe8dcdbcb8d636febf833458a271d3bde52edc6b73757adfb573686c949"
+    },
+    {
+      "path": "packages/domain/household.ts",
+      "sha256": "bcc92c6333a7908855c1626024309c207926711998b9dbe733a29750fc4dc527"
+    },
+    {
+      "path": "packages/domain/local-database.ts",
+      "sha256": "f631017129cd996a764ffc87d765c1c53f27de7641b8704dabe08c0dd5d2d2f5"
+    },
+    {
+      "path": "packages/domain/local-stop.ts",
+      "sha256": "a12642cfebc26a7ee7cfe5bc4ceeccc27a9167b79345597a1206068dfa01c4fe"
+    },
+    {
+      "path": "packages/domain/planning.ts",
+      "sha256": "5a48df4bd8e30964ce54424eee0af2e259f1847a0fdff8e382ef142843d08175"
+    },
+    {
+      "path": "packages/domain/providers.ts",
+      "sha256": "0a7e842a8af94e81004fe546a085dc6f4d2b5b06cdc198c595055934c876b160"
+    },
+    {
+      "path": "packages/domain/records.ts",
+      "sha256": "817fc93ffc5e68c311c9d63390213c8feaff736775d49ad9a13aea21acc88414"
+    },
+    {
+      "path": "packages/domain/routines.ts",
+      "sha256": "35e403b56eb023653eb1d03b435a7438bf0eec246e0e05e2028fb71a98e96d5b"
+    },
+    {
+      "path": "packages/domain/sessions.ts",
+      "sha256": "c213517f389faa3e76b9e7350ba00f006fa810d8aef8fce794c700dc29510917"
+    },
+    {
+      "path": "packages/domain/state.ts",
+      "sha256": "0e87851ba34055ec07686d2e88e340afae5c194d3a04c64299eaa0d2442ebb96"
+    },
+    {
+      "path": "playwright.config.ts",
+      "sha256": "ced72f78900f63136b566740b9ab53f2afa876a4858b0a80911183848914cc74"
+    },
+    {
+      "path": "scripts/audit-phase9-retention-cost.ts",
+      "sha256": "dac8adac78fda92869646b2ba12a4d66ed1ff1899cd6a615bdb459ea149046e1"
+    },
+    {
+      "path": "scripts/check-provider-auth.ts",
+      "sha256": "f8e6ba4cbf23189e3f224460a048286d090f6c58e1cb1bb2e723aa5cf8a353a9"
+    },
+    {
+      "path": "scripts/configure-local.py",
+      "sha256": "8e4a5910309bf0a16edd8a3bac02ca5fa2120f9e3ae0b00faad6510696a175d4"
+    },
+    {
+      "path": "scripts/prepare-public-release.mjs",
+      "sha256": "7a36ec6fbcb9e526973dc82d522fb93984b76a958b6e747aaa6664efd3eabcbe"
+    },
+    {
+      "path": "scripts/probe-providers.ts",
+      "sha256": "9dbda437a4d5860b4da699a36bab6a6b5e0b1402c15fe5fbcb638c55cd10c2cb"
+    },
+    {
+      "path": "scripts/prove-household-http.ts",
+      "sha256": "69f9fa33b32f4c70161de278644c7c14b19881a06907967aea5fc8bc866adebb"
+    },
+    {
+      "path": "scripts/prove-http.ts",
+      "sha256": "722fe960c01508670101550fb647173d5e80871b222b47b92204216e5cb34c96"
+    },
+    {
+      "path": "scripts/prove-live-bedrock-fallback.ts",
+      "sha256": "2937cb74980834c1301cbdd89801d54492ce810d6a2b284561a84ca9496935a5"
+    },
+    {
+      "path": "scripts/prove-live-speech-http.ts",
+      "sha256": "690a3abc18fdf24fe0c22610bc058c3329ed0f0347b8f8376319853e1d1073a3"
+    },
+    {
+      "path": "scripts/prove-mcp-http.ts",
+      "sha256": "68be270ced4a055e74977cfecf58689f13ac07458bb9cde3993cf6944af2f7cf"
+    },
+    {
+      "path": "scripts/prove-p9-security-http.ts",
+      "sha256": "2f1c0141632febff0d77e4769dfcca1b910558d9470ed0bf4b0bfcfc02a1a64a"
+    },
+    {
+      "path": "scripts/prove-phase23-http.ts",
+      "sha256": "caf5a8a99335e1b8fc097ac909306322fbaa17d09bd166d96bc8416941024bf3"
+    },
+    {
+      "path": "scripts/prove-phase45-http.ts",
+      "sha256": "88f856575f55fd86fa7a547940cfae7137c50d224537c927769b10e688661e01"
+    },
+    {
+      "path": "scripts/prove-phase6-http.ts",
+      "sha256": "dbfae49c834d78089f356d247ff5f6d1d17cd3bc227f39bf2de8c306ee09d651"
+    },
+    {
+      "path": "scripts/prove-phase7-http.ts",
+      "sha256": "581c7fa8408c43df7bce8e443f20e0f22b9f507e89d359c2bd0967638629d6e1"
+    },
+    {
+      "path": "scripts/prove-phase8-pairings.ts",
+      "sha256": "74dd933c7f960eec3498cf814810201894892b180cdea842339cb116a4e99e4a"
+    },
+    {
+      "path": "scripts/prove-phase9-application-restore.ts",
+      "sha256": "5e3f657855144c5d42046522eaaea1f7d0e3dcfc1d274245a4be73dba1c33175"
+    },
+    {
+      "path": "scripts/prove-phase9-db-recovery.ts",
+      "sha256": "808ad54c0462c481b64cd6ea833a83fb38dd73c2f8b2c0eb6696fd39bb781797"
+    },
+    {
+      "path": "scripts/prove-phase9-demo-retention.ts",
+      "sha256": "51a259c5a51efe15c0fbbf21e747750283f3e4b61f0175c2aab35ecdb3e6060c"
+    },
+    {
+      "path": "scripts/prove-phase9-feedback.ts",
+      "sha256": "cdabe50ccefc3ab1290fda0b020689ee4aa50bc2bf805d74e7e99a9c7865432d"
+    },
+    {
+      "path": "scripts/prove-phase9-latency.ts",
+      "sha256": "2c3cb34033086ba5b491ee10c2c2cfd519df0f56845dbee2ea04184af08bab5a"
+    },
+    {
+      "path": "scripts/prove-phase9-native-zoom.ts",
+      "sha256": "cc843c5f080cbcf619bfd238e3af7be2b7656ab3ab12e516374b83ee9a748135"
+    },
+    {
+      "path": "scripts/prove-phase9-stop.ts",
+      "sha256": "570461a0b49cd33e384eb7019dd35279990f51cb3dc59b3f0c6ad646396c8020"
+    },
+    {
+      "path": "scripts/prove-phase9-withdrawal.ts",
+      "sha256": "c42c1f0522e50c2c21ee3e8898f32b4bbd4b38f90cb8b0f6aea0bc72ed741e4b"
+    },
+    {
+      "path": "scripts/public-release-utils.mjs",
+      "sha256": "532cd28dcc67b9228f39f4297a1fbe2ab47262c406415c893ff08201b2e6d251"
+    },
+    {
+      "path": "scripts/run-mocked-voice-check.mjs",
+      "sha256": "16071cff2d565cc370d90ab5ebbe88c6c19f7c99064866ea4afcb3ceb55be225"
+    },
+    {
+      "path": "scripts/run-next.mjs",
+      "sha256": "8686552f0b732b27fc64fef77d08b445fd8ffb786ebecd2c821bd057e2b16214"
+    },
+    {
+      "path": "scripts/run-phase45-workers.ts",
+      "sha256": "68f3aee7fa077067bbc67dad465f63224f6ef8dd56bf6ef54d1c3f0ce9bff72c"
+    },
+    {
+      "path": "scripts/run-phase9-demo-cleanup.ts",
+      "sha256": "e6f771c4bfac706c22c78c14c8c532876bf69578843c0ec60fd095a29d86c453"
+    },
+    {
+      "path": "scripts/run-phase9-view-session-prune.ts",
+      "sha256": "800d2208e99113d3b916eac1600eb70352e5110c1643f92c1c6d5c5569ac67bf"
+    },
+    {
+      "path": "scripts/setup-db.ts",
+      "sha256": "5a1f30ab5389a4440f62ceef88d06102d831939b11438d881008abe80597c5d8"
+    },
+    {
+      "path": "supabase/config.toml",
+      "sha256": "0ea01d487e2486a2d272bcfd23470c72b6798bc7b5cfc88c1d1b71eeca2e3e81"
+    },
+    {
+      "path": "supabase/migrations/20260916084317_phase0_state_proof.sql",
+      "sha256": "fbc9d60d381f8eb77c6edafd5c2eec716f5fea45c7af44639a78e9cb0aa865f5"
+    },
+    {
+      "path": "supabase/migrations/20260922111644_phase1_household_state.sql",
+      "sha256": "2f1724a4628d3447170d782b49c41623d30797f8e07e61ee7d8709c54856422a"
+    },
+    {
+      "path": "supabase/migrations/20260922113952_phase2_routing_content_registry.sql",
+      "sha256": "243ee50a94b40fd94f5b8331f4139a3ecbe517ec62c3260288fc02fa0f83ea7c"
+    },
+    {
+      "path": "supabase/migrations/20260922113953_phase3_plan_handover.sql",
+      "sha256": "ab71b615fd6e335e2919923065f54571bd86585fb708b791650bb1bcb3ebcd6f"
+    },
+    {
+      "path": "supabase/migrations/20260922121836_phase4_session_observation.sql",
+      "sha256": "71c43d5f4d0cafd7b2124b170715c5f11e92b68f264817b01dff3317013ecae4"
+    },
+    {
+      "path": "supabase/migrations/20260922121837_phase5_routines_jobs.sql",
+      "sha256": "c790d92610d854bc137cdc7782526a3402be0ef7313c20c3fe5e265aa9044fe2"
+    },
+    {
+      "path": "supabase/migrations/20260922175744_phase7_private_records.sql",
+      "sha256": "0af2e20f847575524a4170bfc53bc83d555c027b5d8941b971031ee5e765f485"
+    },
+    {
+      "path": "supabase/migrations/20260922180422_phase6_pet_aliases.sql",
+      "sha256": "2e2c3fdd8ad07276d56ef3e3b2f70fc219e3aef952a2ce396de7d2e02a495ec7"
+    },
+    {
+      "path": "supabase/migrations/20260922224000_phase9_interrupted_withdrawal.sql",
+      "sha256": "7a4c4ae385b723c21eef918bb45317bce96f5f7379cf365b8954db3c884f1838"
+    },
+    {
+      "path": "supabase/migrations/20260923010307_phase9_demo_retention_consent.sql",
+      "sha256": "11a23a71028ea0debffd4a4b4d96bd07ea0d9576210221909b6a0a91e84c2f1d"
+    },
+    {
+      "path": "supabase/migrations/20260928043714_phase9_demo_deletion_recovery.sql",
+      "sha256": "5f8f6ab15a4686650bf124fb3155a1b63e5df794cfe3cca2ed7000d2d9a131ca"
+    },
+    {
+      "path": "supabase/migrations/20261001122002_phase9_rls_household_prefilter.sql",
+      "sha256": "72e6193029d9ecea4055ef102e0d787af2f0a9a41d9798bad24ce228ace86ad1"
+    },
+    {
+      "path": "supabase/migrations/20261020184746_routine_history_identity.sql",
+      "sha256": "85074c1e851da22711dd9bdb7f24355145860344a1d06a57a34f3e7b2931f6e4"
+    },
+    {
+      "path": "supabase/migrations/20261020193618_p8_membership_acceptance.sql",
+      "sha256": "140bacd8fd9806c697c37f85421474f5c7ec7585fbc23782da63fbacea76b196"
+    },
+    {
+      "path": "supabase/migrations/20261020194324_p8_grant_revision.sql",
+      "sha256": "5b8b965ca5792543a873a64a48e268a1e400f3e55840658e6ffba0c2dc381882"
+    },
+    {
+      "path": "tests/configure-local.test.py",
+      "sha256": "c29e83796a084e32ae3dc915fbf37e08854f1bba6880443a0c283224ee632646"
+    },
+    {
+      "path": "tests/conversation.test.ts",
+      "sha256": "4c85ebc0a120e4ee1a103bb46aca3e55ce9b4d57d284b755419b95e37bfcbd25"
+    },
+    {
+      "path": "tests/e2e/database-test.ts",
+      "sha256": "e49247e88497ef7c6f6eccb7a5585bf9b4ed8a53abe82f56260a05760a91c2a5"
+    },
+    {
+      "path": "tests/e2e/live-speech.spec.ts",
+      "sha256": "4fe9a36120fe073c48d5fca7dfc436c72305215d97eda062090dd713e1fb89c9"
+    },
+    {
+      "path": "tests/e2e/p8-routine-workflows.spec.ts",
+      "sha256": "3f25cbcb43d8e8e842229548404a3d64c92ad5176b9ba8cde3404b8ee1b98d55"
+    },
+    {
+      "path": "tests/e2e/p8-session-workflows.spec.ts",
+      "sha256": "1503b86cf969daf851d57d3525108169c8b6edc93a86f6f447547078a50b1692"
+    },
+    {
+      "path": "tests/e2e/p8-setup-workflows.spec.ts",
+      "sha256": "9a35c59283455ab5fb1533a0e81f2dde735abd89619e11c5eb50b3b470c5c76f"
+    },
+    {
+      "path": "tests/e2e/phase0.spec.ts",
+      "sha256": "54f01d6ef15a76980f863f9981fc61a3ef8a7d295639075e42e122e4c543d8c8"
+    },
+    {
+      "path": "tests/e2e/phase6.spec.ts",
+      "sha256": "736ad3b251e4a15926bc28c2f58771fc8ac8da8dac8cbdf1d62fe67c886b62a2"
+    },
+    {
+      "path": "tests/e2e/phase7.spec.ts",
+      "sha256": "a792dcde389cd039fada075c100e79ddd0807e332cca7b937a5cd51b61735266"
+    },
+    {
+      "path": "tests/e2e/phase8-journey.spec.ts",
+      "sha256": "f2d3b552ce6451caaea2e52f999257f011548976af509cfa0547d6e1bfa11d31"
+    },
+    {
+      "path": "tests/e2e/phase8-participant-stale.spec.ts",
+      "sha256": "801e9d92ef857959274d831b79e841e59a585811f3490198874cb644d4d9ac1b"
+    },
+    {
+      "path": "tests/e2e/phase8-routines.spec.ts",
+      "sha256": "d1c80f463c8b9f5f1eac5934b5e689459951598720769e38a5795e1ec6604d67"
+    },
+    {
+      "path": "tests/e2e/phase8-views.spec.ts",
+      "sha256": "f5808729d72e9dabe00233b0e7feeb8dad14483f63327672f78d095e90ca7058"
+    },
+    {
+      "path": "tests/e2e/phase9-accessibility.spec.ts",
+      "sha256": "d6f83934ebae55ecb579574fe2810870a8d854b7e2bbe4eb7646f1d729113d95"
+    },
+    {
+      "path": "tests/e2e/phase9-deletion-recovery.spec.ts",
+      "sha256": "e4f9e92411c6e59461170bddf5ff025b3e59e382e6759df59be22db3a9449889"
+    },
+    {
+      "path": "tests/e2e/phase9-expired-deletion.spec.ts",
+      "sha256": "b46821fb9edccb7555edb2131a63299258ec910d4e34ef811eede32fe952dfa4"
+    },
+    {
+      "path": "tests/e2e/phase9-outage.spec.ts",
+      "sha256": "f361b60c66f2954e11de09c6dcf7393bc1467839c3277b02f9e49c37b5ce52e8"
+    },
+    {
+      "path": "tests/e2e/phase9-privacy.spec.ts",
+      "sha256": "d24a52bb6890bc1415dbf537b98b39b2479412e681ac29fba27d774d7a2e9b4d"
+    },
+    {
+      "path": "tests/e2e/shared.spec.ts",
+      "sha256": "c9c36fef887a1116aed1a8a3db43c74d88f43f45b668027088ad74013a8814a4"
+    },
+    {
+      "path": "tests/e2e/stop-restoration.spec.ts",
+      "sha256": "1f2cb4cf60e77e31e3c5e302ede984bfbaa6636c6d2c49e5a3829281812c5ad4"
+    },
+    {
+      "path": "tests/helpers.ts",
+      "sha256": "76f8cd85f8aa8509bb9f487d92ee1b3ef6d0b69487154f1f4158cc42b8049585"
+    },
+    {
+      "path": "tests/household.test.ts",
+      "sha256": "471603455eb99f3c0f19f9b48e4b9bd99f917d0db5fb9e83c28e30b5863058ee"
+    },
+    {
+      "path": "tests/http-security.test.ts",
+      "sha256": "e2ff41e1d81f65bd6af1afa7259326c4acb2cb8fdeb74e8687a4350a76c1a4f4"
+    },
+    {
+      "path": "tests/local-database.test.ts",
+      "sha256": "7a1f4f29f90914310acd135946824d22baa87e2b00f0969ca95acce777fabb5f"
+    },
+    {
+      "path": "tests/local-stop.test.ts",
+      "sha256": "236e79fa34ef18dce691d51b2ad1fb896b02beea81d7d9838b507001db2aa527"
+    },
+    {
+      "path": "tests/mcp-security.test.ts",
+      "sha256": "9c7a0d578f3b6251aaac38cf0bdb78c3a8feb84f1153cfcd9bf60322a90809bf"
+    },
+    {
+      "path": "tests/p8-coordination.test.ts",
+      "sha256": "7ecb4a2b15f2b0414990bf9913887ea87a6aec1ab3483286122c0d7f7fe1a429"
+    },
+    {
+      "path": "tests/p9-handover-lock.test.ts",
+      "sha256": "db059b330ad16cfacc8c21720cab373896a9fba8a6473cf3aa4f37e364ff3014"
+    },
+    {
+      "path": "tests/p9-outbox-order.test.ts",
+      "sha256": "f29958047901395e6d615b6434d15d9c5ff48c6488a862cd5c6b6003d2fecc17"
+    },
+    {
+      "path": "tests/p9-read-budgets.test.ts",
+      "sha256": "1d5c97a17e6225b78da495af4fb5e77fbeba5efd208a8c40b88e61f920d926cc"
+    },
+    {
+      "path": "tests/p9-withdrawal-operations.test.ts",
+      "sha256": "1288dbbf4b56a83f234f631fc28aa460a04aaf31f40d1a07f5a29df8790df65c"
+    },
+    {
+      "path": "tests/phase45.test.ts",
+      "sha256": "5a9938d9c5bdfc28e649a9c6b513cb151b0b55d13727ab1990df837e65398607"
+    },
+    {
+      "path": "tests/phase7.test.ts",
+      "sha256": "4eb541bf086a50f95aae67ab854251cd304ffe77fe05b33c6c30ec12f619fd68"
+    },
+    {
+      "path": "tests/planning.test.ts",
+      "sha256": "64595483418a73c228533e3fdbcc2552b482f56bde923cc6754949cd1f76a6ed"
+    },
+    {
+      "path": "tests/provider.test.ts",
+      "sha256": "7ed2f96c4a26f6d5b1bed91049e16297e06a1dbb5859670beca6effb4b760061"
+    },
+    {
+      "path": "tests/public-release.test.mjs",
+      "sha256": "540dffdc68ac57de183d2f043353e5daa1201d6d23277fc9da0af4a29f366493"
+    },
+    {
+      "path": "tests/routines-regression.test.ts",
+      "sha256": "40c54ded44b998acc0c1b574853a5bd8e044a3b2bd3e72c349b0fe9af3e29fe7"
+    },
+    {
+      "path": "tests/scenario-regression.test.ts",
+      "sha256": "c84af3f8783edbda8760e5a1c999a189648861ef2c3fb4ae440c823eba497c4e"
+    },
+    {
+      "path": "tests/session-regression.test.ts",
+      "sha256": "b17ca56baa063722afe99945ffb79c8177ad3daf0ec7e472c255d4c702fc6964"
+    },
+    {
+      "path": "tests/signout.test.ts",
+      "sha256": "5e3e0b310eb314edf37bf12eb99e254efbc9878ff2a46fc2ff9710a2db1b9ed6"
+    },
+    {
+      "path": "tests/speech-boundary.test.ts",
+      "sha256": "0712663716d19dd760e8a1d86cefe826ec4cae099952604533d0843d4e62e135"
+    },
+    {
+      "path": "tests/state.test.ts",
+      "sha256": "a1d2799c00ba273dc0ad5745a8388e27ab742a51ccf04451eeeb9b5b7853d36e"
+    },
+    {
+      "path": "tests/unit-environment.mjs",
+      "sha256": "39b5c9db16e0df04a296c40aed31b69ef72802a83755cf368c1daf9c89bebc0d"
+    },
+    {
+      "path": "tests/withdrawal-fixture.ts",
+      "sha256": "ae696e43c04e5a31a042238d41515189b81583573c9ec9d155853bdf11f1bb2a"
+    },
+    {
+      "path": "tsconfig.json",
+      "sha256": "23e3aca1b468528ce39b040e7805800986eb61a3f6c70a93a9f39002ef1bcbd6"
+    }
+  ]
+}

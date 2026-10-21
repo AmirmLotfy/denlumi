@@ -1,0 +1,31 @@
+{
+  "checked_at": "2026-10-19T17:41:06.829Z",
+  "scope": "Local static showcase video metadata/playback and responsive reflow; no audible or human accessibility acceptance",
+  "checks": [
+    {
+      "width": 320,
+      "overflow": false,
+      "duration": 122.76,
+      "caption_tracks": 1,
+      "video_width": 1440,
+      "video_height": 1000
+    },
+    {
+      "width": 768,
+      "overflow": false,
+      "duration": 122.76,
+      "caption_tracks": 1,
+      "video_width": 1440,
+      "video_height": 1000
+    },
+    {
+      "width": 1440,
+      "overflow": false,
+      "duration": 122.76,
+      "caption_tracks": 1,
+      "video_width": 1440,
+      "video_height": 1000
+    }
+  ],
+  "muted_playback": "PASS"
+}

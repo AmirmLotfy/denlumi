@@ -1,6 +1,6 @@
-import { test,expect } from '@playwright/test';
+import { test,expect } from './database-test';
 import { mkdir } from 'node:fs/promises';
-const evidence=process.env.DENLUMI_EVIDENCE_DIR??'evidence/phase0';
+const evidence=process.env.DENLUMI_EVIDENCE_DIR??'.local/browser-captures/phase0';
 test.beforeAll(()=>mkdir(evidence,{recursive:true}));
 
 test('desktop: real MCP retrieval, fictional pause, stale refusal, fresh retrieval, offline stop',async({page,context})=>{
@@ -13,7 +13,8 @@ test('desktop: real MCP retrieval, fictional pause, stale refusal, fresh retriev
  await expect(page.getByRole('button',{name:'Open sample household'})).toBeDisabled();
  await page.getByRole('checkbox',{name:/I understand the fictional sample/}).check();
  await expect(page.getByRole('button',{name:'Open sample household'})).toBeEnabled();
- await page.getByRole('button',{name:'Open sample household'}).click();
+ const [created]=await Promise.all([page.waitForResponse(r=>new URL(r.url()).pathname==='/api/demo'&&r.request().method()==='POST',{timeout:15000}),page.getByRole('button',{name:'Open sample household'}).click()]);
+ expect(created.status()).toBe(200);
  await expect(page.getByRole('heading',{name:'Finn & Nora'})).toBeVisible();
  await expect(page.getByText('Demo-only protocol')).toBeVisible();
  await page.getByRole('button',{name:'Read current plan'}).click();
@@ -36,8 +37,9 @@ test('desktop: real MCP retrieval, fictional pause, stale refusal, fresh retriev
  await expect(page.getByText('Stopped on this device.')).toBeVisible();
  await expect(page.getByText('Household update not yet synchronized.')).toBeVisible();
  await context.setOffline(false);
- await page.getByRole('button',{name:'Retry sync'}).click().catch(()=>{});
- await expect(page.getByText('The software pause is saved to the household.')).toBeVisible();
+ // Reconnection may already finish sync and remove Retry before the click.
+ await page.getByRole('button',{name:'Retry sync'}).click({timeout:1000}).catch(()=>{});
+ await expect(page.getByText('The software pause is saved to the household.')).toBeVisible({timeout:10000});
  await page.screenshot({path:`${evidence}/desktop-paused.png`,fullPage:true});
  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=document.documentElement.clientWidth)).toBe(true);
 });
@@ -46,7 +48,8 @@ test('320px mobile: all household shapes, typed controls, and Stop remain usable
  await page.setViewportSize({width:320,height:800});await page.goto('/');
  await page.getByLabel(/A multi-pet home/).check();
  await page.screenshot({path:`${evidence}/mobile-entry.png`,fullPage:true});
- await page.getByRole('checkbox',{name:/I understand the fictional sample/}).check();await page.getByRole('button',{name:'Open sample household'}).click();
+ await page.getByRole('checkbox',{name:/I understand the fictional sample/}).check();const [created]=await Promise.all([page.waitForResponse(r=>new URL(r.url()).pathname==='/api/demo'&&r.request().method()==='POST',{timeout:15000}),page.getByRole('button',{name:'Open sample household'}).click()]);
+ expect(created.status()).toBe(200);
  await expect(page.getByRole('heading',{name:'Finn, Nora & Milo'})).toBeVisible();
  await expect(page.getByText('Separate records. No assumption of group readiness.')).toBeVisible();
  await expect(page.getByRole('button',{name:'Stop guidance'})).toBeVisible();

@@ -1,6 +1,18 @@
+# Current submission video — October 20
+
+The owner rejected the first static 2:03/Samantha cut, then requested stronger SVG animation, transitions and intro/outro. The replacement is now exported at **1:44, 1920×1080, constant 30 fps** with continuous Higgsfield Grady narration, original caregiver/current-record SVG animation, 18 actual-browser shots, tighter report/MCP framing, an explanatory offline Stop diagram, source/setup outro and 34 English caption cues. Full decode/audio/caption checks passed; see [media evidence](../../evidence/phase10/video-natural.json) and [the exact review/upload packet](UPLOAD.md). YouTube upload remains paused. Human listening/voice acceptance remains open.
+
+Source/render direction: [MOTION_DIRECTION.md](MOTION_DIRECTION.md). [Reproduction and verification instructions](motion/README.md) cover the render scripts, sentence-aware caption alignment, media validation and private browser player check. Captions use original SVG glyphs streamed as raw RGBA into a reserved footer; a separate selectable caption stream/SRT/VTT and static transcript are retained. No font binary, reference screenshot, real pet footage or music is introduced.
+
+The actual paced capture completed 30 scheduled steps over 100.706 seconds; maximum start drift was 8 ms. Recorded HTTP statuses include real 200/201 and expected stale-view 409. No speech endpoint or provider inference request was made. This is automated fictional local evidence, not observed human usability, native Alexa certification, professional content approval or animal-outcome evidence.
+
+The older shot plan below remains historical planning, not the final edit or current duration.
+
+---
+
 # Denlumi demo video — 2:40 target
 
-Recording plan only, prepared 2026-10-18. No footage or upload is claimed. Keep the finished video below three minutes, with English narration/captions and a publicly visible YouTube or Vimeo link as required by the [official submission overview](https://amazonappdev2026.devpost.com/).
+Historical October 19 note: the first export was **2:03** with Samantha narration and was rejected by the owner. The 2:40 table below is the original shot plan, not the current film. Use the checked replacement at the top of this document and [the exact upload packet](UPLOAD.md). No YouTube/Vimeo upload is claimed. The [official submission overview](https://amazonappdev2026.devpost.com/) was checked October 18; the existing delivery plan requires an English public YouTube/Vimeo video under three minutes.
 
 Use only fictional records and original/authorized visuals. No real animals or stress demonstrations, no third-party music, no account chrome, tokens, deletion codes, private addresses or full provider request identifiers. Keep the on-screen label **“Alexa-style browser simulation · fictional records · demo_only content”** visible. Caption Stop as **“Stops software on this device”**. Screens must come from the real app; do not fabricate provider success, review approval or delivered messages.
 
