@@ -84,4 +84,6 @@ Current P8 work and checks are in [P8_WORKFLOWS_HANDOFF.md](docs/P8_WORKFLOWS_HA
 
 This workspace has no dedicated hosted Supabase project. Only the isolated local stack on ports `55431`/`55432` may be used. Never link a hosted project, push migrations, or deploy from this repository without a later explicit decision.
 
-Current P10 local source reconciliation and exported-folder replay are recorded in [P10_SOURCE_RECONCILIATION.md](docs/P10_SOURCE_RECONCILIATION.md). The owner resumed delivery; [current delivery status](docs/submission/DELIVERY_STATUS.md) separates the source candidate from the pending video, personal declarations and final submission.
+Current P10 local source reconciliation and exported-folder replay are recorded in [P10_SOURCE_RECONCILIATION.md](docs/P10_SOURCE_RECONCILIATION.md). The owner resumed delivery; [current delivery status](docs/submission/DELIVERY_STATUS.md) separates the source candidate from the public video, pending personal declarations and final submission.
+
+The submission film is [public on YouTube](https://www.youtube.com/watch?v=cbWwUAx-EMU), with selectable English captions. Devpost remains a draft pending owner-entered personal information and final declarations; [manual finish checklist](docs/submission/MANUAL_FINISH.md).

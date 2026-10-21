@@ -2,9 +2,9 @@
 
 > Delivery resumed by the owner on October 21, 2026. The preparation-only upload pause below is historical; current progress and unresolved form/terms gates are in [delivery status](DELIVERY_STATUS.md). This does not assert a completed upload or submitted entry.
 
-The replacement film is exported and locally checked on October 20. It uses the existing continuous Higgsfield Grady narration, original SVG animation, tighter actual-browser shots and sentence-based English captions. YouTube upload remains paused under the owner's October 19 instruction; human listening/review is the next action.
+The replacement film is exported and locally checked on October 20, then publicly uploaded with owner agreement approval on October 22. It uses the existing continuous Higgsfield Grady narration, original SVG animation, tighter actual-browser shots and sentence-based English captions. The prior October 19 pause was superseded by the owner; the public upload is complete. Human listening/review and personal/final form declarations remain manual.
 
-## Current replacement — local review only
+## Current replacement — public delivery verified
 
 - Film: `.local/submission/denlumi-submission-film.mp4` — **104.0 seconds (1:44)**, 1920×1080, constant 30 fps, H.264/AAC, **7,262,243 bytes**.
 - SHA-256: `1a8b63b138c151002519302703345e77008034805c8a43dac7f071d5b2f589ca`.
@@ -15,7 +15,7 @@ The replacement film is exported and locally checked on October 20. It uses the 
 - Voice: actual Higgsfield Seed Audio, Grady preset, General American direction, continuous take. Not in-app AWS speech evidence or human voice acceptance.
 - Fresh capture: 30 paced actual browser steps, no response mocking or provider calls.
 - Original SVG opening/closing and chapter assets: `.local/submission/motion/`; reproduction sources in `docs/submission/motion/`.
-- Keep YouTube upload paused; the earlier Samantha site export below is historical and must not be uploaded as the replacement.
+- Public YouTube: https://www.youtube.com/watch?v=cbWwUAx-EMU. English SRT track selectable; initial platform checks reported no issues. The earlier Samantha site export below remains historical.
 
 ## Earlier export — historical files and links
 
@@ -46,11 +46,15 @@ Recorded October 19, 2026 through actual automated browser operation, without mo
 Source and MIT license: https://github.com/AmirmLotfy/denlumi
 Project presentation and transcript: https://denlumi-showcase.vercel.app/
 
-## Owner-controlled completion
+## Owner-controlled completion record
 
-1. Review the complete narration/video and confirm the entrant's rights, eligibility and account authority using the platform's actual declarations. The coordinator performed sampled-frame, capture-path and metadata checks, not a human frame-by-frame/audible review.
-2. Upload to the owner's chosen YouTube/Vimeo account, public and in English, keeping the complete version under three minutes. Add the supplied English captions if the platform supports them.
-3. Verify public playback and captions outside the signed-in session. Paste the real YouTube/Vimeo URL into the submission draft and exact Devpost video field.
-4. Review factual tool feedback, personal reuse preferences, track selection and the official form. Complete required owner declarations and final submission before October 23 at 22:00 Cairo.
+1. Owner film/rights/personal review remains manual. Automated media and sampled-frame checks do not establish human listening.
+2. The owner explicitly approved the YouTube agreement/public upload. The exact Grady film was uploaded to Frameless and published publicly at https://www.youtube.com/watch?v=cbWwUAx-EMU with matching English SRT.
+3. Public status, initial platform checks, actual watch-page playback/English caption selection and anonymous metadata were verified. The real URL is saved in Devpost; the historical site MP4 was not used as the replacement.
+4. Personal eligibility/feedback/survey answers and final Devpost agreement/submission remain owner-manual. See [manual finish](MANUAL_FINISH.md).
 
-The owner selected the signed-in YouTube channel Frameless, then explicitly paused upload to replace the narration. No file was uploaded. Keep publication paused while the replacement is reviewed. Do not treat the earlier account selection as permission to resume this paused upload.
+Historical October 19: the owner selected Frameless, paused upload and requested narration replacement. No file was uploaded at that time. The later explicit approval superseded that pause for the exact new film; it did not imply human listening acceptance or fill personal declarations.
+
+## October 22 delivery outcome
+
+Public source and video verified; Devpost draft 3/5 saved. Personal fields/agreements and final Submit project remain owner-manual per latest instruction. See [delivery status](DELIVERY_STATUS.md) and [manual finish](MANUAL_FINISH.md). Earlier pause/account notes above retain their historical dates.
